@@ -6,7 +6,7 @@
   "router_config": {
     "router_type": "CUSTOM",
     "router_map": {
-      "/": "functions/v1/test.js"
+      "/api": "functions/v1/test.js"
     }
   }
 }
