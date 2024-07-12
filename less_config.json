@@ -6,7 +6,7 @@
   "router_config": {
     "router_type": "CUSTOM",
     "router_map": {
-      "/v1/elasticsearch": "functions/v1/index.js"
+      "/v1/elasticsearch/": "functions/v1/index.js"
     }
   }
 }
