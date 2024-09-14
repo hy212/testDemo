@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传获取MD5</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.2/spark-md5.min.js"></script>
+    <!-- spark-md5 npm安装方式：https://github.com/satazor/js-spark-md5 -->
+</head>
+<style>
+    .inputDom{
+        padding: 20px 0;
+        border-bottom: 1px dashed #d7d7d7;
+    }
+    .result{
+        line-height: 26px;
+        color: #666;
+        font-size: 14px;
+    }
+    .result span:first-child{
+        margin-right: 30px;
+    }
+</style>
+<body>
+<div id="app">
+    <input
+        id="file"
+        type="file"
+        name="file"
+        @change="fileChange"
+        @click="clearValue"
+        ref="uploadInput"
+        class="inputDom"
+    />
+    <div>
+        <h5>生成结果</h5>
+        <div class="result">
+            <span>当前进度: {{ progress }}%</span>
+            <span v-show="md5">MD5值: {{ md5 }}</span>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    const { createApp, ref } = Vue
+
+    createApp({
+        setup() {
+            const md5 = ref('')
+            const progress = ref(0)
+            const uploadInput = ref(null)
+
+            /** 防止重复上传文件不触发change事件 */
+            function clearValue() {
+                uploadInput.value && (uploadInput.value.value = '')
+            }
+
+
+            /** 文件上传 */
+            async function fileChange(event) {
+                md5.value = ''
+                progress.value = 0
+
+                const file = event.target.files[0]
+                md5.value = await getFileMD5BySlice(file, (val) => {
+                    console.log('当前进度-----', val)
+                    progress.value = val;
+                })
+                console.log('计算的MD5值为----', md5.value)
+                // clearValue()
+            }
+
+
+            /** 获取文件MD5值,分段处理：防止文件过大导致页面卡顿 */
+            function getFileMD5BySlice(file, onProgress) {
+                return new Promise((resolve, reject) => {
+                    const blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice
+                    const chunkSize = 2 * 1024 * 1024 // 单个分片大小为2MB
+                    const chunks = Math.ceil(file.size / chunkSize) // 总分片数
+
+                    console.log('文件大小、分片个数---', file.size, chunks)
+                    let currentChunk = 0
+                    const spark = new SparkMD5.ArrayBuffer()
+                    const fileReader = new FileReader()
+
+                    fileReader.onload = (event) => {
+                        console.log('read chunk nr', currentChunk + 1, 'of', chunks)
+                        spark.append(event.target.result)
+                        currentChunk++
+                        // 计算进度
+                        const progress = Math.floor((currentChunk / chunks) * 100)
+                        onProgress(progress)
+
+                        if (currentChunk < chunks) {
+                            loadNext()
+                        } else {
+                            console.log('end-------')
+                            const md5 = spark.end()
+                            spark.destroy() // 释放缓存
+                            resolve(md5)
+                        }
+                    }
+
+                    fileReader.onerror = (e) => {
+                        console.warn('文件读取错误')
+                        reject(e)
+                    }
+
+                    function loadNext() {
+                        const start = currentChunk * chunkSize
+                        const endSize = start + chunkSize
+                        const end = endSize >= file.size ? file.size : endSize
+                        fileReader.readAsArrayBuffer(blobSlice.call(file, start, end))
+                    }
+
+                    loadNext()
+                })
+            }
+
+
+            /** 获取文件MD5值，一次性处理 */
+            function getFileMd5(file) {
+                return new Promise((resolve, reject) => {
+                    const fileReader = new FileReader()
+                    fileReader.readAsArrayBuffer(file)
+                    fileReader.onload = (event) => {
+                        const spark = new SparkMD5.ArrayBuffer()
+                        spark.append(event.target.result)
+                        const md5 = spark.end()
+                        console.log('MD5 hash:', md5)
+                        resolve(md5)
+                    }
+                    fileReader.onerror = (e) => {
+                        console.warn('文件读取错误')
+                        reject(e)
+                    }
+                })
+            }
+
+
+            return {
+                md5,
+                progress,
+                uploadInput,
+                fileChange,
+                clearValue
+            }
+        }
+    }).mount('#app')
+</script>
+</html>
