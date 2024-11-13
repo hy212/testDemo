@@ -5,6 +5,8 @@
   },
   "router_config": {
     "router_type": "AUTO",
-    "router_map": {}
+    "router_map": {
+      "/api": "/api"
+    }
   }
 }
