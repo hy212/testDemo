@@ -5,13 +5,6 @@
   },
   "router_config": {
     "router_type": "CUSTOM",
-    "router_map": {
-      "/app": "functions/testc.js",
-      "/v1/module": "functions/v1/test.js",
-      "/v1/elasticsearch": "functions/v1/index.js",
-      "/": "functions/testUrl.js",
-      "/build": "functions/build.js"
-    }
+    "router_map": {}
   }
 }
-
