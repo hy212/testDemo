@@ -1,10 +1,12 @@
 {
   "build_config": {
     "build_command": "",
-    "build_output_dir": "."
+    "build_output_dir": ""
   },
   "router_config": {
-    "router_type": "AUTO",
-    "router_map": {}
+    "router_type": "CUSTOM",
+    "router_map": {
+      "/functions/mcpapi": "functions/mcpapi.js"
+    }
   }
 }
