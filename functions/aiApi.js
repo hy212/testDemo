@@ -111,10 +111,12 @@ function getResponseContent(rsp) {
         //
         if (hasArrayBuffer) {
         //     // 如果包含ArrayBuffer，保持原结构返回
+            rsp.aaa=1
             responseBody = rsp;
             resContentType = 'application/json';
         } else {
             // 普通对象转为JSON字符串
+            rsp.aaa=2
             responseBody = JSON.stringify(rsp);
             resContentType = 'application/json';
         }
