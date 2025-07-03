@@ -6,7 +6,8 @@
   "router_config": {
     "router_type": "CUSTOM",
     "router_map": {
-      "/functions/mcpapi": "functions/mcpapi.js"
+      "/functions/mcpapi": "functions/mcpapi.js",
+      "/functions/run": "functions/aiApi.js"
     }
   }
 }

@@ -1,0 +1,55 @@
+/**
+ * 说明：
+ * 1. #{MODEL_ID} 是动态占位符，实际运行时会被替换为具体的模型ID
+ * 2. AI 是自定义模型服务实例变量
+ * 3. 支持JSON、表单和纯文本等多种请求参数格式
+ */
+
+addEventListener('fetch', async (event) => {
+    const res = await handleRequest(event.request);
+    event.respondWith(res);
+});
+
+async function handleRequest(req) {
+    try {
+        const { method } = req;
+        if (method === 'POST') {
+            // 获取请求内容类型，解析请求参数
+            const contentType = req.headers.get('content-type') || '';
+
+            let reqArgs;
+            if (contentType.includes('application/json')) {
+                reqArgs = await req.json();
+            } else if (
+                contentType.includes('application/x-www-form-urlencoded') ||
+                contentType.includes('multipart/form-data')
+            ) {
+                // 表单格式、文件上传
+                const formData = await req.formData();
+                reqArgs = Object.fromEntries(formData.entries());
+            } else {
+                // 解析文本处理
+                const text = await req.text();
+                try {
+                    reqArgs = text ? JSON.parse(text) : {};
+                } catch {
+                    reqArgs = { rawData: text };
+                }
+            }
+            const model = reqArgs.model;
+            delete reqArgs.model;
+            const rsp = await AI.run(model, reqArgs);
+
+            // const rsp = await AI.run('#{MODEL_ID}', reqArgs);
+            return new Response(rsp);
+        }
+        return new Response(`暂不支持${method}请求，请使用POST请求`, {
+            status: 404,
+        });
+    } catch (e) {
+        const rsp = {
+            msg: e.message,
+        };
+        return new Response(JSON.stringify(rsp), { status: 500 });
+    }
+}
