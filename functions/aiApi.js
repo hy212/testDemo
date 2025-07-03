@@ -112,6 +112,7 @@ async function handleRequest(req) {
     } catch (e) {
         const rsp = {
             msg: e.message,
+            e: JSON.stringify(e)
         };
         return new Response(JSON.stringify(rsp), { status: 500 });
     }
