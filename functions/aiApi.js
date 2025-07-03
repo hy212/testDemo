@@ -27,7 +27,7 @@ async function handleRequest(req) {
             //         'Content-Type': response.contentType,
             //     }
             // });
-            return new Response(rsp);
+            return new Response(JSON.stringify(rsp));
         }
         return new Response(`暂不支持${method}请求，请使用POST请求`, {
             status: 404,
