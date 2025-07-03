@@ -30,7 +30,7 @@ async function handleRequest(req) {
                 reqArgs = {};
                 // 遍历表单字段，保留文件二进制数据
                 for (const [key, value] of formData.entries()) {
-                    if (value instanceof Blob || value instanceof File) {
+                    if (value instanceof Blob) {
                         // 如果是文件类型，保留为ArrayBuffer
                         reqArgs[key] = await value.arrayBuffer();
                     } else {
