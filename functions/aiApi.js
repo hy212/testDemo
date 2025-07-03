@@ -20,13 +20,13 @@ async function handleRequest(req) {
             const rsp = await AI.run(model, reqArgs);
             // const rsp = await AI.run('#{MODEL_ID}', reqArgs);
 
-            return new Response('1111');
+            // return new Response('1111');
             const response = getResponseContent(rsp);
-            // return new Response(response.body, {
-            //     headers: {
-            //         'Content-Type': response.contentType,
-            //     }
-            // });
+            return new Response(response.body, {
+                headers: {
+                    'Content-Type': response.contentType,
+                }
+            });
         }
         return new Response(`暂不支持${method}请求，请使用POST请求`, {
             status: 404,
