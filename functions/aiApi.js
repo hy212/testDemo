@@ -61,7 +61,6 @@ async function getQueryArgs(req) {
                 // 如果是文件类型，保留为ArrayBuffer
                 const buffer = await value.arrayBuffer()
                 reqArgs[key] = [...new Uint8Array(buffer)];
-                reqArgs.aaa = 1
             }catch (e) {
                 // 普通字段保持原样
                 reqArgs[key] = value;
@@ -105,19 +104,19 @@ function getResponseContent(rsp) {
         // responseBody = JSON.stringify(rsp);
         // resContentType = 'application/json';
         // 检查对象中是否包含ArrayBuffer类型的值
-        const hasArrayBuffer = Object.values(rsp).some(
-            value => value instanceof ArrayBuffer
-        );
-
-        if (hasArrayBuffer) {
-            // 如果包含ArrayBuffer，保持原结构返回
+        // const hasArrayBuffer = Object.values(rsp).some(
+        //     value => value instanceof ArrayBuffer
+        // );
+        //
+        // if (hasArrayBuffer) {
+        //     // 如果包含ArrayBuffer，保持原结构返回
             responseBody = rsp;
             resContentType = 'application/json';
-        } else {
-            // 普通对象转为JSON字符串
-            responseBody = JSON.stringify(rsp);
-            resContentType = 'application/json';
-        }
+        // } else {
+        //     // 普通对象转为JSON字符串
+        //     responseBody = JSON.stringify(rsp);
+        //     resContentType = 'application/json';
+        // }
     } else if (typeof rsp === 'string') {
         // 处理字符串
         responseBody = rsp;
