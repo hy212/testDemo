@@ -20,14 +20,25 @@ async function handleRequest(req) {
             let reqArgs;
             if (contentType.includes('application/json')) {
                 reqArgs = await req.json();
-            } else if (
-                contentType.includes('application/x-www-form-urlencoded') ||
-                contentType.includes('multipart/form-data')
-            ) {
-                // 表单格式、文件上传
+            } else if (contentType.includes('application/x-www-form-urlencoded')) {
+                // 普通表单格式
                 const formData = await req.formData();
                 reqArgs = Object.fromEntries(formData.entries());
-            } else {
+            } else if (contentType.includes('multipart/form-data')) {
+                // 文件上传表单格式
+                const formData = await req.formData();
+                reqArgs = {};
+                // 遍历表单字段，保留文件二进制数据
+                for (const [key, value] of formData.entries()) {
+                    if (value instanceof Blob || value instanceof File) {
+                        // 如果是文件类型，保留为ArrayBuffer
+                        reqArgs[key] = await value.arrayBuffer();
+                    } else {
+                        // 普通字段保持原样
+                        reqArgs[key] = value;
+                    }
+                }
+            }else {
                 // 解析文本处理
                 const text = await req.text();
                 try {
