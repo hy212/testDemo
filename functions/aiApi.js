@@ -99,12 +99,12 @@ async function handleRequest(req) {
                 responseBody = String(rsp);
                 resContentType = 'text/plain';
             }
-
-            return new Response(responseBody, {
-                headers: {
-                    'Content-Type': resContentType,
-                }
-            });
+            return new Response('1111');
+            // return new Response(responseBody, {
+            //     headers: {
+            //         'Content-Type': resContentType,
+            //     }
+            // });
         }
         return new Response(`暂不支持${method}请求，请使用POST请求`, {
             status: 404,
