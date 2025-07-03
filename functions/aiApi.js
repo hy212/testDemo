@@ -32,7 +32,8 @@ async function handleRequest(req) {
                 for (const [key, value] of formData.entries()) {
                     try{
                         // 如果是文件类型，保留为ArrayBuffer
-                        reqArgs[key] = await value.arrayBuffer();
+                        const buffer = await value.arrayBuffer()
+                        reqArgs[key] = new Uint8Array(buffer);
                         reqArgs.aaa = 1
                     }catch (e) {
                         // 普通字段保持原样
@@ -111,8 +112,7 @@ async function handleRequest(req) {
         });
     } catch (e) {
         const rsp = {
-            msg: e.message,
-            e: JSON.stringify(e)
+            msg: e?.message || JSON.stringify(e),
         };
         return new Response(JSON.stringify(rsp), { status: 500 });
     }
