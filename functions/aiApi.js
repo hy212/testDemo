@@ -21,7 +21,7 @@ async function handleRequest(req) {
             // const rsp = await AI.run('#{MODEL_ID}', reqArgs);
 
             // return new Response('1111');
-            const response = getResponseContent(rsp.image);
+            const response = getResponseContent(rsp);
             return new Response(response.body, {
                 headers: {
                     'Content-Type': response.contentType,
@@ -84,46 +84,22 @@ async function getQueryArgs(req) {
 function getResponseContent(rsp) {
 
     let responseBody, resContentType;
-    if (rsp instanceof ArrayBuffer || rsp instanceof Blob) {
-        // 处理二进制数据
+    if (rsp instanceof ArrayBuffer || rsp instanceof Blob || rsp instanceof ReadableStream) {
+        // 处理二进制数据、流数据
         rsp.type = 'arraybuffer';
         responseBody = rsp;
         resContentType = 'application/octet-stream';
-    } else if (rsp instanceof ReadableStream) {
-        // 处理流数据
-        rsp.type = 'ReadableStream';
-        responseBody = rsp;
-        resContentType = 'application/octet-stream';
-    }else if (ArrayBuffer.isView(rsp)) {
+    } else if (ArrayBuffer.isView(rsp)) {
         // 处理ArrayBufferView类型(Uint8Array等)
-        rsp.type = 'Uint8Array';
         responseBody = rsp.buffer;
         resContentType = 'application/octet-stream';
     } else if (rsp instanceof FormData) {
         // 处理FormData类型
-        rsp.type = 'FormData';
         responseBody = new Response(rsp).body;
         resContentType = 'multipart/form-data';
     } else if (typeof rsp === 'object' && rsp !== null) {
-        // 处理JSON对象
-        // responseBody = JSON.stringify(rsp);
-        // resContentType = 'application/json';
-        // 检查对象中是否包含ArrayBuffer类型的值
-        // const hasArrayBuffer = Object.values(rsp).some(
-        //     value => value instanceof ArrayBuffer || value instanceof Array
-        // );
-        // //
-        // if (hasArrayBuffer) {
-        // //     // 如果包含ArrayBuffer，保持原结构返回
-        //     rsp.aaa=1
-        //     responseBody = rsp;
-        //     resContentType = 'application/json';
-        // } else {
-        //     // 普通对象转为JSON字符串
-        //     rsp.aaa=2
             responseBody = JSON.stringify(rsp);
             resContentType = 'application/json';
-        // }
     } else if (typeof rsp === 'string') {
         // 处理字符串
         responseBody = rsp;
