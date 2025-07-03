@@ -49,8 +49,9 @@ async function handleRequest(req) {
             }
             const model = reqArgs.model;
             delete reqArgs.model;
-            const rsp = await AI.run(model, reqArgs);
-
+            // const rsp = await AI.run(model, reqArgs);
+            const rsp = reqArgs
+            //
             // const rsp = await AI.run('#{MODEL_ID}', reqArgs);
             // 根据AI.run返回的数据类型自动处理响应格式
             let responseBody, resContentType;
