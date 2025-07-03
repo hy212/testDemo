@@ -105,21 +105,21 @@ function getResponseContent(rsp) {
         // responseBody = JSON.stringify(rsp);
         // resContentType = 'application/json';
         // 检查对象中是否包含ArrayBuffer类型的值
-        const hasArrayBuffer = Object.values(rsp).some(
-            value => value instanceof ArrayBuffer || value instanceof Array
-        );
-        //
-        if (hasArrayBuffer) {
-        //     // 如果包含ArrayBuffer，保持原结构返回
-            rsp.aaa=1
-            responseBody = rsp;
-            resContentType = 'application/json';
-        } else {
-            // 普通对象转为JSON字符串
-            rsp.aaa=2
+        // const hasArrayBuffer = Object.values(rsp).some(
+        //     value => value instanceof ArrayBuffer || value instanceof Array
+        // );
+        // //
+        // if (hasArrayBuffer) {
+        // //     // 如果包含ArrayBuffer，保持原结构返回
+        //     rsp.aaa=1
+        //     responseBody = rsp;
+        //     resContentType = 'application/json';
+        // } else {
+        //     // 普通对象转为JSON字符串
+        //     rsp.aaa=2
             responseBody = JSON.stringify(rsp);
             resContentType = 'application/json';
-        }
+        // }
     } else if (typeof rsp === 'string') {
         // 处理字符串
         responseBody = rsp;
