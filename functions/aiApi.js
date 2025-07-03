@@ -21,7 +21,7 @@ async function handleRequest(req) {
             // const rsp = await AI.run('#{MODEL_ID}', reqArgs);
 
             // return new Response('1111');
-            const response = getResponseContent(rsp);
+            const response = getResponseContent(rsp.image);
             return new Response(response.body, {
                 headers: {
                     'Content-Type': response.contentType,
@@ -86,18 +86,22 @@ function getResponseContent(rsp) {
     let responseBody, resContentType;
     if (rsp instanceof ArrayBuffer || rsp instanceof Blob) {
         // 处理二进制数据
+        rsp.type = 'arraybuffer';
         responseBody = rsp;
         resContentType = 'application/octet-stream';
     } else if (rsp instanceof ReadableStream) {
         // 处理流数据
+        rsp.type = 'ReadableStream';
         responseBody = rsp;
         resContentType = 'application/octet-stream';
     }else if (ArrayBuffer.isView(rsp)) {
         // 处理ArrayBufferView类型(Uint8Array等)
+        rsp.type = 'Uint8Array';
         responseBody = rsp.buffer;
         resContentType = 'application/octet-stream';
     } else if (rsp instanceof FormData) {
         // 处理FormData类型
+        rsp.type = 'FormData';
         responseBody = new Response(rsp).body;
         resContentType = 'multipart/form-data';
     } else if (typeof rsp === 'object' && rsp !== null) {
