@@ -52,7 +52,7 @@ async function handleRequest(req) {
             const response = getResponseContent(rsp);
             return new Response(response.body, {
                 headers: {
-                    // 'Content-Type': response.contentType,
+                    'Content-Type': response.contentType,
                 }
             });
         }
@@ -88,14 +88,12 @@ async function getQueryArgs(req) {
         // 文件上传表单格式
         const formData = await req.formData();
         reqArgs = {};
-        // 遍历表单字段，保留文件二进制数据
         for (const [key, value] of formData.entries()) {
             try{
                 // 如果是文件类型，保留为ArrayBuffer
                 const buffer = await value.arrayBuffer()
                 reqArgs[key] = [...new Uint8Array(buffer)];
             }catch (e) {
-                // 普通字段保持原样
                 reqArgs[key] = value;
             }
         }
@@ -128,33 +126,30 @@ async function getQueryArgs(req) {
  */
 function getResponseContent(rsp) {
 
-    let responseBody, resContentType;
+    let body, contentType;
     if (rsp instanceof ArrayBuffer || rsp instanceof Blob || rsp instanceof ReadableStream) {
         // 处理二进制数据、流数据
-        responseBody = rsp;
-        resContentType = 'application/octet-stream';
+        body = rsp;
+        contentType = 'application/octet-stream';
     } else if (ArrayBuffer.isView(rsp)) {
         // 处理ArrayBufferView类型(Uint8Array等)
-        responseBody = rsp.buffer;
-        resContentType = 'application/octet-stream';
+        body = rsp.buffer;
+        contentType = 'application/octet-stream';
     } else if (rsp instanceof FormData) {
-        // 处理FormData类型
-        responseBody = new Response(rsp).body;
-        resContentType = 'multipart/form-data';
+        body = new Response(rsp).body;
+        contentType = 'multipart/form-data';
     } else if (typeof rsp === 'object' && rsp !== null) {
-            responseBody = JSON.stringify(rsp);
-            resContentType = 'application/json';
+        body = JSON.stringify(rsp);
+        contentType = 'application/json';
     } else if (typeof rsp === 'string') {
-        // 处理字符串
-        responseBody = rsp;
-        resContentType = rsp.startsWith('<') ? 'text/html' : 'text/plain';
+        body = rsp;
+        contentType = rsp.startsWith('<') ? 'text/html' : 'text/plain';
     } else {
-        // 其他类型转为字符串
-        responseBody = String(rsp);
-        resContentType = 'text/plain';
+        body = String(rsp);
+        contentType = 'text/plain';
     }
     return {
-        body: responseBody,
-        contentType: resContentType,
+        body,
+        contentType,
     }
 }
