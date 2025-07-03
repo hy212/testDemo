@@ -22,12 +22,12 @@ async function handleRequest(req) {
 
             // return new Response('1111');
             const response = getResponseContent(rsp);
-            // return new Response(response.body, {
-            //     headers: {
-            //         'Content-Type': response.contentType,
-            //     }
-            // });
-            return new Response(JSON.stringify(rsp));
+            return new Response(response.body, {
+                headers: {
+                    'Content-Type': response.contentType,
+                }
+            });
+            // return new Response(JSON.stringify(rsp));
         }
         return new Response(`暂不支持${method}请求，请使用POST请求`, {
             status: 404,
@@ -106,7 +106,7 @@ function getResponseContent(rsp) {
         // resContentType = 'application/json';
         // 检查对象中是否包含ArrayBuffer类型的值
         const hasArrayBuffer = Object.values(rsp).some(
-            value => value instanceof ArrayBuffer
+            value => value instanceof ArrayBuffer || value instanceof Array
         );
         //
         if (hasArrayBuffer) {
