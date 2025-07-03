@@ -61,8 +61,22 @@ async function handleRequest(req) {
                 resContentType = 'multipart/form-data';
             } else if (typeof rsp === 'object' && rsp !== null) {
                 // 处理JSON对象
-                responseBody = JSON.stringify(rsp);
-                resContentType = 'application/json';
+                // responseBody = JSON.stringify(rsp);
+                // resContentType = 'application/json';
+                // 检查对象中是否包含ArrayBuffer类型的值
+                const hasArrayBuffer = Object.values(rsp).some(
+                    value => value instanceof ArrayBuffer
+                );
+
+                if (hasArrayBuffer) {
+                    // 如果包含ArrayBuffer，保持原结构返回
+                    responseBody = rsp;
+                    resContentType = 'application/json';
+                } else {
+                    // 普通对象转为JSON字符串
+                    responseBody = JSON.stringify(rsp);
+                    resContentType = 'application/json';
+                }
             } else if (typeof rsp === 'string') {
                 // 处理字符串
                 responseBody = rsp;
