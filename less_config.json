@@ -1,14 +1,11 @@
 {
-  "build_config": {
-    "build_command": "",
-    "build_output_dir": ""
-  },
   "router_config": {
     "router_type": "CUSTOM",
     "router_map": {
       "/functions/mcpapi": "functions/mcpapi.js",
       "/functions/run": "functions/aiApi.js",
-      "/functions/tme": "functions/temApi.js"
+      "/functions/tme": "functions/temApi.js",
+      "/functions/test": "functions/temApi.js"
     }
   }
 }
