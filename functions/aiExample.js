@@ -45,7 +45,7 @@ async function handleRequest(req) {
         if (method === 'POST') {
 
 
-            const rsp = await AI.run(path, JSON.stringify(reqArgs));
+            const rsp = await AI.run(path, model ? reqArgs : JSON.stringify(reqArgs));
 
             const response = getResponseContent(rsp);
             return new Response(response.body, {
