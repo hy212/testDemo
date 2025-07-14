@@ -26,8 +26,10 @@ addEventListener('fetch', async (event) => {
  * @returns {Response} 处理后的HTTP响应
  */
 async function handleRequest(req) {
+    const { method, url } = req;
+    const path = `@less/xyinghu/hyTest-2${url}`
     try {
-        const { method, url } = req;
+
         if (method === 'POST') {
             let reqArgs = {};
             const contentType = req.headers.get('content-type') || '';
@@ -35,7 +37,7 @@ async function handleRequest(req) {
                 reqArgs = await req.json();
             }
 
-            const rsp = await AI.run(`@less/xyinghu/hyTest-2${url}`, JSON.stringify(reqArgs));
+            const rsp = await AI.run(path, JSON.stringify(reqArgs));
 
             const response = getResponseContent(rsp);
             return new Response(response.body, {
@@ -50,6 +52,7 @@ async function handleRequest(req) {
     } catch (e) {
         const rsp = {
             msg: e?.message || JSON.stringify(e),
+            url: path
         };
         return new Response(JSON.stringify(rsp), { status: 500 });
     }
