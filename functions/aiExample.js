@@ -29,15 +29,21 @@ async function handleRequest(req) {
     const { method, url } = req;
 
     const apiUrl = new URL(url).pathname
-    const path = `@less/xyinghu/hyTest-2${apiUrl}`
+    let path = `@less/xyinghu/hyTest-2${apiUrl}`
+    let reqArgs = {};
+    const contentType = req.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+        reqArgs = await req.json();
+    }
+    const model = reqArgs.model;
+    if (model) {
+        path = model
+    }
+    delete reqArgs.model;
     try {
 
         if (method === 'POST') {
-            let reqArgs = {};
-            const contentType = req.headers.get('content-type') || '';
-            if (contentType.includes('application/json')) {
-                reqArgs = await req.json();
-            }
+
 
             const rsp = await AI.run(path, JSON.stringify(reqArgs));
 
@@ -55,7 +61,8 @@ async function handleRequest(req) {
         const rsp = {
             msg: e?.message || JSON.stringify(e),
             url,
-            path
+            path,
+            reqArgs
         };
         return new Response(JSON.stringify(rsp), { status: 500 });
     }
