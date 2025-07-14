@@ -35,7 +35,7 @@ async function handleRequest(req) {
                 reqArgs = await req.json();
             }
 
-            const rsp = await AI.run(`#{MODEL_ID}${url}`, JSON.stringify(reqArgs));
+            const rsp = await AI.run(`@less/xyinghu/hyTest-2${url}`, JSON.stringify(reqArgs));
 
             const response = getResponseContent(rsp);
             return new Response(response.body, {
