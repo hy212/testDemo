@@ -27,7 +27,9 @@ addEventListener('fetch', async (event) => {
  */
 async function handleRequest(req) {
     const { method, url } = req;
-    const path = `@less/xyinghu/hyTest-2${url}`
+
+    const apiUrl = new URL(url).pathname
+    const path = `@less/xyinghu/hyTest-2${apiUrl}`
     try {
 
         if (method === 'POST') {
@@ -52,7 +54,8 @@ async function handleRequest(req) {
     } catch (e) {
         const rsp = {
             msg: e?.message || JSON.stringify(e),
-            url: path
+            url,
+            path
         };
         return new Response(JSON.stringify(rsp), { status: 500 });
     }
