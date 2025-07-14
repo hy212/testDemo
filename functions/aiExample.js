@@ -47,7 +47,7 @@ async function handleRequest(req) {
 
             const rsp = await AI.run(path, model ? reqArgs : JSON.stringify(reqArgs));
 
-            const response = getResponseContent(rsp);
+            const response = getResponseContent(rsp.image);
             return new Response(response.body, {
                 headers: {
                     'Content-Type': response.contentType,
