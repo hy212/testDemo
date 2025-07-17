@@ -5,6 +5,8 @@ const ApiMethodMap = {
   [`${API_PREFIX}/update`]: updateImageHandler, // 更新图片API路径
 };
 
+const Authed_Hosts = ["shp.qlogo.cn", "pic.kg.qq.com"];
+
 /**
  * 主请求监听器
  * 监听fetch事件并处理所有传入请求
@@ -38,6 +40,14 @@ async function handleRequest(req) {
           status: 400,
         });
       }
+      const imageHost = path.split("/")[0];
+
+      if (!Authed_Hosts.includes(imageHost)) {
+        return new Response("图片地址域名无效", {
+          status: 403,
+        });
+      }
+
       return await ApiMethodMap[apiUrl](path);
     }
     return new Response("404", {
@@ -58,32 +68,31 @@ async function getImageHandler(path) {
     return new Response(kvImage, {
       headers: {
         "Content-Type": "image/jpeg",
-        "Use-KV": "true"
+        "Use-KV": "true",
       },
     });
   }
   const res = await requestPathImage(path);
-
-  // await KV.put(path, res.body); // 存在问题: res.body数据会被清空
-  // 复制响应体数据存储
+  // 图片存储到KV中
   const bodyClone = await res.clone().arrayBuffer();
   await KV.put(path, bodyClone);
 
   return res;
 }
 
-/** 更新图片逻辑：KV中存在图片的话，请求path并更新KV中的图片 **/
+/** 更新图片逻辑：请求path并更新KV中的图片 **/
 async function updateImageHandler(path) {
+  const res = await requestPathImage(path);
   const kvImage = await KV.get(path, "stream");
-  if (kvImage) {
-    const res = await requestPathImage(path);
-    await KV.put(path, res.body);
-    return new Response('更新成功');
-  }
-  return new Response(`KV中不存在图片: ${path}`, { status: 500 });
+  await KV.put(path, res.body);
+  return new Response("更新成功", {
+    headers: {
+      created: !kvImage,
+    },
+  });
 }
 
 /** 请求外部链接图片 **/
 async function requestPathImage(path) {
-  return await fetch(`http://${path}`)
+  return await fetch(`http://${path}`);
 }
