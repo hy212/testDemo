@@ -63,10 +63,8 @@ async function getImageHandler(path) {
     });
   }
   const res = await requestPathImage(path);
-  await KV.put(path, res.body);
-  return new Response(res.body, {
-    headers: res.headers,
-  });
+  // await KV.put(path, res.body);
+  return res;
 }
 
 /** 更新图片逻辑：KV中存在图片的话，请求path并更新KV中的图片 **/
