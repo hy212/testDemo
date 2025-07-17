@@ -66,9 +66,9 @@ async function getImageHandler(path) {
 
   // await KV.put(path, res.body); // 存在问题: res.body数据会被清空
   // 复制响应体数据存储
-  // const bodyClone = await res.clone().arrayBuffer();
-  // await KV.put(path, bodyClone);
-  await KV.put(path, res);
+  const bodyClone = await res.clone().arrayBuffer();
+  await KV.put(path, bodyClone);
+
   return res;
 }
 
