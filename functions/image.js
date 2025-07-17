@@ -57,9 +57,9 @@ async function getImageHandler(path) {
   const kvImage = await KV.get(path, "stream");
   if (kvImage) {
     return new Response(kvImage, {
-      // headers: {
-      //   "Content-Type": "image/jpeg",
-      // },
+      headers: {
+        "Content-Type": "image/jpeg",
+      },
     });
   }
   const res = await fetch(`http://${path}`);
