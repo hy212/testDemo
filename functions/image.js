@@ -85,11 +85,5 @@ async function updateImageHandler(path) {
 
 /** 请求外部链接图片 **/
 async function requestPathImage(path) {
-  const res = await fetch(`http://${path}`);
-  const bodyClone = await res.clone().arrayBuffer();
-  return new Response(bodyClone, {
-    status: res.status,
-    statusText: res.statusText,
-    headers: res.headers
-  });
+  return await fetch(`http://${path}`)
 }
