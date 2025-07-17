@@ -54,7 +54,7 @@ async function handleRequest(req) {
 
 /** 获取图片逻辑：KV中不存在图片的话，请求图片，再存到KV中，否则直接返回KV中的图片 **/
 async function getImageHandler(path) {
-  const kvImage = await KV.get(path, "arrayBuffer");
+  const kvImage = await KV.get(path, "text");
   if (kvImage) {
     return new Response(kvImage, {
       headers: {
