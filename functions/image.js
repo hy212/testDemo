@@ -1,5 +1,5 @@
 const API_PREFIX = `/image`;
-const Text2textApiUrl = `${API_PREFIX}/text2text`;
+
 const ApiMethodMap = {
   [`${API_PREFIX}/get`]: getImageHandler, // 获取图片API路径
   [`${API_PREFIX}/update`]: updateImageHandler, // 更新图片API路径
@@ -38,8 +38,7 @@ async function handleRequest(req) {
           status: 400,
         });
       }
-      const rsp = await ApiMethodMap[apiUrl](path);
-      return rsp;
+      return await ApiMethodMap[apiUrl](path);
     }
     return new Response("404", {
       status: 404,
@@ -52,29 +51,34 @@ async function handleRequest(req) {
   }
 }
 
-/** 获取图片逻辑：KV中不存在图片的话，请求图片，再存到KV中，否则直接返回KV中的图片 **/
+/** 获取图片逻辑：KV中不存在图片的话，请求path图片，再存到KV中，否则直接返回KV中的图片 **/
 async function getImageHandler(path) {
   const kvImage = await KV.get(path, "stream");
   if (kvImage) {
     return new Response(kvImage, {
-      // headers: {
-      //   "Content-Type": "image/jpeg",
-      // },
+      headers: {
+        "Content-Type": "image/jpeg",
+        "Use-KV": "true"
+      },
     });
   }
-  const res = await fetch(`http://${path}`);
+  const res = await requestPathImage(path);
   await KV.put(path, res.body);
   return res;
 }
 
-/** 更新图片逻辑：KV中不存在图片的话，请求图片，再存到KV中，否则更新KV中的图片 **/
+/** 更新图片逻辑：KV中存在图片的话，请求path并更新KV中的图片 **/
 async function updateImageHandler(path) {
-  const res = await fetch(`http://${path}`);
-  return res;
+  const kvImage = await KV.get(path, "stream");
+  if (kvImage) {
+    const res = await requestPathImage(path);
+    await KV.put(path, res.body);
+    return new Response('更新成功');
+  }
+  return new Response(`不存在图片: ${path}`, { status: 500 });
 }
-/** 发送json数据 **/
-function sendJsonRes(obj, status) {
-  return new Response(JSON.stringify(obj), {
-    status,
-  });
+
+/** 请求外部链接图片 **/
+async function requestPathImage(path) {
+  return await fetch(`http://${path}`)
 }
