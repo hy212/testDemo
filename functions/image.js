@@ -63,7 +63,8 @@ async function getImageHandler(path) {
     });
   }
   const res = await requestPathImage(path);
-  await KV.put(path, res.body);
+  const bodyClone = await res.clone().arrayBuffer();
+  await KV.put(path, bodyClone);
   return res;
 }
 
@@ -80,5 +81,11 @@ async function updateImageHandler(path) {
 
 /** 请求外部链接图片 **/
 async function requestPathImage(path) {
-  return await fetch(`http://${path}`)
+  const res = await fetch(`http://${path}`);
+  const bodyClone = await res.clone().arrayBuffer();
+  return new Response(bodyClone, {
+    status: res.status,
+    statusText: res.statusText,
+    headers: res.headers
+  });
 }
