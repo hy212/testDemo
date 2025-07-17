@@ -63,8 +63,12 @@ async function getImageHandler(path) {
     });
   }
   const res = await requestPathImage(path);
-  const bodyClone = await res.clone().arrayBuffer();
-  await KV.put(path, bodyClone);
+
+  // await KV.put(path, res.body); // 存在问题: res.body数据会被清空
+  // 复制响应体数据存储
+  // const bodyClone = await res.clone().arrayBuffer();
+  // await KV.put(path, bodyClone);
+  await KV.put(path, res);
   return res;
 }
 
