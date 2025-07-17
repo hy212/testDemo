@@ -63,7 +63,7 @@ async function getImageHandler(path) {
     });
   }
   const res = await requestPathImage(path);
-  // await KV.put(path, res.body);
+  await KV.put(path, res.body);
   return res;
 }
 
