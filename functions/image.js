@@ -64,7 +64,7 @@ async function getImageHandler(path) {
   }
   const res = await requestPathImage(path);
   await KV.put(path, res.body);
-  return res;
+  return new Response(res);
 }
 
 /** 更新图片逻辑：KV中存在图片的话，请求path并更新KV中的图片 **/
@@ -75,7 +75,7 @@ async function updateImageHandler(path) {
     await KV.put(path, res.body);
     return new Response('更新成功');
   }
-  return new Response(`不存在图片: ${path}`, { status: 500 });
+  return new Response(`KV中不存在图片: ${path}`, { status: 500 });
 }
 
 /** 请求外部链接图片 **/
