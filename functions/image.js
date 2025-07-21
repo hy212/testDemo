@@ -117,7 +117,8 @@ async function storeImageKVData(path) {
   // 图片数据和最后修改时间字段存储到KV中（分两个key存储）
   const bodyClone = await res.clone().arrayBuffer();
   await KV.put(path, bodyClone);
-  await KV.put(`metadata_${path}`, { lastModifiedTime });
+  const metadata = { lastModifiedTime };
+  await KV.put(`metadata_${path}`, JSON.stringify(metadata));
 
   return res;
 }
