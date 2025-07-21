@@ -40,8 +40,8 @@ async function handleRequest(req) {
           status: 400,
         });
       }
-      const imageHost = path.split("/")[0];
 
+      const imageHost = path.split("/")[0];
       if (!Authed_Hosts.includes(imageHost)) {
         return new Response("图片地址域名无效", {
           status: 403,
@@ -72,27 +72,52 @@ async function getImageHandler(path) {
       },
     });
   }
-  const res = await requestPathImage(path);
-  // 图片存储到KV中
-  const bodyClone = await res.clone().arrayBuffer();
-  await KV.put(path, bodyClone);
 
-  return res;
+  return await storeImageKVData(path);
 }
 
 /** 更新图片逻辑：请求path并更新KV中的图片 **/
 async function updateImageHandler(path) {
-  const res = await requestPathImage(path);
-  const kvImage = await KV.get(path, "stream");
-  await KV.put(path, res.body);
+  const headRes = await requestPathImage(path, "head");
+  const lastModifiedTime = headRes.headers.get("Last-Modified");
+  // 取KV中图片的修改时间
+  const kvImageMetadata = await KV.get(`metadata_${path}`, { type: "json" });
+  const kvImageLastModifiedTime = kvImageMetadata
+      ? kvImageMetadata.lastModifiedTime
+      : "";
+
+  if (kvImageLastModifiedTime === lastModifiedTime) {
+    return new Response("图片未修改", {
+      headers: {
+        created: false,
+      },
+    });
+  }
+  // 请求外部图片缓存
+  await storeImageKVData(path);
+
   return new Response("更新成功", {
     headers: {
-      created: !kvImage,
+      created: !kvImageLastModifiedTime,
     },
   });
 }
 
 /** 请求外部链接图片 **/
-async function requestPathImage(path) {
-  return await fetch(`http://${path}`);
+async function requestPathImage(path, method = "get") {
+  return await fetch(`http://${path}`, {
+    method,
+  });
+}
+
+/** 请求外部链接图片，并将图片、图片修改时间存储到KV **/
+async function storeImageKVData(path) {
+  const res = await requestPathImage(path);
+  const lastModifiedTime = res.headers.get("Last-Modified");
+  // 图片数据和最后修改时间字段存储到KV中（分两个key存储）
+  const bodyClone = await res.clone().arrayBuffer();
+  await KV.put(path, bodyClone);
+  await KV.put(`metadata_${path}`, { lastModifiedTime });
+
+  return res;
 }
