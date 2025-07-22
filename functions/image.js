@@ -72,53 +72,58 @@ async function getImageHandler(path) {
       },
     });
   }
-
-  return await storeImageKVData(path);
+  const res = await requestPathImage(path);
+  if (res.status === 200) {
+    await storeImageKVData(path, res);
+  }
+  return res;
 }
 
-/** 更新图片逻辑：请求path并更新KV中的图片 **/
+/** 更新图片逻辑：get请求设置请求头['If-Modified-Since'] = KV中存储的lastModifiedTime值，远程图片服务器判断如果未修改会返回状态码304（无响应体），如果资源被修改会返回状态码200 & 图片数据，再将数据存储到KV中 **/
 async function updateImageHandler(path) {
-  const headRes = await requestPathImage(path, "head");
-  const lastModifiedTime = headRes.headers.get("Last-Modified");
   // 取KV中图片的修改时间
   const kvImageMetadata = await KV.get(`metadata_${path}`, { type: "json" });
   const kvImageLastModifiedTime = kvImageMetadata
-      ? kvImageMetadata.lastModifiedTime
-      : "";
+    ? kvImageMetadata.lastModifiedTime
+    : "";
 
-  if (kvImageLastModifiedTime === lastModifiedTime) {
-    return new Response("图片未修改", {
+  const res = await requestPathImage(path, {
+    "If-Modified-Since": kvImageLastModifiedTime,
+  });
+
+  if (res.status === 304) {
+    // 图片未修改
+    return res;
+  }
+
+  if (res.status === 200) {
+    // 图片被修改
+    await storeImageKVData(path, res);
+
+    return new Response("更新成功", {
       headers: {
-        created: false,
+        created: !kvImageLastModifiedTime,
       },
     });
   }
-  // 请求外部图片缓存
-  await storeImageKVData(path);
-
-  return new Response("更新成功", {
-    headers: {
-      created: !kvImageLastModifiedTime,
-    },
-  });
+  // 其他情况透传结果
+  return res;
 }
 
 /** 请求外部链接图片 **/
-async function requestPathImage(path, method = "get") {
+async function requestPathImage(path, headers = {}) {
   return await fetch(`http://${path}`, {
-    method,
+    method: "get",
+    headers,
   });
 }
 
-/** 请求外部链接图片，并将图片、图片修改时间存储到KV **/
-async function storeImageKVData(path) {
-  const res = await requestPathImage(path);
+/** 将图片、图片修改时间存储到KV **/
+async function storeImageKVData(path, res) {
   const lastModifiedTime = res.headers.get("Last-Modified");
   // 图片数据和最后修改时间字段存储到KV中（分两个key存储）
   const bodyClone = await res.clone().arrayBuffer();
   await KV.put(path, bodyClone);
   const metadata = { lastModifiedTime };
   await KV.put(`metadata_${path}`, JSON.stringify(metadata));
-
-  return res;
 }
