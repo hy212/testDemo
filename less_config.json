@@ -6,7 +6,8 @@
       "/functions/run": "functions/aiApi.js",
       "/functions/tme": "functions/temApi.js",
       "/functions/test": "functions/temApi.js",
-      "/image": "functions/image.js"
+      "/image": "functions/image.js",
+      "/testbody": "functions/testbody.js"
     }
   }
 }
