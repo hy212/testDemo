@@ -18,7 +18,8 @@ async function handleRequest(req) {
   return new Response("111", {
     status: 200,
     headers: {
-      "Server-Timing": 'fetch;desc="fetch请求耗时";dur=300, compute;dur=100',
+      "Server-Timing":
+        'fetch;desc="fetch请求耗时";dur=300, compute;dur=100,loadresource;dur=150',
     },
   });
 }
