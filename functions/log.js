@@ -24,34 +24,81 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/aegis-mp-sdk/lib/aegis.min.js
+// node_modules/aegis-web-sdk/lib/aegis.min.js
 var require_aegis_min = __commonJS({
-  "node_modules/aegis-mp-sdk/lib/aegis.min.js"(exports2, module2) {
-    !function(e, t) {
+  "node_modules/aegis-web-sdk/lib/aegis.min.js"(exports2, module2) {
+    ((e, t) => {
       "object" == typeof exports2 && "undefined" != typeof module2 ? module2.exports = t() : "function" == typeof define && define.amd ? define(t) : (e = "undefined" != typeof globalThis ? globalThis : e || self).Aegis = t();
-    }(exports2, function() {
-      "use strict";
-      var j = function(e2, t2) {
-        return (j = Object.setPrototypeOf || ({ __proto__: [] } instanceof Array ? function(e3, t3) {
+    })(exports2, function() {
+      var _, U;
+      function H(e2) {
+        this.name = "__st" + (1e9 * Math.random() >>> 0) + _ + "__", null != e2 && e2.forEach(this.add, this), _ += 1;
+      }
+      Array.prototype.find || Object.defineProperty(Array.prototype, "find", { configurable: true, writable: true, value: function(e2) {
+        if (null === this) throw new TypeError('"this" is null or not defined');
+        var t2 = Object(this), n2 = t2.length >>> 0;
+        if ("function" != typeof e2) throw new TypeError("predicate must be a function");
+        for (var r2 = arguments[1], i2 = 0; i2 < n2; ) {
+          var o2 = t2[i2];
+          if (e2.call(r2, o2, i2, t2)) return o2;
+          i2 += 1;
+        }
+      } }), window.WeakSet || (_ = Date.now() % 1e9, H.prototype.add = function(e2) {
+        var t2 = this.name;
+        return e2[t2] || Object.defineProperty(e2, t2, { value: true, writable: true }), this;
+      }, H.prototype.delete = function(e2) {
+        return !!e2[this.name] && !(e2[this.name] = void 0);
+      }, H.prototype.has = function(e2) {
+        return !!e2[this.name];
+      }, U = H, Object.defineProperty(window, "WeakSet", { value: function(e2) {
+        return new U(e2);
+      } })), Object.assign || Object.defineProperty(Object, "assign", { enumerable: false, configurable: true, writable: true, value: function(e2) {
+        if (null == e2) throw new TypeError("Cannot convert first argument to object");
+        for (var t2 = Object(e2), n2 = 1; n2 < arguments.length; n2++) if (null != (r2 = arguments[n2])) for (var r2 = Object(r2), i2 = Object.keys(Object(r2)), o2 = 0, a2 = i2.length; o2 < a2; o2++) {
+          var s2 = i2[o2], c2 = Object.getOwnPropertyDescriptor(r2, s2);
+          null != c2 && c2.enumerable && (t2[s2] = r2[s2]);
+        }
+        return t2;
+      } });
+      var D = function(e2, t2) {
+        return (D = Object.setPrototypeOf || ({ __proto__: [] } instanceof Array ? function(e3, t3) {
           e3.__proto__ = t3;
         } : function(e3, t3) {
           for (var n2 in t3) Object.prototype.hasOwnProperty.call(t3, n2) && (e3[n2] = t3[n2]);
         }))(e2, t2);
-      };
-      function e(e2, t2) {
-        function n2() {
-          this.constructor = e2;
-        }
-        j(e2, t2), e2.prototype = null === t2 ? Object.create(t2) : (n2.prototype = t2.prototype, new n2());
-      }
-      var p = function() {
-        return (p = Object.assign || function(e2) {
-          for (var t2, n2 = 1, r2 = arguments.length; n2 < r2; n2++) for (var o2 in t2 = arguments[n2]) Object.prototype.hasOwnProperty.call(t2, o2) && (e2[o2] = t2[o2]);
+      }, B = function() {
+        return (B = Object.assign || function(e2) {
+          for (var t2, n2 = 1, r2 = arguments.length; n2 < r2; n2++) for (var i2 in t2 = arguments[n2]) Object.prototype.hasOwnProperty.call(t2, i2) && (e2[i2] = t2[i2]);
           return e2;
         }).apply(this, arguments);
       };
-      function H(r2, o2) {
-        var i2, a2, s2, l2 = { label: 0, sent: function() {
+      function W(e2, a2, s2, c2) {
+        return new (s2 = s2 || Promise)(function(n2, t2) {
+          function r2(e3) {
+            try {
+              o2(c2.next(e3));
+            } catch (e4) {
+              t2(e4);
+            }
+          }
+          function i2(e3) {
+            try {
+              o2(c2.throw(e3));
+            } catch (e4) {
+              t2(e4);
+            }
+          }
+          function o2(e3) {
+            var t3;
+            e3.done ? n2(e3.value) : ((t3 = e3.value) instanceof s2 ? t3 : new s2(function(e4) {
+              e4(t3);
+            })).then(r2, i2);
+          }
+          o2((c2 = c2.apply(e2, a2 || [])).next());
+        });
+      }
+      function G(r2, i2) {
+        var o2, a2, s2, c2 = { label: 0, sent: function() {
           if (1 & s2[0]) throw s2[1];
           return s2[1];
         }, trys: [], ops: [] }, e2 = { next: t2(0), throw: t2(1), return: t2(2) };
@@ -61,70 +108,64 @@ var require_aegis_min = __commonJS({
         function t2(n2) {
           return function(e3) {
             var t3 = [n2, e3];
-            if (i2) throw new TypeError("Generator is already executing.");
-            for (; l2; ) try {
-              if (i2 = 1, a2 && (s2 = 2 & t3[0] ? a2.return : t3[0] ? a2.throw || ((s2 = a2.return) && s2.call(a2), 0) : a2.next) && !(s2 = s2.call(a2, t3[1])).done) return s2;
+            if (o2) throw new TypeError("Generator is already executing.");
+            for (; c2; ) try {
+              if (o2 = 1, a2 && (s2 = 2 & t3[0] ? a2.return : t3[0] ? a2.throw || ((s2 = a2.return) && s2.call(a2), 0) : a2.next) && !(s2 = s2.call(a2, t3[1])).done) return s2;
               switch (a2 = 0, (t3 = s2 ? [2 & t3[0], s2.value] : t3)[0]) {
                 case 0:
                 case 1:
                   s2 = t3;
                   break;
                 case 4:
-                  return l2.label++, { value: t3[1], done: false };
+                  return c2.label++, { value: t3[1], done: false };
                 case 5:
-                  l2.label++, a2 = t3[1], t3 = [0];
+                  c2.label++, a2 = t3[1], t3 = [0];
                   continue;
                 case 7:
-                  t3 = l2.ops.pop(), l2.trys.pop();
+                  t3 = c2.ops.pop(), c2.trys.pop();
                   continue;
                 default:
-                  if (!((s2 = 0 < (s2 = l2.trys).length && s2[s2.length - 1]) || 6 !== t3[0] && 2 !== t3[0])) {
-                    l2 = 0;
+                  if (!((s2 = 0 < (s2 = c2.trys).length && s2[s2.length - 1]) || 6 !== t3[0] && 2 !== t3[0])) {
+                    c2 = 0;
                     continue;
                   }
-                  if (3 === t3[0] && (!s2 || t3[1] > s2[0] && t3[1] < s2[3])) l2.label = t3[1];
-                  else if (6 === t3[0] && l2.label < s2[1]) l2.label = s2[1], s2 = t3;
+                  if (3 === t3[0] && (!s2 || t3[1] > s2[0] && t3[1] < s2[3])) c2.label = t3[1];
+                  else if (6 === t3[0] && c2.label < s2[1]) c2.label = s2[1], s2 = t3;
                   else {
-                    if (!(s2 && l2.label < s2[2])) {
-                      s2[2] && l2.ops.pop(), l2.trys.pop();
+                    if (!(s2 && c2.label < s2[2])) {
+                      s2[2] && c2.ops.pop(), c2.trys.pop();
                       continue;
                     }
-                    l2.label = s2[2], l2.ops.push(t3);
+                    c2.label = s2[2], c2.ops.push(t3);
                   }
               }
-              t3 = o2.call(r2, l2);
+              t3 = i2.call(r2, c2);
             } catch (e4) {
               t3 = [6, e4], a2 = 0;
             } finally {
-              i2 = s2 = 0;
+              o2 = s2 = 0;
             }
             if (5 & t3[0]) throw t3[1];
             return { value: t3[0] ? t3[1] : void 0, done: true };
           };
         }
       }
-      function _() {
+      function u() {
         for (var e2 = 0, t2 = 0, n2 = arguments.length; t2 < n2; t2++) e2 += arguments[t2].length;
-        for (var r2 = Array(e2), o2 = 0, t2 = 0; t2 < n2; t2++) for (var i2 = arguments[t2], a2 = 0, s2 = i2.length; a2 < s2; a2++, o2++) r2[o2] = i2[a2];
+        for (var r2 = Array(e2), i2 = 0, t2 = 0; t2 < n2; t2++) for (var o2 = arguments[t2], a2 = 0, s2 = o2.length; a2 < s2; a2++, i2++) r2[i2] = o2[a2];
         return r2;
       }
-      Object.assign || Object.defineProperty(Object, "assign", { enumerable: false, configurable: true, writable: true, value: function(e2) {
-        if (null == e2) throw new TypeError("Cannot convert first argument to object");
-        for (var t2 = Object(e2), n2 = 1; n2 < arguments.length; n2++) if (null != (r2 = arguments[n2])) for (var r2 = Object(r2), o2 = Object.keys(Object(r2)), i2 = 0, a2 = o2.length; i2 < a2; i2++) {
-          var s2 = o2[i2], l2 = Object.getOwnPropertyDescriptor(r2, s2);
-          null != l2 && l2.enumerable && (t2[s2] = r2[s2]);
-        }
-        return t2;
-      } });
-      var M = /_?t(\d)?(imestamp)?=\d+&?/g, D = ["aegis.qq.com", "tamaegis.com", "/aegis-sdk", "rumt-", "/flog.core.min.js", "pingfore.qq.com", "pingfore.tencent.com", "zhiyan.tencent-cloud.net", "h.trace.qq.com", "btrace.qq.com", "beacon.qq.com", "dmplog.qq.com", "qq.com/report", "svibeacon.onezapp.com", "cube.weixinbridge.com", "doubleclick.net", "pcmgrmonitor.3g.qq.com", "tdm.qq.com", "report.qqweb.qq.com", "tpstelemetry.tencent.com", "insight.cloud.tencent.com", "facebook.com", "facebook.net", "google", "yahoo.com", "twitter.com", "ga-audiences", "report.idqqimg.com", "arms-retcode.aliyuncs.com", "px.effirst.com", "sentry", "baidu.com", "hot-update.json", "u.c.b.r.o.w.s.e.r", "report.url.cn", "sockjs-node", "m3u8"], F = ["ext1", "ext2", "ext3", "level", "trace", "tag", "seq", "code"], B = (r.prototype.indexOf = function(e2, t2) {
+      var F, m, l, M = /_?t(\d)?(imestamp)?=\d+&?/g, j = ["aegis.qq.com", "tamaegis.com", "/aegis-sdk", "rumt-", "/flog.core.min.js", "pingfore.qq.com", "pingfore.tencent.com", "zhiyan.tencent-cloud.net", "h.trace.qq.com", "btrace.qq.com", "beacon.qq.com", "dmplog.qq.com", "qq.com/report", "svibeacon.onezapp.com", "cube.weixinbridge.com", "doubleclick.net", "pcmgrmonitor.3g.qq.com", "tdm.qq.com", "report.qqweb.qq.com", "tpstelemetry.tencent.com", "galileotelemetry.tencent.com", "insight.cloud.tencent.com", "facebook.com", "facebook.net", "google", "yahoo.com", "twitter.com", "ga-audiences", "report.idqqimg.com", "arms-retcode.aliyuncs.com", "px.effirst.com", "sentry", "baidu.com", "hot-update.json", "u.c.b.r.o.w.s.e.r", "report.url.cn", "sockjs-node", "m3u8", "flv"], q = ["ResizeObserver loop limit exceeded", "ResizeObserver loop completed", "Failed to execute 'transaction'", "window.indexedDB.deleteDatabase is not a function"], X = ["ext1", "ext2", "ext3", "level", "trace", "tag", "seq", "code"], V = ["static", "fetch"], E = "unknown";
+      (r = F = F || {}).INFO_ALL = "-1", r.API_RESPONSE = "1", r.INFO = "2", r.ERROR = "4", r.PROMISE_ERROR = "8", r.AJAX_ERROR = "16", r.SCRIPT_ERROR = "32", r.IMAGE_ERROR = "64", r.CSS_ERROR = "128", r.CONSOLE_ERROR = "256", r.MEDIA_ERROR = "512", r.RET_ERROR = "1024", r.PAGE_LOAD = "1025", r.SLOW_PAGE_LOAD = "1026", r.SLOW_NET_REQUEST = "1027", r.ASSERT_REQUEST = "1028", r.SLOW_ASSET_REQUEST = "1029", r.CLICK_EVENT = "1030", r.true = "1031", r.BLANK_SCREEN = "1032", r.REPORT = "2048", r.PV = "4096", r.EVENT = "8192", r.SPEED_EVENT = "8193", r.PAGE_NOT_FOUND_ERROR = "16384", r.WEBSOCKET_ERROR = "32768", r.BRIDGE_ERROR = "65536", r.LAZY_LOAD_ERROR = "131072", (r = m = m || {}).LOG = "log", r.SPEED = "speed", r.PERFORMANCE = "performance", r.OFFLINE = "offline", r.WHITE_LIST = "whiteList", r.VITALS = "vitals", r.PV = "pv", r.CUSTOM_PV = "customPV", r.EVENT = "event", r.CUSTOM = "custom", r.SDK_ERROR = "sdkError", r.SET_DATA = "setData", r.LOAD_PACKAGE = "loadPackage", (r = l = l || {}).production = "production", r.development = "development", r.gray = "gray", r.pre = "pre", r.daily = "daily", r.local = "local", r.test = "test", r.others = "others";
+      e.prototype.indexOf = function(e2, t2) {
         for (var n2 = 0; n2 < e2.length; n2++) if (e2[n2].callback === t2) return n2;
         return -1;
-      }, r.prototype.on = function(e2, t2, n2) {
+      }, e.prototype.on = function(e2, t2, n2) {
         var r2;
         if (void 0 === n2 && (n2 = 0), this) return (r2 = this.eventsList[e2]) || (this.eventsList[e2] = [], r2 = this.eventsList[e2]), -1 === this.indexOf(r2, t2) && r2.push({ name: e2, type: n2 || 0, callback: t2 }), this;
-      }, r.prototype.one = function(e2, t2) {
+      }, e.prototype.one = function(e2, t2) {
         this.on(e2, t2, 1);
-      }, r.prototype.remove = function(e2, t2) {
+      }, e.prototype.remove = function(e2, t2) {
         if (this) {
           var n2 = this.eventsList[e2];
           if (n2) {
@@ -136,19 +177,31 @@ var require_aegis_min = __commonJS({
           }
           return null;
         }
-      }, r.prototype.clear = function() {
+      }, e.prototype.clear = function() {
         this.eventsList = {};
-      }, r), t = { generateTraceId: W(16), generateSpanId: W(8) }, n = Array(32);
-      function r() {
+      };
+      var n, K = e, $ = function(e2) {
+        if (!e2 || 0 === e2.length) return "{}";
+        e2 = Array.isArray(e2) ? e2 : [e2];
+        var t2 = Array.from(new Set(e2.flatMap(function(e3) {
+          return Object.keys(e3);
+        }))), n2 = {};
+        return t2.forEach(function(t3) {
+          n2[t3] = e2.map(function(e3) {
+            return e3[t3] || "";
+          });
+        }), n2.count = e2.length, ue(n2);
+      };
+      function e() {
         var a2 = this;
         this.emit = function(e2, t2) {
           if (a2) {
             var n2;
-            if (null != (r2 = a2.eventsList[e2]) && r2.length) for (var r2 = r2.slice(), o2 = 0; o2 < r2.length; o2++) {
-              n2 = r2[o2];
+            if (null != (r2 = a2.eventsList[e2]) && r2.length) for (var r2 = r2.slice(), i2 = 0; i2 < r2.length; i2++) {
+              n2 = r2[i2];
               try {
-                var i2 = n2.callback.apply(a2, [t2]);
-                if (1 === n2.type && a2.remove(e2, n2.callback), false === i2) break;
+                var o2 = n2.callback.apply(a2, [t2]);
+                if (1 === n2.type && a2.remove(e2, n2.callback), false === o2) break;
               } catch (e3) {
                 throw e3;
               }
@@ -157,48 +210,248 @@ var require_aegis_min = __commonJS({
           }
         }, this.eventsList = {};
       }
-      function W(t2) {
-        return function() {
-          for (var e2 = 0; e2 < 2 * t2; e2++) n[e2] = Math.floor(16 * Math.random()) + 48, 58 <= n[e2] && (n[e2] += 39);
-          return String.fromCharCode.apply(null, n.slice(0, 2 * t2));
+      (r = n = n || {})[r.number = -1] = "number", r.string = "";
+      function J(e2, t2) {
+        return "number" == typeof e2 || "string" == typeof e2 ? e2 : t2 ? n.string : n.number;
+      }
+      function R(e2, t2) {
+        return "string" == typeof e2 ? e2.split("?")[t2 ? 1 : 0] || "" : e2;
+      }
+      function z(e2, t2) {
+        return void 0 === t2 && (t2 = 2048), String(e2).replace(M, "").slice(0, t2);
+      }
+      function Q(e2) {
+        return "string" == typeof e2 && /^\//.test(e2) ? "https:" === (null == location ? void 0 : location.protocol) : /^https/.test(e2);
+      }
+      function Y(e2, t2, n2) {
+        var r2, i2, o2;
+        try {
+          if ("function" == typeof (null == t2 ? void 0 : t2.retCodeHandler)) return { code: void 0 === (o2 = (i2 = t2.retCodeHandler(e2, null == n2 ? void 0 : n2.url, null == n2 ? void 0 : n2.ctx, null == n2 ? void 0 : n2.payload) || {}).code) ? E : o2, isErr: i2.isErr };
+          if (!(e2 = "string" == typeof e2 ? JSON.parse(e2) : e2)) return { code: E, isErr: false };
+          "function" == typeof (null == (r2 = null == t2 ? void 0 : t2.ret) ? void 0 : r2.join) && (se = [].concat(t2.ret.map(function(e3) {
+            return e3.toLowerCase();
+          })));
+          var a2 = Object.getOwnPropertyNames(e2).filter(function(e3) {
+            return -1 !== se.indexOf(e3.toLowerCase());
+          });
+          return a2.length ? { code: "" + (o2 = "\u672A\u77E5" !== (o2 = e2[a2[0]]) && "" !== o2 ? o2 : E), isErr: 0 !== o2 && "0" !== o2 && o2 !== E } : { code: E, isErr: false };
+        } catch (e3) {
+          return { code: E, isErr: false };
+        }
+      }
+      function Z(e2, t2, n2) {
+        try {
+          var r2 = "function" == typeof t2 ? t2(e2, null == n2 ? void 0 : n2.url, null == n2 ? void 0 : n2.ctx) || "" : e2;
+          return le(r2).slice(0, 10240);
+        } catch (e3) {
+          return "";
+        }
+      }
+      function T(t2, e2) {
+        return "string" != typeof t2 || !t2 || e2 && -1 < t2.indexOf(e2) || pe.test(t2) || j.some(function(e3) {
+          return -1 < t2.indexOf(e3);
+        });
+      }
+      function ee(n2, r2) {
+        var i2, o2 = [], a2 = n2.config;
+        return n2.lifeCycle.on("destroy", function() {
+          o2.length = 0;
+        }), function(e2, t2) {
+          Array.isArray(e2) ? o2 = o2.concat(e2) : o2.push(e2), r2 && o2.length >= r2 || n2.sendNow && 0 < o2.length ? (o2 = he(o2), t2(o2.splice(0, o2.length)), i2 && clearTimeout(i2)) : (i2 && clearTimeout(i2), i2 = setTimeout(function() {
+            i2 = null, 0 < (o2 = he(o2)).length && t2(o2.splice(0, o2.length));
+          }, a2.delay));
         };
       }
-      function V() {
+      function te(e2, t2) {
+        return Array.isArray(e2) ? t2(e2.map(function(e3) {
+          return t3 = B(B({}, e3), { msg: "string" == typeof e3.msg ? e3.msg : [].concat(e3.msg).map(v).join(" ") }), X.forEach(function(e4) {
+            t3[e4] || delete t3[e4];
+          }), t3;
+          var t3;
+        })) : t2([B(B({}, e2), { msg: "string" == typeof e2.msg ? e2.msg : v(e2.msg) })]);
+      }
+      function ne(c2, u2) {
+        return function(e2, t2) {
+          var n2, r2, i2, o2 = Array.isArray(e2), a2 = o2 ? e2 : [e2], s2 = (c2.lifeCycle.emit("beforeRequest", e2), c2.config.beforeRequest);
+          (a2 = "function" == typeof s2 ? a2.map(function(t3) {
+            try {
+              var e3 = s2({ logs: t3, logType: u2 });
+              return (null == e3 ? void 0 : e3.logType) === u2 && null != e3 && e3.logs ? e3.logs : false !== e3 && t3;
+            } catch (e4) {
+              return t3;
+            }
+          }).filter(function(e3) {
+            return false !== e3;
+          }) : a2).length && (n2 = a2, e2 = X, !Array.isArray(n2) || n2.length <= 1 || (r2 = [], i2 = [], !(i2 = "string" == typeof e2 ? [e2] : e2)) || i2.length <= 0 || (i2.forEach(function(t3) {
+            n2.forEach(function(e3) {
+              null != e3 && e3[t3] && r2.push(t3);
+            });
+          }), 0 < r2.length && (n2 = n2.map(function(e3) {
+            var t3 = {};
+            return r2.forEach(function(e4) {
+              t3[e4] = "";
+            }), B(B({}, t3), e3);
+          }))), a2 = n2, t2(o2 ? a2 : a2[0]));
+        };
+      }
+      function re(i2) {
+        return function(e2, t2) {
+          i2.lifeCycle.emit("modifyRequest", e2);
+          var n2 = i2.config.modifyRequest;
+          if ("function" == typeof n2) try {
+            var r2 = n2(e2);
+            "object" == typeof r2 && "url" in r2 && (e2 = r2);
+          } catch (e3) {
+            console.error(e3);
+          }
+          t2(e2);
+        };
+      }
+      function ie(r2) {
+        return function(e2, t2) {
+          null != (n2 = r2.lifeCycle) && n2.emit("afterRequest", e2);
+          var n2 = (r2.config || {}).afterRequest;
+          "function" == typeof n2 && false === n2(e2) || t2(e2);
+        };
+      }
+      var oe = ["application/xhtml+xml", "application/xml", "application/pdf", "application/pkcs12", "application/javascript", "application/x-javascript", "application/ecmascript", "application/vnd.mspowerpoint", "application/vnd.apple.mpegurl", "application/ogg", "text/css", "text/javascript", "image", "audio", "video", "video/mp2t"], ae = /\.(json|js|css|jpg|jpeg|png|svg|apng|webp|gif|bmp|mp4|mp3|ts|mpeg|wav|webm|ogg|flv|m3u8|ttf|woff2|otf|eot|woff|html|htm|shtml|shtm|)$/i, se = ["ret", "retcode", "code", "errcode"], ce = function() {
+        var n2 = /* @__PURE__ */ new WeakSet();
+        return function(e2, t2) {
+          if (t2 instanceof Error) return "Error.message: " + t2.message + " \n  Error.stack: " + t2.stack;
+          if ("object" == typeof t2 && null !== t2) {
+            if (n2.has(t2)) return "[Circular " + (e2 || "root") + "]";
+            n2.add(t2);
+          }
+          return t2;
+        };
+      }, v = function(e2) {
+        if ("string" == typeof e2) return e2;
+        try {
+          return e2 instanceof Error ? (JSON.stringify(e2, ce(), 4) || "undefined").replace(/"/gim, "") : JSON.stringify(e2, ce(), 4) || "undefined";
+        } catch (e3) {
+          return "error happen when aegis stringify: \n " + e3.message + " \n " + e3.stack;
+        }
+      }, ue = function(e2) {
+        if ("string" == typeof e2) return e2;
+        try {
+          return JSON.stringify(e2, ce()) || "undefined";
+        } catch (e3) {
+          return "error happen when aegis stringify: \n " + e3.message + " \n " + e3.stack;
+        }
+      }, le = function(n2, r2) {
+        void 0 === r2 && (r2 = 3);
+        var i2, o2, a2, s2 = "";
+        return Array.isArray(n2) ? (s2 += "[", i2 = n2.length, n2.forEach(function(e2, t2) {
+          s2 = (s2 += "object" == typeof e2 && 1 < r2 ? le(e2, r2 - 1) : de(e2)) + (t2 === i2 - 1 ? "" : ",");
+        }), s2 += "]") : n2 instanceof Object ? (s2 = "{", o2 = Object.keys(n2), a2 = o2.length, o2.forEach(function(e2, t2) {
+          "object" == typeof n2[e2] && 1 < r2 ? s2 += '"' + e2 + '":' + le(n2[e2], r2 - 1) : s2 += fe(e2, n2[e2]), s2 += t2 === a2 - 1 || t2 < a2 - 1 && void 0 === n2[o2[t2 + 1]] ? "" : ",";
+        }), s2 += "}") : s2 += n2, s2;
+      }, fe = function(e2, t2) {
+        var n2 = typeof t2, r2 = "";
+        return "string" == n2 || "object" == n2 ? r2 += '"' + e2 + '":"' + t2 + '"' : "function" == typeof t2 ? r2 += '"' + e2 + '":"function ' + t2.name + '"' : "symbol" == typeof t2 ? r2 += '"' + e2 + '":"symbol"' : "number" != typeof t2 && "boolean" != n2 || (r2 += '"' + e2 + '": ' + t2), r2;
+      }, de = function(e2) {
+        var t2 = typeof e2;
+        return "" + ("undefined" == t2 || "symbol" == t2 || "function" == t2 ? "null" : "string" == t2 || "object" == t2 ? '"' + e2 + '"' : e2);
+      }, pe = /data:(image|text|application|font)\/.*;base64/, he = function(e2) {
+        return e2.filter(function(n2, r2) {
+          return "static" !== n2.type || !e2.find(function(e3, t2) {
+            return n2.url === e3.url && 200 === n2.status && r2 < t2;
+          });
+        });
+      }, ge = function(e2) {
+        e2.level === F.INFO_ALL && (e2.level = F.INFO);
+      }, y = {}, w = {}, me = function(e2) {
+        return y[e2] || (y[e2] = setTimeout(function() {
+          w[e2] = {}, y[e2] = null;
+        }, 6e4)), y[e2];
+      }, ve = function(e2) {
+        return (Array.isArray(e2) ? e2 : [e2]).map(function(n2) {
+          return Object.getOwnPropertyNames(n2).reduce(function(e3, t2) {
+            return "ctx" !== t2 && (e3[t2] = n2[t2]), e3;
+          }, { level: F.INFO, msg: "" });
+        });
+      }, ye = function(r2) {
+        return function(e2) {
+          return r2.sendPipeline([function(e3, n2) {
+            return n2({ url: r2.config.url || "", data: $(ve(e3)), method: "post", contentType: "application/json", type: m.LOG, log: e3, requestConfig: { timeout: 5e3 }, success: function() {
+              var t2 = r2.config.onReport;
+              "function" == typeof t2 && e3.forEach(function(e4) {
+                t2(e4);
+              }), "function" == typeof n2 && n2([]);
+            } });
+          }], m.LOG)(e2);
+        };
+      }, we = { generateTraceId: Ee(16), generateSpanId: Ee(8) }, be = Array(32);
+      function Ee(t2) {
+        return function() {
+          for (var e2 = 0; e2 < 2 * t2; e2++) be[e2] = Math.floor(16 * Math.random()) + 48, 58 <= be[e2] && (be[e2] += 39);
+          return String.fromCharCode.apply(null, be.slice(0, 2 * t2));
+        };
+      }
+      function Re() {
         return ("10000000100040008000" + 1e11).replace(/[018]/g, function(e2) {
           return (e2 ^ (16 * Math.random() & 15) >> e2 / 4).toString(16);
         });
       }
-      function G() {
+      function Te() {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(e2) {
           var t2 = 16 * Math.random() | 0;
           return ("x" === e2 ? t2 : 3 & t2 | 8).toString(16);
         });
       }
-      function J(e2) {
-        for (var t2, n2, r2, o2 = "", i2 = 0, a2 = (e2 = String(e2)).length % 3; i2 < e2.length; ) {
-          if (255 < (t2 = e2.charCodeAt(i2++)) || 255 < (n2 = e2.charCodeAt(i2++)) || 255 < (r2 = e2.charCodeAt(i2++))) throw new TypeError("Failed to execute 'btoa': The string to be encoded contains characters outside of the Latin1 range.");
-          o2 += s.charAt((t2 = t2 << 16 | n2 << 8 | r2) >> 18 & 63) + s.charAt(t2 >> 12 & 63) + s.charAt(t2 >> 6 & 63) + s.charAt(63 & t2);
+      function Se(e2) {
+        for (var t2, n2, r2, i2 = "", o2 = 0, a2 = (e2 = String(e2)).length % 3; o2 < e2.length; ) {
+          if (255 < (t2 = e2.charCodeAt(o2++)) || 255 < (n2 = e2.charCodeAt(o2++)) || 255 < (r2 = e2.charCodeAt(o2++))) throw new TypeError("Failed to execute 'btoa': The string to be encoded contains characters outside of the Latin1 range.");
+          i2 += s.charAt((t2 = t2 << 16 | n2 << 8 | r2) >> 18 & 63) + s.charAt(t2 >> 12 & 63) + s.charAt(t2 >> 6 & 63) + s.charAt(63 & t2);
         }
-        return a2 ? o2.slice(0, a2 - 3) + "===".substring(a2) : o2;
+        return a2 ? i2.slice(0, a2 - 3) + "===".substring(a2) : i2;
       }
-      function z(e2) {
-        if (e2 = String(e2).replace(/[\t\n\f\r ]+/g, ""), !$.test(e2)) throw new TypeError("Failed to execute 'atob': The string to be decoded is not correctly encoded.");
+      function Oe(e2) {
+        if (e2 = String(e2).replace(/[\t\n\f\r ]+/g, ""), !ke.test(e2)) throw new TypeError("Failed to execute 'atob': The string to be decoded is not correctly encoded.");
         var t2;
         e2 += "==".slice(2 - (3 & e2.length));
-        for (var n2, r2, o2 = "", i2 = 0; i2 < e2.length; ) t2 = s.indexOf(e2.charAt(i2++)) << 18 | s.indexOf(e2.charAt(i2++)) << 12 | (n2 = s.indexOf(e2.charAt(i2++))) << 6 | (r2 = s.indexOf(e2.charAt(i2++))), o2 += 64 === n2 ? String.fromCharCode(t2 >> 16 & 255) : 64 === r2 ? String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255) : String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255, 255 & t2);
-        return o2;
+        for (var n2, r2, i2 = "", o2 = 0; o2 < e2.length; ) t2 = s.indexOf(e2.charAt(o2++)) << 18 | s.indexOf(e2.charAt(o2++)) << 12 | (n2 = s.indexOf(e2.charAt(o2++))) << 6 | (r2 = s.indexOf(e2.charAt(o2++))), i2 += 64 === n2 ? String.fromCharCode(t2 >> 16 & 255) : 64 === r2 ? String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255) : String.fromCharCode(t2 >> 16 & 255, t2 >> 8 & 255, 255 & t2);
+        return i2;
       }
-      function K(e2) {
+      function xe(e2) {
         var t2, n2 = "";
-        return n2 = "object" == typeof e2 && (t2 = (e2 = function(e3, t3) {
+        return n2 = "object" == typeof e2 && (t2 = (e2 = ((e3, t3) => {
           for (var n3 = 0; n3 < t3.length; n3++) {
-            var r2 = t3[n3], o2 = e3[r2] || "function" == typeof e3.get && e3.get(r2);
-            if (o2) return [r2, o2];
+            var r2 = t3[n3], i2 = e3[r2] || "function" == typeof e3.get && e3.get(r2);
+            if (i2) return [r2, i2];
           }
           return ["", ""];
-        }(e2, Object.keys(Y)))[0], e2 = e2[1], t2) ? Y[t2](e2) : n2;
+        })(e2, Object.keys(Ae)))[0]) ? Ae[t2](e2[1]) : n2;
       }
-      var s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", $ = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/, Z = (o.prototype.generate = function(e2, t2, n2) {
+      function b(n2) {
+        if (n2 && n2.reduce && n2.length) return 1 === n2.length ? function(e2, t2) {
+          n2[0](e2, t2 || Ie);
+        } : n2.reduce(function(n3, r2) {
+          return function(e2, t2) {
+            return void 0 === t2 && (t2 = Ie), n3(e2, function(e3) {
+              return null == r2 ? void 0 : r2(e3, t2);
+            });
+          };
+        });
+        throw new TypeError("createPipeline need at least one function param");
+      }
+      function Le(t2, n2) {
+        Object.getOwnPropertyNames(t2).forEach(function(e2) {
+          "function" == typeof t2[e2] && "constructor" !== e2 && (n2 ? n2[e2] = "sendPipeline" === e2 ? function() {
+            return function() {
+            };
+          } : function() {
+          } : t2[e2] = function() {
+          });
+        });
+      }
+      function Pe() {
+        return void 0 !== window.performance && "function" == typeof performance.getEntriesByType && "function" == typeof performance.now;
+      }
+      function t(e2) {
+        return -1 !== De.indexOf(e2);
+      }
+      var s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", ke = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/, Ce = (c.prototype.generate = function(e2, t2, n2) {
         if (void 0 === t2 && (t2 = {}), this.url = e2, !this.isUrlIgnored() && this.isUrlInTraceUrls() && this.traceType) {
           switch (this.traceType) {
             case "traceparent":
@@ -218,25 +471,25 @@ var require_aegis_min = __commonJS({
           }
           return t2[this.traceType] && (this.traceId = t2[this.traceType]), { name: this.traceType, value: this.traceId };
         }
-      }, o.prototype.createTraceparent = function() {
-        var e2 = t.generateSpanId();
-        return "00-" + t.generateTraceId() + "-" + e2 + "-0" + Number(1).toString(16);
-      }, o.prototype.createB3 = function() {
-        var e2 = t.generateSpanId();
-        return t.generateTraceId() + "-" + e2 + "-1";
-      }, o.prototype.createSw8 = function(e2) {
-        var t2 = "function" == typeof btoa ? btoa : J, e2 = e2 || {}, n2 = e2.host, n2 = void 0 === n2 ? "" : n2, e2 = e2.pathname, e2 = void 0 === e2 ? "" : e2, r2 = G(), o2 = G();
-        return "1-" + String(t2(o2)) + "-" + String(t2(r2)) + "-1-" + String(t2("aegis")) + "-" + String(t2("1.39.1")) + "-" + String(t2(encodeURI(e2))) + "-" + String(t2(n2));
-      }, o.prototype.createSentryTrace = function() {
-        var e2 = V().substring(16);
-        return V() + "-" + e2 + "-1";
-      }, o.prototype.isUrlIgnored = function() {
+      }, c.prototype.createTraceparent = function() {
+        var e2 = we.generateSpanId();
+        return "00-" + we.generateTraceId() + "-" + e2 + "-0" + this.traceFlag.toString(16);
+      }, c.prototype.createB3 = function() {
+        var e2 = we.generateSpanId();
+        return we.generateTraceId() + "-" + e2 + "-" + this.traceFlag;
+      }, c.prototype.createSw8 = function(e2) {
+        var t2 = "function" == typeof btoa ? btoa : Se, e2 = e2 || {}, n2 = e2.host, n2 = void 0 === n2 ? "" : n2, e2 = e2.pathname, e2 = void 0 === e2 ? "" : e2, r2 = Te(), i2 = Te();
+        return "1-" + String(t2(i2)) + "-" + String(t2(r2)) + "-1-" + String(t2("aegis")) + "-" + String(t2("1.41.2")) + "-" + String(t2(encodeURI(e2))) + "-" + String(t2(n2));
+      }, c.prototype.createSentryTrace = function() {
+        var e2 = Re().substring(16);
+        return Re() + "-" + e2 + "-" + this.traceFlag;
+      }, c.prototype.isUrlIgnored = function() {
         if (Array.isArray(this.ignoreUrls) && 0 !== this.ignoreUrls.length) for (var e2 = 0, t2 = this.ignoreUrls; e2 < t2.length; e2++) {
           var n2 = t2[e2];
           if (this.urlMatches(this.url, n2)) return true;
         }
         return false;
-      }, o.prototype.isUrlInTraceUrls = function() {
+      }, c.prototype.isUrlInTraceUrls = function() {
         if (!this.urls) return true;
         if (Array.isArray(this.urls)) {
           if (0 === this.urls.length) return false;
@@ -246,10 +499,10 @@ var require_aegis_min = __commonJS({
           }
         }
         return false;
-      }, o.prototype.urlMatches = function(e2, t2) {
+      }, c.prototype.urlMatches = function(e2, t2) {
         return "string" == typeof t2 ? e2 === t2 : !!e2.match(t2);
-      }, o), Y = { sw8: function(e2) {
-        var t2 = "function" == typeof atob ? atob : z, e2 = e2.split("-")[1];
+      }, c), Ae = { sw8: function(e2) {
+        var t2 = "function" == typeof atob ? atob : Oe, e2 = e2.split("-")[1];
         return e2 ? t2(e2) : "";
       }, traceparent: function(e2) {
         return e2.split("-")[1];
@@ -257,276 +510,26 @@ var require_aegis_min = __commonJS({
         return e2.split("-")[0];
       }, "sentry-trace": function(e2) {
         return e2.split("-")[0];
-      } }, Q = function(e2) {
-        if (!e2 || 0 === e2.length) return "{}";
-        e2 = Array.isArray(e2) ? e2 : [e2];
-        var t2 = Object.keys(e2[0]), n2 = {}, r2 = (t2.forEach(function(t3) {
-          n2[t3] = e2.map(function(e3) {
-            return e3[t3];
-          });
-        }), n2.count = e2.length, n2);
-        if ("string" == typeof r2) return r2;
-        try {
-          return JSON.stringify(r2, ve()) || "undefined";
-        } catch (r3) {
-          return "error happen when aegis stringify: \n " + r3.message + " \n " + r3.stack;
-        }
-      };
-      function o(e2, t2, n2) {
-        void 0 === n2 && (n2 = null), this.traceType = e2, this.ignoreUrls = t2, this.urls = n2;
-      }
-      function X(e2, t2) {
-        return "string" == typeof e2 ? e2.split("?")[t2 ? 1 : 0] || "" : e2;
-      }
-      function ee(e2) {
-        return "string" == typeof e2 && /^\//.test(e2) ? "https:" === (null === location || void 0 === location ? void 0 : location.protocol) : /^https/.test(e2);
-      }
-      function te(e2, t2, n2) {
-        var r2, o2;
-        try {
-          if ("function" == typeof (null == t2 ? void 0 : t2.retCodeHandler)) return { code: void 0 === (i2 = (o2 = t2.retCodeHandler(e2, null == n2 ? void 0 : n2.url, null == n2 ? void 0 : n2.ctx, null == n2 ? void 0 : n2.payload) || {}).code) ? "unknown" : i2, isErr: o2.isErr };
-          if (!(e2 = "string" == typeof e2 ? JSON.parse(e2) : e2)) return { code: "unknown", isErr: false };
-          "function" == typeof (null == (r2 = null == t2 ? void 0 : t2.ret) ? void 0 : r2.join) && (ye = [].concat(t2.ret.map(function(e3) {
-            return e3.toLowerCase();
-          })));
-          var i2, a2 = Object.getOwnPropertyNames(e2).filter(function(e3) {
-            return -1 !== ye.indexOf(e3.toLowerCase());
-          });
-          return a2.length ? { code: "" + (i2 = "\u672A\u77E5" !== (i2 = e2[a2[0]]) && "" !== i2 ? i2 : "unknown"), isErr: 0 !== i2 && "0" !== i2 && "unknown" !== i2 } : { code: "unknown", isErr: false };
-        } catch (e3) {
-          return { code: "unknown", isErr: false };
-        }
-      }
-      function d(e2, t2, n2) {
-        try {
-          var r2 = "function" == typeof t2 ? t2(e2, null == n2 ? void 0 : n2.url) || "" : e2;
-          return be(r2).slice(0, 102400);
-        } catch (e3) {
-          return "";
-        }
-      }
-      function h(t2, e2) {
-        return "string" != typeof t2 || !t2 || e2 && -1 < t2.indexOf(e2) || Re.test(t2) || D.some(function(e3) {
-          return -1 < t2.indexOf(e3);
-        });
-      }
-      function m(n2, r2) {
-        var o2, i2 = [], a2 = n2.config;
-        return n2.lifeCycle.on("destroy", function() {
-          i2.length = 0;
-        }), function(e2, t2) {
-          Array.isArray(e2) ? i2 = i2.concat(e2) : i2.push(e2), r2 && i2.length >= r2 || n2.sendNow && 0 < i2.length ? (i2 = we(i2), t2(i2.splice(0, i2.length)), o2 && clearTimeout(o2)) : (o2 && clearTimeout(o2), o2 = setTimeout(function() {
-            o2 = null, 0 < (i2 = we(i2)).length && t2(i2.splice(0, i2.length));
-          }, a2.delay));
-        };
-      }
-      function ne(e2, t2) {
-        return Array.isArray(e2) ? t2(e2.map(function(e3) {
-          return t3 = p(p({}, e3), { msg: "string" == typeof e3.msg ? e3.msg : [].concat(e3.msg).map(E).join(" ") }), F.forEach(function(e4) {
-            t3[e4] || delete t3[e4];
-          }), t3;
-          var t3;
-        })) : t2([p(p({}, e2), { msg: "string" == typeof e2.msg ? e2.msg : E(e2.msg) })]);
-      }
-      function re(l2, c2) {
-        return function(e2, t2) {
-          var n2, r2, o2, i2 = Array.isArray(e2), a2 = i2 ? e2 : [e2], s2 = (l2.lifeCycle.emit("beforeRequest", e2), l2.config.beforeRequest);
-          (a2 = "function" == typeof s2 ? a2.map(function(t3) {
-            try {
-              var e3 = s2({ logs: t3, logType: c2 });
-              return (null == e3 ? void 0 : e3.logType) === c2 && null != e3 && e3.logs ? e3.logs : false !== e3 && t3;
-            } catch (e4) {
-              return t3;
-            }
-          }).filter(function(e3) {
-            return false !== e3;
-          }) : a2).length && (n2 = a2, e2 = F, !Array.isArray(n2) || n2.length <= 1 || (r2 = [], o2 = [], !(o2 = "string" == typeof e2 ? [e2] : e2)) || o2.length <= 0 || (o2.forEach(function(t3) {
-            n2.forEach(function(e3) {
-              null != e3 && e3[t3] && r2.push(t3);
-            });
-          }), 0 < r2.length && (n2 = n2.map(function(e3) {
-            var t3 = {};
-            return r2.forEach(function(e4) {
-              t3[e4] = "";
-            }), p(p({}, t3), e3);
-          }))), a2 = n2, t2(i2 ? a2 : a2[0]));
-        };
-      }
-      function oe(o2) {
-        return function(e2, t2) {
-          o2.lifeCycle.emit("modifyRequest", e2);
-          var n2 = o2.config.modifyRequest;
-          if ("function" == typeof n2) try {
-            var r2 = n2(e2);
-            "object" == typeof r2 && "url" in r2 && (e2 = r2);
-          } catch (e3) {
-            console.error(e3);
-          }
-          t2(e2);
-        };
-      }
-      function ie(r2) {
-        return function(e2, t2) {
-          null != (n2 = r2.lifeCycle) && n2.emit("afterRequest", e2);
-          var n2 = (r2.config || {}).afterRequest;
-          "function" == typeof n2 && false === n2(e2) || t2(e2);
-        };
-      }
-      function y(n2) {
-        if (n2 && n2.reduce && n2.length) return 1 === n2.length ? function(e2, t2) {
-          n2[0](e2, t2 || ke);
-        } : n2.reduce(function(n3, r2) {
-          return function(e2, t2) {
-            return void 0 === t2 && (t2 = ke), n3(e2, function(e3) {
-              return null == r2 ? void 0 : r2(e3, t2);
-            });
-          };
-        });
-        throw new TypeError("createPipeline need at least one function param");
-      }
-      function ae(t2, n2) {
-        Object.getOwnPropertyNames(t2).forEach(function(e2) {
-          "function" == typeof t2[e2] && "constructor" !== e2 && (n2 ? n2[e2] = "sendPipeline" === e2 ? function() {
-            return function() {
-            };
-          } : function() {
-          } : t2[e2] = function() {
-          });
-        });
-      }
-      function se(e2) {
-        try {
-          var t2, n2, r2, o2 = "";
-          return o2 = e2.pageUrl || (n2 = (t2 = getCurrentPages())[t2.length - 1] || {}, i2 = n2.options, r2 = Object.keys(i2).length ? "?" + Object.keys(i2).map(function(e3) {
-            return e3 + "=" + i2[e3];
-          }).join("&") : "", n2.route ? n2.route + r2 : ""), (o2 = "function" == typeof e2.urlHandler ? e2.urlHandler() : o2).slice(0, 2048);
-        } catch (e3) {
-          return "";
-        }
-        var i2;
-      }
-      function le(e2, t2) {
-        if ("string" == typeof e2 && "string" == typeof t2) {
-          if (e2 === t2) return 1;
-          for (var n2 = e2.split("."), r2 = t2.split("."), o2 = Math.max(n2.length, r2.length), i2 = 0; i2 < o2; i2++) {
-            var a2 = ~~n2[i2], s2 = ~~r2[i2];
-            if (a2 < s2) return;
-            if (s2 < a2) return 1;
-          }
-        }
-      }
-      function ce(e2, t2) {
-        var n2 = this;
-        this.taskQueue = [], this.count = 1, this.maxCount = 2, this.addTask = function(e3) {
-          n2.taskQueue.push(e3);
-        }, this.fireTask = function() {
-          var e3 = n2.taskQueue.length;
-          n2.count > n2.maxCount || 0 === e3 || (n2.count = n2.count + 1, (e3 = n2.taskQueue.shift()) && n2.sendRequest(e3.options, null == e3 ? void 0 : e3.success, null == e3 ? void 0 : e3.fail));
-        }, this.complete = function() {
-          1 < n2.count && (n2.count = n2.count - 1), n2.fireTask();
-        }, t2 && (this.maxCount = t2), this.sendRequest = e2;
-      }
-      function i(e2) {
-        return Ce = Ce || g.getSystemInfoSync().SDKVersion, le(Ce, "1.1.1") && g.canIUse ? g.canIUse(e2) : !!g[e2];
-      }
-      function ue(e2) {
-        for (var t2, n2 = { unknown: /unknown|none/i, wifi: /wifi/i, net2g: /2g/i, net3g: /3g/i, net4g: /4g/i, net5g: /5g/i, net6g: /6g/i }, r2 = l.unknown, o2 = 0; o2 < Object.keys(n2).length; o2++) {
-          var i2 = Object.keys(n2)[o2];
-          if (null != (t2 = n2[i2]) && t2.test(e2)) {
-            r2 = l[i2];
-            break;
-          }
-        }
-        return r2;
-      }
-      function fe(e2) {
-        var t2 = e2.apiName, n2 = S[t2];
-        n2 ? n2.hackCloudReq.addCallback(e2) : (n2 = x.cloud[t2], S[t2] = { hackCloudReq: new qe(e2), originApi: n2 }), S[t2];
-      }
-      function pe(e2) {
-        var t2 = e2.apiName, n2 = T[t2];
-        n2 ? n2.hackReq.addCallback(e2) : (n2 = wx[t2], T[t2] = { hackReq: new Ie(e2), originApi: n2 }), T[t2];
-      }
-      var v, a, l, b, u, de, he, ge, me, ye = ["ret", "retcode", "code", "errcode"], ve = function() {
-        var n2 = /* @__PURE__ */ new WeakSet();
-        return function(e2, t2) {
-          if (t2 instanceof Error) return "Error.message: " + t2.message + " \n  Error.stack: " + t2.stack;
-          if ("object" == typeof t2 && null !== t2) {
-            if (n2.has(t2)) return "[Circular " + (e2 || "root") + "]";
-            n2.add(t2);
-          }
-          return t2;
-        };
-      }, E = function(e2) {
-        if ("string" == typeof e2) return e2;
-        try {
-          return e2 instanceof Error ? (JSON.stringify(e2, ve(), 4) || "undefined").replace(/"/gim, "") : JSON.stringify(e2, ve(), 4) || "undefined";
-        } catch (e3) {
-          return "error happen when aegis stringify: \n " + e3.message + " \n " + e3.stack;
-        }
-      }, be = function(n2, r2) {
-        void 0 === r2 && (r2 = 3);
-        var o2, i2, a2, s2 = "";
-        return Array.isArray(n2) ? (s2 += "[", o2 = n2.length, n2.forEach(function(e2, t2) {
-          s2 = (s2 += "object" == typeof e2 && 1 < r2 ? be(e2, r2 - 1) : Oe(e2)) + (t2 === o2 - 1 ? "" : ",");
-        }), s2 += "]") : n2 instanceof Object ? (s2 = "{", i2 = Object.keys(n2), a2 = i2.length, i2.forEach(function(e2, t2) {
-          "object" == typeof n2[e2] && 1 < r2 ? s2 += '"' + e2 + '":' + be(n2[e2], r2 - 1) : s2 += Ee(e2, n2[e2]), s2 += t2 === a2 - 1 || t2 < a2 - 1 && void 0 === n2[i2[t2 + 1]] ? "" : ",";
-        }), s2 += "}") : s2 += n2, s2;
-      }, Ee = function(e2, t2) {
-        var n2 = typeof t2, r2 = "";
-        return "string" == n2 || "object" == n2 ? r2 += '"' + e2 + '":"' + t2 + '"' : "function" == typeof t2 ? r2 += '"' + e2 + '":"function ' + t2.name + '"' : "symbol" == typeof t2 ? r2 += '"' + e2 + '":"symbol"' : "number" != typeof t2 && "boolean" != n2 || (r2 += '"' + e2 + '": ' + t2), r2;
-      }, Oe = function(e2) {
-        var t2 = typeof e2;
-        return "" + ("undefined" == t2 || "symbol" == t2 || "function" == t2 ? "null" : "string" == t2 || "object" == t2 ? '"' + e2 + '"' : e2);
-      }, Re = /data:(image|text|application|font)\/.*;base64/, we = ((c = v = v || {}).INFO_ALL = "-1", c.API_RESPONSE = "1", c.INFO = "2", c.ERROR = "4", c.PROMISE_ERROR = "8", c.AJAX_ERROR = "16", c.SCRIPT_ERROR = "32", c.IMAGE_ERROR = "64", c.CSS_ERROR = "128", c.CONSOLE_ERROR = "256", c.MEDIA_ERROR = "512", c.RET_ERROR = "1024", c.REPORT = "2048", c.PV = "4096", c.EVENT = "8192", c.PAGE_NOT_FOUND_ERROR = "16384", c.WEBSOCKET_ERROR = "32768", c.BRIDGE_ERROR = "65536", c.LAZY_LOAD_ERROR = "131072", (c = a = a || {})[c.android = 1] = "android", c[c.ios = 2] = "ios", c[c.windows = 3] = "windows", c[c.macos = 4] = "macos", c[c.linux = 5] = "linux", c[c.devtools = 6] = "devtools", c[c.other = 100] = "other", (c = l = l || {})[c.unknown = 100] = "unknown", c[c.wifi = 1] = "wifi", c[c.net2g = 2] = "net2g", c[c.net3g = 3] = "net3g", c[c.net4g = 4] = "net4g", c[c.net5g = 5] = "net5g", c[c.net6g = 6] = "net6g", (c = b = b || {}).LOG = "log", c.SPEED = "speed", c.PERFORMANCE = "performance", c.OFFLINE = "offline", c.WHITE_LIST = "whiteList", c.VITALS = "vitals", c.PV = "pv", c.CUSTOM_PV = "customPV", c.EVENT = "event", c.CUSTOM = "custom", c.SDK_ERROR = "sdkError", c.SET_DATA = "setData", c.LOAD_PACKAGE = "loadPackage", (c = u = u || {}).production = "production", c.development = "development", c.gray = "gray", c.pre = "pre", c.daily = "daily", c.local = "local", c.test = "test", c.others = "others", function(e2) {
-        return e2.filter(function(n2, r2) {
-          return "static" !== n2.type || !e2.find(function(e3, t2) {
-            return n2.url === e3.url && 200 === n2.status && r2 < t2;
-          });
-        });
-      }), xe = function(e2) {
-        e2.level === v.INFO_ALL && (e2.level = v.INFO);
-      }, O = {}, R = {}, Se = function(e2) {
-        return O[e2] || (O[e2] = setTimeout(function() {
-          R[e2] = {}, O[e2] = null;
-        }, 6e4)), O[e2];
-      }, Te = function(e2) {
-        return (Array.isArray(e2) ? e2 : [e2]).map(function(n2) {
-          return Object.getOwnPropertyNames(n2).reduce(function(e3, t2) {
-            return "ctx" !== t2 && (e3[t2] = n2[t2]), e3;
-          }, { level: v.INFO, msg: "" });
-        });
-      }, Pe = function(r2) {
-        return function(e2) {
-          return r2.sendPipeline([function(e3, n2) {
-            return n2({ url: r2.config.url || "", data: Q(Te(e3)), method: "post", contentType: "application/json", type: b.LOG, log: e3, requestConfig: { timeout: 5e3 }, success: function() {
-              var t2 = r2.config.onReport;
-              "function" == typeof t2 && e3.forEach(function(e4) {
-                t2(e4);
-              }), "function" == typeof n2 && n2([]);
-            } });
-          }], b.LOG)(e2);
-        };
-      }, ke = function() {
-      }, c = (L.use = function(e2) {
-        -1 === L.installedPlugins.indexOf(e2) && e2.aegisPlugin && L.installedPlugins.push(e2);
-      }, L.unuse = function(e2) {
-        e2 = L.installedPlugins.indexOf(e2);
-        -1 !== e2 && L.installedPlugins.splice(e2, 1);
-      }, L.prototype.init = function(e2) {
+      } }, Ie = function() {
+      }, r = (S.use = function(e2) {
+        -1 === S.installedPlugins.indexOf(e2) && e2.aegisPlugin && S.installedPlugins.push(e2);
+      }, S.unuse = function(e2) {
+        e2 = S.installedPlugins.indexOf(e2);
+        -1 !== e2 && S.installedPlugins.splice(e2, 1);
+      }, S.prototype.init = function(e2) {
         this.setConfig(e2);
-        for (var t2 = 0; t2 < L.installedPlugins.length; t2++) try {
-          L.installedPlugins[t2].patch(this);
+        for (var t2 = 0; t2 < S.installedPlugins.length; t2++) try {
+          S.installedPlugins[t2].patch(this);
         } catch (e3) {
           this.sendSDKError(e3);
         }
         this.lifeCycle.emit("onInited");
-      }, L.prototype.destroy = function(e2) {
+      }, S.prototype.destroy = function(e2) {
         void 0 === e2 && (e2 = false);
-        var t2, n2, r2 = L.instances.indexOf(this);
-        -1 !== r2 && L.instances.splice(r2, 1);
-        for (var o2 = L.installedPlugins.length - 1; 0 <= o2; o2--) try {
-          L.installedPlugins[o2].unpatch(this);
+        var t2, n2, r2 = S.instances.indexOf(this);
+        -1 !== r2 && S.instances.splice(r2, 1);
+        for (var i2 = S.installedPlugins.length - 1; 0 <= i2; i2--) try {
+          S.installedPlugins[i2].unpatch(this);
         } catch (e3) {
           this.sendSDKError(e3);
         }
@@ -534,785 +537,1507 @@ var require_aegis_min = __commonJS({
           n2[e3].writable && (t2[e3] = null);
         }), Object.setPrototypeOf(this, null);
         else {
-          for (var i2 = this; i2.constructor !== Object && ae(i2, this), i2 = Object.getPrototypeOf(i2); ) ;
-          0 === L.instances.length && (r2 = Object.getPrototypeOf(this).constructor, ae(r2), ae(L));
+          for (var o2 = this; o2.constructor !== Object && Le(o2, this), o2 = Object.getPrototypeOf(o2); ) ;
+          0 === S.instances.length && (r2 = Object.getPrototypeOf(this).constructor, Le(r2), Le(S));
         }
-      }, L.prototype.setConfig = function(e2) {
+      }, S.prototype.setConfig = function(e2) {
         Object.assign(this.config, e2);
-        var e2 = this.config, t2 = e2.id, n2 = e2.uin, r2 = e2.version, o2 = e2.ext1, i2 = e2.ext2, a2 = e2.ext3, s2 = e2.aid, l2 = e2.env, c2 = void 0 === l2 ? "production" : l2, l2 = e2.pageUrl, e2 = this.bean.id !== t2 || this.bean.uin !== n2 || this.bean.aid !== s2;
-        return this.bean.id = t2 || "", this.bean.uin = n2 || "", this.bean.version = r2 || "1.39.1", this.bean.aid = s2 || "", this.bean.env = function() {
-          switch (c2) {
-            case u.production:
-            case u.development:
-            case u.gray:
-            case u.pre:
-            case u.daily:
-            case u.local:
-            case u.test:
-            case u.others:
+        var e2 = this.config, t2 = e2.id, n2 = e2.uin, r2 = e2.version, i2 = e2.ext1, o2 = e2.ext2, a2 = e2.ext3, s2 = e2.aid, c2 = e2.env, u2 = void 0 === c2 ? "production" : c2, c2 = e2.pageUrl, e2 = this.bean.id !== t2 || this.bean.uin !== n2 || this.bean.aid !== s2;
+        return this.bean.id = t2 || "", this.bean.uin = n2 || "", this.bean.version = r2 || "1.41.2", this.bean.aid = s2 || "", this.bean.env = (() => {
+          switch (u2) {
+            case l.production:
+            case l.development:
+            case l.gray:
+            case l.pre:
+            case l.daily:
+            case l.local:
+            case l.test:
+            case l.others:
               return 1;
             default:
               return;
           }
-        }() ? c2 : u.others, l2 && this.extendBean("from", encodeURIComponent(l2.slice(0, 2048))), o2 && this.extendBean("ext1", encodeURIComponent(o2)), i2 && this.extendBean("ext2", encodeURIComponent(i2)), a2 && this.extendBean("ext3", encodeURIComponent(a2)), e2 && this.lifeCycle.emit("onConfigChange", this.config), this.config;
-      }, L.prototype.extendBean = function(e2, t2) {
+        })() ? u2 : l.others, c2 && this.extendBean("from", encodeURIComponent(c2.slice(0, 2048))), i2 && this.extendBean("ext1", encodeURIComponent(i2)), o2 && this.extendBean("ext2", encodeURIComponent(o2)), a2 && this.extendBean("ext3", encodeURIComponent(a2)), e2 && this.lifeCycle.emit("onConfigChange", this.config), this.config;
+      }, S.prototype.extendBean = function(e2, t2) {
         this.bean[e2] = t2;
-      }, L.prototype.send = function(e2, o2, i2) {
+      }, S.prototype.send = function(e2, i2, o2) {
         var t2 = this;
-        return y([oe(this), function(n2, r2) {
+        return b([re(this), function(n2, r2) {
           t2.request(n2, function() {
             for (var e3 = [], t3 = 0; t3 < arguments.length; t3++) e3[t3] = arguments[t3];
-            r2({ isErr: false, result: e3, logType: n2.type, logs: n2.log }), null != o2 && o2.apply(void 0, e3);
+            r2({ isErr: false, result: e3, logType: n2.type, logs: n2.log }), null != i2 && i2.apply(void 0, e3);
           }, function() {
             for (var e3 = [], t3 = 0; t3 < arguments.length; t3++) e3[t3] = arguments[t3];
-            r2({ isErr: true, result: e3, logType: n2.type, logs: n2.log }), null != i2 && i2.apply(void 0, e3);
+            r2({ isErr: true, result: e3, logType: n2.type, logs: n2.log }), null != o2 && o2.apply(void 0, e3);
           });
         }, ie(this)])(e2);
-      }, L.prototype.sendSDKError = function(e2) {
+      }, S.prototype.sendSDKError = function(e2) {
         var n2 = this;
         this.sendPipeline([function(e3, t2) {
-          t2({ url: n2.config.url + "?id=1085&msg[0]=" + encodeURIComponent(E(e3)) + "&level[0]=2&from=" + n2.config.id + "&count=1&version=" + n2.config.id + "(1.39.1)", addBean: false, method: "get", type: b.SDK_ERROR, log: e3 });
-        }], b.SDK_ERROR)(e2);
-      }, L.prototype.sendPipeline = function(e2, t2) {
-        var n2, i2 = this;
-        return y(_([function(e3, t3) {
+          t2({ url: n2.config.url + "?id=1085&msg[0]=" + encodeURIComponent(v(e3)) + "&level[0]=2&from=" + n2.config.id + "&count=1&version=" + n2.config.id + "(1.41.2)", addBean: false, method: "get", type: m.SDK_ERROR, log: e3 });
+        }], m.SDK_ERROR)(e2);
+      }, S.prototype.sendPipeline = function(e2, t2) {
+        var n2, o2 = this;
+        return b(u([function(e3, t3) {
           if ("number" != typeof n2.config.random && (console.warn("random must in [0, 1], default is 1."), n2.config.random = 1), !n2.isHidden || !n2.isGetSample) if (n2.isGetSample) n2.isHidden || t3(e3);
           else {
             if (n2.isGetSample = true, Math.random() < n2.config.random) return n2.isHidden = false, t3(e3);
             n2.isHidden = true;
           }
-        }, re(n2 = this, t2)], e2, [oe(this), function(r2, o2) {
-          i2.request(r2, function() {
+        }, ne(n2 = this, t2)], e2, [re(this), function(r2, i2) {
+          o2.request(r2, function() {
             for (var e3 = [], t3 = 0; t3 < arguments.length; t3++) e3[t3] = arguments[t3];
             var n3 = false;
-            -1 < ("" + e3[i2.failRequestCount = 0]).indexOf("403 forbidden") && (n3 = true, i2.destroy()), o2({ isErr: n3, result: e3, logType: null == r2 ? void 0 : r2.type, logs: null == r2 ? void 0 : r2.log }), null != (n3 = null == r2 ? void 0 : r2.success) && n3.call.apply(n3, _([r2], e3));
+            -1 < ("" + e3[o2.failRequestCount = 0]).indexOf("403 forbidden") && (n3 = true, o2.destroy()), i2({ isErr: n3, result: e3, logType: null == r2 ? void 0 : r2.type, logs: null == r2 ? void 0 : r2.log }), null != (n3 = null == r2 ? void 0 : r2.success) && n3.call.apply(n3, u([r2], e3));
           }, function() {
             for (var e3, t3 = [], n3 = 0; n3 < arguments.length; n3++) t3[n3] = arguments[n3];
-            60 <= ++i2.failRequestCount && i2.destroy(), -1 < ("" + t3[0]).indexOf("403 forbidden") && i2.destroy(), o2({ isErr: true, result: t3, logType: null == r2 ? void 0 : r2.type, logs: null == r2 ? void 0 : r2.log }), null != (e3 = null == r2 ? void 0 : r2.fail) && e3.call.apply(e3, _([r2], t3));
+            60 <= ++o2.failRequestCount && o2.destroy(), -1 < ("" + t3[0]).indexOf("403 forbidden") && o2.destroy(), i2({ isErr: true, result: t3, logType: null == r2 ? void 0 : r2.type, logs: null == r2 ? void 0 : r2.log }), null != (e3 = null == r2 ? void 0 : r2.fail) && e3.call.apply(e3, u([r2], t3));
           });
         }, ie(this)]));
-      }, L.prototype.info = function() {
+      }, S.prototype.validateRange = function(e2) {
+        return 0 <= e2 && e2 <= 127 ? e2 : -1;
+      }, S.prototype.info = function() {
         for (var e2 = [], t2 = 0; t2 < arguments.length; t2++) e2[t2] = arguments[t2];
-        var n2 = { level: v.INFO, msg: e2 };
-        1 === e2.length && e2[0].msg && Object.assign(n2, p({}, e2[0]), { level: v.INFO }), this.normalLogPipeline(n2);
-      }, L.prototype.infoAll = function() {
+        var n2 = { level: F.INFO, msg: e2 };
+        1 === e2.length && e2[0].msg && Object.assign(n2, B({}, e2[0]), { level: F.INFO }), this.normalLogPipeline(n2);
+      }, S.prototype.infoAll = function() {
         for (var e2 = [], t2 = 0; t2 < arguments.length; t2++) e2[t2] = arguments[t2];
-        var n2 = { level: v.INFO_ALL, msg: e2 };
-        1 === e2.length && e2[0].msg && Object.assign(n2, p({}, e2[0]), { level: v.INFO_ALL }), this.normalLogPipeline(n2);
-      }, L.prototype.report = function() {
+        var n2 = { level: F.INFO_ALL, msg: e2 };
+        1 === e2.length && e2[0].msg && Object.assign(n2, B({}, e2[0]), { level: F.INFO_ALL }), this.normalLogPipeline(n2);
+      }, S.prototype.report = function() {
         for (var e2 = [], t2 = 0; t2 < arguments.length; t2++) e2[t2] = arguments[t2];
-        var n2 = { level: v.REPORT, msg: e2 };
-        1 === e2.length && e2[0].msg && Object.assign(n2, p({}, e2[0])), this.normalLogPipeline(n2);
-      }, L.prototype.error = function() {
+        var n2 = { level: F.REPORT, msg: e2 };
+        1 === e2.length && e2[0].msg && Object.assign(n2, B({}, e2[0])), this.normalLogPipeline(n2);
+      }, S.prototype.error = function() {
         for (var e2 = [], t2 = 0; t2 < arguments.length; t2++) e2[t2] = arguments[t2];
-        var n2 = { level: v.ERROR, msg: e2 };
-        1 === e2.length && e2[0].msg && Object.assign(n2, p({}, e2[0]), { level: v.ERROR }), this.normalLogPipeline(n2);
-      }, L.prototype.reportEvent = function(e2) {
+        var n2 = { level: F.ERROR, msg: e2 };
+        1 === e2.length && e2[0].msg && Object.assign(n2, B({}, e2[0]), { level: F.ERROR }), this.normalLogPipeline(n2);
+      }, S.prototype.reportEvent = function(e2) {
         e2 && ((e2 = "string" == typeof e2 ? { name: e2, ext1: this.config.ext1 || "", ext2: this.config.ext2 || "", ext3: this.config.ext3 || "" } : e2).name ? ("string" != typeof e2.name && (console.warn("reportEvent params name must be string"), e2.name = String(e2.name)), this.eventPipeline(e2)) : console.warn("reportEvent params error"));
-      }, L.prototype.reportT = function(e2) {
-        var t2 = e2.name, n2 = e2.duration, r2 = e2.ext1, r2 = void 0 === r2 ? "" : r2, o2 = e2.ext2, o2 = void 0 === o2 ? "" : o2, i2 = e2.ext3, i2 = void 0 === i2 ? "" : i2, e2 = e2.from;
-        if ("string" == typeof t2 && "number" == typeof n2 && "string" == typeof r2 && "string" == typeof o2 && "string" == typeof i2) {
-          if (!(n2 < 0 || 6e4 < n2)) return this.submitCustomTime(t2, n2, r2, o2, i2, void 0 === e2 ? "" : e2);
-          console.warn("reportTime: duration must between 0 and 60000");
+      }, S.prototype.reportT = function(e2) {
+        var t2 = e2.name, n2 = e2.duration, r2 = e2.ext1, r2 = void 0 === r2 ? "" : r2, i2 = e2.ext2, i2 = void 0 === i2 ? "" : i2, o2 = e2.ext3, o2 = void 0 === o2 ? "" : o2, a2 = e2.from;
+        if ("string" == typeof t2 && "number" == typeof n2 && "string" == typeof r2 && "string" == typeof i2 && "string" == typeof o2) {
+          if (!(n2 < 0 || 2147483646 < n2)) return this.submitCustomTime(t2, n2, r2, i2, o2, e2.ext4, e2.ext5, e2.ext6, e2.ext7, e2.ext8, e2.ext9, e2.ext10, void 0 === a2 ? "" : a2);
+          console.warn("reportTime: duration must between 0 and 2147483646");
         } else console.warn("reportTime: params error");
-      }, L.prototype.reportTime = function(e2, t2) {
+      }, S.prototype.reportTime = function(e2, t2) {
         if ("object" == typeof e2) return this.reportT(e2);
-        "string" == typeof e2 ? "number" == typeof t2 ? t2 < 0 || 6e4 < t2 ? console.warn("reportTime: duration must between 0 and 60000") : this.submitCustomTime(e2, t2) : console.warn("reportTime: second param must be number") : console.warn("reportTime: first param must be a string");
-      }, L.prototype.time = function(e2) {
+        "string" == typeof e2 ? "number" == typeof t2 ? t2 < 0 || 2147483646 < t2 ? console.warn("reportTime: duration must between 0 and 2147483646") : (this.submitCustomTime(e2, t2), this.normalLogPipeline({ level: F.SPEED_EVENT, msg: "key:" + e2 + "\n duration:" + t2, errorMsg: "" })) : console.warn("reportTime: second param must be number") : console.warn("reportTime: first param must be a string");
+      }, S.prototype.time = function(e2) {
         "string" == typeof e2 ? this.timeMap[e2] ? console.warn("Timer " + e2 + " already exists") : this.timeMap[e2] = Date.now() : console.warn("time: first param must be a string");
-      }, L.prototype.timeEnd = function(e2) {
+      }, S.prototype.timeEnd = function(e2) {
         "string" == typeof e2 ? this.timeMap[e2] ? (this.submitCustomTime(e2, Date.now() - this.timeMap[e2]), delete this.timeMap[e2]) : console.warn("Timer " + e2 + " does not exist") : console.warn("timeEnd: first param must be a string");
-      }, L.prototype.ready = function(e2, t2, n2) {
+      }, S.prototype.ready = function(e2, t2, n2) {
         throw new Error('You need to override "ready" method');
-      }, L.prototype.request = function(e2, t2, n2) {
+      }, S.prototype.request = function(e2, t2, n2) {
         throw new Error('You need to override "request" method');
-      }, L.prototype.speedLogPipeline = function(e2) {
+      }, S.prototype.speedLogPipeline = function(e2) {
         throw new Error('You need to override "speedLogPipeline" method');
-      }, Object.defineProperty(L.prototype, "__version__", { get: function() {
-        return "1.39.1";
-      }, enumerable: false, configurable: true }), Object.defineProperty(L.prototype, "LogType", { get: function() {
-        return v;
-      }, enumerable: false, configurable: true }), L.prototype.reportPv = function(e2) {
+      }, Object.defineProperty(S.prototype, "__version__", { get: function() {
+        return "1.41.2";
+      }, enumerable: false, configurable: true }), Object.defineProperty(S.prototype, "LogType", { get: function() {
+        return F;
+      }, enumerable: false, configurable: true }), S.prototype.reportPv = function(e2) {
         e2 && console.warn("reportPv is deprecated, please use reportEvent");
-      }, L.prototype.submitCustomTime = function(e2, t2, n2, r2, o2, i2) {
-        this.customTimePipeline({ name: e2, duration: t2, ext1: n2 || this.config.ext1, ext2: r2 || this.config.ext2, ext3: o2 || this.config.ext3, from: i2 || void 0 });
-      }, L.version = "1.39.1", L.instances = [], L.logType = v, L.environment = u, L.installedPlugins = [], L), f = (A.prototype.patch = function(e2) {
+      }, S.prototype.submitCustomTime = function(e2, t2, n2, r2, i2, o2, a2, s2, c2, u2, l2, f2, d2) {
+        var p2 = this, n2 = [{ key: "ext1", value: n2 || this.config.ext1, isString: true }, { key: "ext2", value: r2 || this.config.ext2, isString: true }, { key: "ext3", value: i2 || this.config.ext3, isString: true }, { key: "ext4", value: o2 || this.config.ext4, isString: false }, { key: "ext5", value: a2 || this.config.ext5, isString: false }, { key: "ext6", value: s2 || this.config.ext6, isString: false }, { key: "ext7", value: c2 || this.config.ext7, isString: false }, { key: "ext8", value: u2 || this.config.ext8, isString: false }, { key: "ext9", value: l2 || this.config.ext9, isString: false }, { key: "ext10", value: f2 || this.config.ext10, isString: false }], h2 = { name: e2, duration: t2 };
+        n2.forEach(function(e3) {
+          var t3 = e3.key, n3 = e3.value;
+          void 0 !== n3 && (h2[t3] = e3.isString ? null == (t3 = String(n3)) ? void 0 : t3.slice(0, 1024) : String(p2.validateRange(n3)));
+        }), d2 && (h2.from = d2), this.customTimePipeline(h2);
+      }, S.version = "1.41.2", S.instances = [], S.logType = F, S.environment = l, S.installedPlugins = [], S), i = (a.prototype.patch = function(e2) {
         this.canUse(e2) && this.exist(e2) && (this.instances.push(e2), this.triggerInit(e2), this.triggerOnNewAegis(e2));
-      }, A.prototype.unpatch = function(e2) {
+      }, a.prototype.unpatch = function(e2) {
         var t2 = this.instances.indexOf(e2);
         -1 !== t2 && (this.instances.splice(t2, 1), 0 === this.instances.length) && this.uninstall(e2);
-      }, A.prototype.countInstance = function() {
+      }, a.prototype.countInstance = function() {
         return this.instances.length;
-      }, A.prototype.uninstall = function(e2) {
+      }, a.prototype.uninstall = function(e2) {
         var t2;
         null != (t2 = null == (t2 = this.option) ? void 0 : t2.destroy) && t2.apply(this, [e2]);
-      }, A.prototype.walk = function(n2) {
+      }, a.prototype.walk = function(n2) {
         var r2 = this;
         this.instances.forEach(function(e2) {
           var t2 = r2.canUse(e2);
           t2 && n2(e2, t2);
         });
-      }, A.prototype.canUse = function(e2) {
+      }, a.prototype.canUse = function(e2) {
         e2 = this.getConfig(e2);
         return !(!e2 || "object" != typeof e2) || !!e2;
-      }, A.prototype.getConfig = function(e2) {
+      }, a.prototype.getConfig = function(e2) {
         return null == (e2 = e2.config) ? void 0 : e2[this.name];
-      }, A.prototype.exist = function(e2) {
+      }, a.prototype.exist = function(e2) {
         return -1 === this.instances.indexOf(e2);
-      }, A.prototype.triggerInit = function(e2) {
+      }, a.prototype.triggerInit = function(e2) {
         var t2;
         this.inited || (this.inited = true, null == (t2 = null == (t2 = this.option) ? void 0 : t2.init)) || t2.call(this.option, this.getConfig(e2));
-      }, A.prototype.triggerOnNewAegis = function(e2) {
+      }, a.prototype.triggerOnNewAegis = function(e2) {
         var t2;
         null != (t2 = null == (t2 = this.option) ? void 0 : t2.onNewAegis) && t2.call(this.option, e2, this.getConfig(e2));
-      }, A), g = wx || qq, Ce = "", Ne = new f({ name: "device", onNewAegis: function(t2) {
-        return e2 = this, l2 = function() {
-          return H(this, function(e3) {
-            return this.setSystemInfo(t2), this.setNetworkType(t2), this.setNetworkChange(t2), [2];
-          });
-        }, new (s2 = (s2 = a2 = void 0) || Promise)(function(n2, t3) {
-          function r2(e3) {
-            try {
-              i2(l2.next(e3));
-            } catch (e4) {
-              t3(e4);
-            }
-          }
-          function o2(e3) {
-            try {
-              i2(l2.throw(e3));
-            } catch (e4) {
-              t3(e4);
-            }
-          }
-          function i2(e3) {
-            var t4;
-            e3.done ? n2(e3.value) : ((t4 = e3.value) instanceof s2 ? t4 : new s2(function(e4) {
-              e4(t4);
-            })).then(r2, o2);
-          }
-          i2((l2 = l2.apply(e2, a2 || [])).next());
-        });
-        var e2, a2, s2, l2;
-      }, setSystemInfo: function(a2) {
-        var s2 = this;
+      }, a), Ne = new i({ name: "aid", aid: "", init: function(e2) {
         try {
-          i("getSystemInfo") && g.getSystemInfo({ success: function(e2) {
-            var t2 = e2.platform, n2 = e2.model, r2 = e2.windowHeight, o2 = e2.windowWidth, i2 = e2.screenWidth, i2 = void 0 === i2 ? 0 : i2, e2 = e2.screenHeight, e2 = void 0 === e2 ? 0 : e2;
-            a2.extendBean("platform", s2.getPlatFormType(t2)), a2.extendBean("model", n2), a2.extendBean("vp", Math.round(o2) + " * " + Math.round(r2)), a2.extendBean("sr", Math.round(i2) + " * " + Math.round(e2));
-          } });
-        } catch (a3) {
-        }
-      }, getPlatFormType: function(e2) {
-        for (var t2, n2 = { android: /android/i, ios: /ios/i, windows: /windows/i, macos: /mac/i, devtools: /devtools/i }, r2 = a.other, o2 = 0; o2 < Object.keys(n2).length; o2++) {
-          var i2 = Object.keys(n2)[o2];
-          if (null != (t2 = n2[i2]) && t2.test(e2)) {
-            r2 = a[i2];
-            break;
-          }
-        }
-        return r2;
-      }, setNetworkChange: function(t2) {
-        i("onNetworkStatusChange") && g.onNetworkStatusChange(function(e2) {
-          e2 = ue(e2.networkType);
-          t2.extendBean("netType", e2);
-        });
-      }, setNetworkType: function(t2) {
-        i("getNetworkType") && g.getNetworkType({ success: function(e2) {
-          e2 = ue(e2.networkType);
-          t2.extendBean("netType", e2);
-        } });
-      } }), Ae = g.request, c = (e(N, ge = c), Object.defineProperty(N.prototype, "getBean", { get: function() {
-        var t2 = this;
-        return this.bean ? Object.getOwnPropertyNames(this.bean).map(function(e2) {
-          return e2 + "=" + t2.bean[e2];
-        }).join("&") + "&from=" + encodeURIComponent(se(this.config)) : "from=" + encodeURIComponent(se(this.config));
-      }, enumerable: false, configurable: true }), N.prototype.initRequestSchedule = function() {
-        this.requestSchedule = new ce(this.sendRequest);
-      }, N.prototype.uploadLogs = function(e2, t2) {
-        this.lifeCycle.emit("uploadLogs", e2 = void 0 === e2 ? {} : e2, t2 = void 0 === t2 ? {} : t2);
-      }, N.prototype.reportPv = function(e2) {
-        var t2, n2 = this;
-        e2 && (t2 = Object.getOwnPropertyNames(this.bean).filter(function(e3) {
-          return "id" !== e3;
-        }).map(function(e3) {
-          return e3 + "=" + n2.bean[e3];
-        }).join("&") + "&from=" + encodeURIComponent(se(this.config)), this.send({ url: this.config.url + "/" + e2 + "?" + t2, addBean: false, type: b.CUSTOM_PV, log: b.CUSTOM_PV }, function() {
-        }, function() {
-        }));
-      }, N.sessionID = "session-" + Date.now(), N.asyncPluginIndex = 0, N), Le = new f({ name: "aid", onNewAegis: function(t2) {
-        this.initAid(function(e2) {
-          t2.bean.aid = e2, t2.config.aid = e2;
-        });
-      }, initAid: function(t2) {
-        g.getStorage({ key: "AEGIS_ID", success: function(e2) {
-          t2(e2.data);
-        }, fail: function() {
-          var e2 = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(e3) {
-            var t3 = 16 * Math.random() | 0;
-            return ("x" === e3 ? t3 : 3 & t3 | 8).toString(16);
-          });
-          g.setStorage({ key: "AEGIS_ID", data: e2, success: function() {
-            t2(e2);
-          } });
-        } });
-      } }), w = (C.prototype.addCallback = function(e2) {
-        e2 && this.callbacks.push(e2);
-      }, C.prototype.prefixHandler = function(e2) {
-        return p(p({}, e2), { aegisRequestStartTime: +/* @__PURE__ */ new Date() });
-      }, C.prototype.onStartHandler = function(n2) {
-        var e2;
-        this.callbacks.forEach(function(e3) {
-          var t2;
-          try {
-            null != (t2 = e3.onStart) && t2.call(e3, n2);
-          } catch (e4) {
-          }
-        }), null != (e2 = n2.onStart) && e2.call(n2, n2);
-      }, C.prototype.successHandler = function(n2, r2) {
-        var e2;
-        this.callbacks.forEach(function(e3) {
-          var t2;
-          try {
-            null != (t2 = e3.success) && t2.call(e3, n2, r2);
-          } catch (e4) {
-          }
-        }), null != (e2 = r2.success) && e2.call(r2, n2, r2);
-      }, C.prototype.failHandler = function(n2, r2) {
-        var e2;
-        this.callbacks.forEach(function(e3) {
-          var t2;
-          try {
-            null != (t2 = e3.fail) && t2.call(e3, n2, r2);
-          } catch (e4) {
-          }
-        }), null != (e2 = r2.fail) && e2.call(r2, n2, r2);
-      }, C.prototype.completeHandler = function(n2, r2) {
-        var e2;
-        this.callbacks.forEach(function(e3) {
-          var t2;
-          try {
-            null != (t2 = e3.complete) && t2.call(e3, n2, r2);
-          } catch (e4) {
-          }
-        }), null != (e2 = r2.complete) && e2.call(r2, n2, r2);
-      }, C.prototype.override = function() {
-        try {
-          this.defineApiProperty();
-        } catch (e2) {
-          console.warn("cannot override `" + this.apiName + "`, error is: " + e2);
-        } finally {
-          this.isOverride = true;
-        }
-      }, C), x = wx || qq, S = {}, qe = (e(k, he = w), k.prototype.defineApiProperty = function() {
-        var e2 = this;
-        x.cloud && x.cloud[this.apiName] && Object.defineProperty(x.cloud, this.apiName, { get: function() {
-          return e2.hackHandler.bind(e2);
-        } });
-      }, k.prototype.hackHandler = function(e2) {
-        var r2 = this, o2 = this.prefixHandler(e2);
-        return new Promise(function(t2, n2) {
-          var e3 = null == (e3 = S[r2.apiName]) ? void 0 : e3.originApi;
-          null != e3 && e3(p(p({}, o2), { success: function(e4) {
-            r2.successHandler(e4, o2), t2(e4);
-          }, fail: function(e4) {
-            r2.failHandler(e4, o2), n2(e4);
-          }, complete: function(e4) {
-            r2.completeHandler(e4, o2);
-          } }));
-        });
-      }, k), Ue = wx || qq, T = {}, Ie = (e(P, de = w), P.prototype.defineApiProperty = function() {
-        var e2 = this;
-        Object.defineProperty(Ue, this.apiName, { get: function() {
-          return e2.hackHandler.bind(e2);
-        } });
-      }, P.prototype.hackHandler = function(e2) {
-        var t2 = this, n2 = this.prefixHandler(e2), e2 = (this.onStartHandler(n2), null == (e2 = T[this.apiName]) ? void 0 : e2.originApi);
-        return null == e2 ? void 0 : e2(p(p({}, n2), { success: function(e3) {
-          t2.successHandler(e3, n2);
-        }, fail: function(e3) {
-          t2.failHandler(e3, n2);
-        }, complete: function(e3) {
-          t2.completeHandler(e3, n2);
-        } }));
-      }, P), je = wx || qq, He = je.request;
-      function P() {
-        return null !== de && de.apply(this, arguments) || this;
-      }
-      function k() {
-        return null !== he && he.apply(this, arguments) || this;
-      }
-      function C(e2) {
-        this.callbacks = [], this.isOverride = false;
-        var t2 = e2.apiName;
-        this.apiName = t2, this.isOverride || this.override(), this.callbacks.push(e2);
-      }
-      function N(e2) {
-        var r2, a2, u2 = ge.call(this, e2) || this;
-        u2.originRequest = Ae, u2.speedLogPipeline = y([(a2 = u2.config, function(e3, t2) {
-          var n2, r3, o2, i2 = "number" == typeof a2.repeat ? a2.repeat : 60;
-          !a2.speedSample || i2 <= 0 ? t2(e3) : (n2 = (null == a2 ? void 0 : a2.id) || "0", r3 = R[n2] || {}, Array.isArray(e3) ? (o2 = e3.filter(function(e4) {
-            var t3 = !r3[e4.url] || r3[e4.url] < i2;
-            return t3 ? (r3[e4.url] = 1 + ~~r3[e4.url], R[n2] = r3) : O[n2] || Se(n2), t3;
-          })).length && t2(o2) : !r3[e3.url] || r3[e3.url] < i2 ? (r3[e3.url] = 1 + ~~r3[e3.url], R[n2] = r3, t2(e3)) : O[n2] || Se(n2));
-        }), m(u2), function(t2, n2) {
-          i("getNetworkType") ? g.getNetworkType({ success: function(e3) {
-            e3 = ue(e3.networkType);
-            r2.extendBean("netType", e3), n2(t2);
-          } }) : n2(t2);
-        }, function(e3, t2) {
-          u2.lifeCycle.emit("beforeReportSpeed", e3);
-          var n2 = u2.config.beforeReportSpeed;
-          if ((e3 = "function" == typeof n2 ? e3.filter(function(e4) {
-            return false !== n2(e4);
-          }) : e3).length) return t2(e3);
-        }, re(r2 = u2, b.SPEED), function(e3, t2) {
-          t2(e3.map(function(e4) {
-            return void 0 !== e4.payload && delete e4.payload, e4;
-          }));
-        }, function(e3) {
-          var t2, n2, r3, o2;
-          u2.send({ url: "" + u2.config.speedUrl, method: "post", data: (e3 = e3, t2 = u2.bean, r3 = { fetch: [], static: [], bridge: [] }, o2 = {}, Array.isArray(e3) ? e3.forEach(function(e4) {
-            var t3;
-            null != (t3 = r3[e4.type]) && t3.push(e4);
-          }) : null != (n2 = r3[e3.type]) && n2.push(e3), o2.payload = JSON.stringify(p({ duration: r3 }, t2)), o2) });
-        }]), u2.request = function(e3, t2, n2) {
-          e3.url && u2.bean.id && (!/^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/.test(String(u2.bean.aid)) || i("getNetworkType") && void 0 === u2.bean.netType ? u2.requestSchedule.addTask({ options: e3, success: t2, fail: n2 }) : (u2.requestSchedule.addTask({ options: e3, success: t2, fail: n2 }), u2.requestSchedule.fireTask()));
-        }, u2.sendRequest = function(e3, t2, n2) {
-          var r3, o2, i2, a3 = e3.url, s2 = (u2.config.whiteListUrl === a3 && (r3 = t2, t2 = function(e4) {
-            null != r3 && r3(JSON.stringify(e4.data));
-          }), e3.method), s2 = void 0 === s2 ? "get" : s2, l2 = (false !== e3.addBean && (a3 = a3 + (-1 === (null == a3 ? void 0 : a3.indexOf("?")) ? "?" : "&") + u2.getBean), e3), c2 = u2.config.onBeforeRequest;
-          return (l2 = c2 ? c2(e3, u2) : l2) && l2.url ? (c2 = u2.config.enableHttp2 || false, "get" === s2 ? (s2 = a3, o2 = l2.data, a3 = "string" != typeof s2 ? "" : "object" == typeof o2 && o2 ? (i2 = Object.getOwnPropertyNames(o2).map(function(e4) {
-            var t3 = o2[e4];
-            return e4 + "=" + ("string" == typeof t3 ? encodeURIComponent(t3) : encodeURIComponent(JSON.stringify(t3)));
-          }).join("&").replace(/eval/gi, "evaI"), s2 + (-1 === s2.indexOf("?") ? "?" : "&") + i2) : s2, u2.originRequest(p({ url: a3, enableHttp2: c2, success: t2, fail: n2, complete: u2.requestSchedule.complete }, e3.requestConfig))) : ("string" == typeof l2.data && (l2.data = l2.data.replace(/eval/gi, "evaI")), u2.originRequest(p({ url: a3, enableHttp2: c2, header: l2.contentType ? { "content-type": l2.contentType } : void 0, method: "POST", data: l2.data, success: t2, fail: n2, complete: u2.requestSchedule.complete }, e3.requestConfig))), true) : (i2 = "", l2 && l2.url || (i2 = "Sending request blocked. Please handle the parameters reasonably, options.url is necessary", console.log(i2)), null != n2 && n2(i2), u2.requestSchedule.complete(), false);
-        };
-        try {
-          u2.initRequestSchedule(), u2.init(e2), u2.extendBean("sessionId", N.sessionID), u2.extendBean("referer", (i("getLaunchOptionsSync") ? g.getLaunchOptionsSync() : { scene: "" }).scene || "");
+          var t2 = true !== e2 && e2 || window.localStorage.getItem("AEGIS_ID");
+          t2 || (t2 = Te(), window.localStorage.setItem("AEGIS_ID", t2)), this.aid = t2;
         } catch (e3) {
-          console.warn(e3), console.log("%cThe above error occurred in the process of initializing Aegis, which will affect your normal use of Aegis.\nIt is recommended that you contact us for feedback and thank you for your support.", "color: red"), u2.sendSDKError(e3);
         }
-        return u2;
-      }
-      function A(e2) {
+      }, onNewAegis: function(e2) {
+        e2.bean.aid = this.aid, e2.config.aid = this.aid;
+      } }), _e = function(t2) {
+        var n2;
+        return t2.payload ? (n2 = {}, Object.keys(t2).forEach(function(e2) {
+          "payload" !== e2 && (n2[e2] = t2[e2]);
+        }), n2) : t2;
+      }, Ue = new i({ name: "reportAssetSpeed" }), He = Ue = new i({ name: "reportAssetSpeed", collectCur: 0, collectEntryType: "resource", ASSETS_INITIATOR_TYPE: ["img", "css", "script", "link", "audio", "video"], onNewAegis: function(e2) {
+        var t2 = this;
+        Pe() && (setTimeout(function() {
+          t2.collectSuccessLog(e2), t2.collectFailLog(e2);
+        }, 5e3), performance.onresourcetimingbufferfull = function() {
+          "function" == typeof performance.clearResourceTimings && (t2.collectCur = 0, performance.clearResourceTimings());
+        });
+      }, processLog: function(e2, t2) {
+        var n2 = t2.duration || 0, r2 = t2.transferSize || 0, i2 = 1e3 < n2, t2 = ["ASSET_REQUEST: " + t2.url, "status: " + t2.status, "duration: " + n2 + "ms", "type: " + t2.type, "domainLookup: " + t2.domainLookup + "ms", "connectTime: " + t2.connectTime + "ms", "transferSize: " + (0 < r2 ? r2 + "bytes" : "unknown")].filter(Boolean).join("\n\n"), r2 = e2.isWhiteList && e2.config.assetLog, o2 = e2.config.slowAssetLog && i2, i2 = { level: i2 ? e2.LogType.SLOW_ASSET_REQUEST : e2.LogType.ASSERT_REQUEST, msg: t2, ext1: n2.toString() || "", errorMsg: "" };
+        (r2 || o2) && e2.normalLogPipeline(i2);
+      }, publish: function(t2, n2) {
+        var r2 = this;
+        this.$walk(function(e2) {
+          e2 === n2 && (e2.speedLogPipeline(t2), Array.isArray(t2) ? t2.forEach(r2.processLog) : r2.processLog(n2, t2));
+        });
+      }, publishMany: function(e2, t2) {
+        for (var n2 = t2.config, r2 = 0, i2 = e2.length; r2 < i2; r2++) {
+          var o2 = e2[r2];
+          -1 === this.ASSETS_INITIATOR_TYPE.indexOf(o2.initiatorType) || T(o2.name, n2.hostUrl) || this.publish(this.generateLog(o2, n2), t2);
+        }
+      }, collectSuccessLog: function(n2) {
+        var e2, t2, r2 = this;
+        "function" == typeof window.PerformanceObserver ? (this.publishMany(performance.getEntriesByType(this.collectEntryType), n2), (e2 = new window.PerformanceObserver(function(e3) {
+          r2.publishMany(e3.getEntries(), n2);
+        })).observe({ entryTypes: [this.collectEntryType] }), n2.lifeCycle.on("destroy", function() {
+          0 === Ue.countInstance() && e2.disconnect();
+        })) : (t2 = setInterval(function() {
+          var e3 = performance.getEntriesByType(r2.collectEntryType), t3 = e3.slice(r2.collectCur);
+          r2.collectCur = e3.length, r2.publishMany(t3, n2);
+        }, 3e3), n2.lifeCycle.on("destroy", function() {
+          0 === Ue.countInstance() && clearInterval(t2);
+        }));
+      }, collectFailLog: function(r2) {
+        function e2(e3) {
+          var t2, n2;
+          e3 && (e3 = e3.target || e3.srcElement, !(t2 = (null == e3 ? void 0 : e3.src) || (null == e3 ? void 0 : e3.href)) || "string" != typeof t2 || -1 < window.location.href.indexOf(t2) || (e3 = "function" == typeof (null == (e3 = o2.api) ? void 0 : e3.resourceTypeHandler) ? null == (e3 = o2.api) ? void 0 : e3.resourceTypeHandler(t2) : "", n2 = performance.getEntriesByType(i2.collectEntryType).find(function(e4) {
+            return e4.name === t2;
+          }), T(t2, o2.hostUrl)) || (n2 = { url: z(t2), status: 400, duration: Number(((null == n2 ? void 0 : n2.duration) || 0).toFixed(2)), method: "get", type: e3 || "static", isHttps: Q(t2), urlQuery: R(t2, true), nextHopProtocol: "", domainLookup: 0, connectTime: 0 }, i2.publish(n2, r2)));
+        }
+        var i2 = this, o2 = r2.config;
+        window.document.addEventListener("error", e2, true), r2.lifeCycle.on("destroy", function() {
+          0 === Ue.countInstance() && window.document.removeEventListener("error", e2, true);
+        });
+      }, generateLog: function(e2, t2) {
+        var t2 = "function" == typeof (null == (n2 = t2.api) ? void 0 : n2.resourceTypeHandler) ? null == (n2 = t2.api) ? void 0 : n2.resourceTypeHandler(e2.name) : "", n2 = e2.transferSize;
+        return { url: z(e2.name), method: "get", duration: Number(e2.duration.toFixed(2)), status: 200, type: t2 || "static", isHttps: Q(e2.name), nextHopProtocol: e2.nextHopProtocol || "", urlQuery: R(e2.name, true), domainLookup: J(e2.domainLookupEnd - e2.domainLookupStart), connectTime: J(e2.connectEnd - e2.connectStart), transferSize: 0 < n2 ? n2 : -1 };
+      }, collectNotReportedLog: function(e2) {
+        var t2, n2;
+        Pe() && (t2 = (n2 = performance.getEntriesByType(this.collectEntryType)).length, "function" != typeof window.PerformanceObserver) && this.collectCur !== t2 && (n2 = n2.slice(this.collectCur), this.collectCur = t2, this.publishMany(n2, e2, true));
+      }, destroy: function() {
+        this.option.publish = function() {
+        };
+      } }), De = window.navigator.userAgent.toLowerCase(), o = {};
+      function a(e2) {
         this.aegisPlugin = true, this.name = "", this.instances = [], this.inited = false, e2.$walk = this.walk.bind(this), e2.$getConfig = this.getConfig.bind(this), this.option = e2, this.name = e2.name;
       }
-      function L(e2) {
-        var n2, t2, r2, o2, a2, i2, s2, l2, c2, u2, f2, p2, d2, h2, g2 = this;
-        this.isGetSample = false, this.isHidden = false, this.config = { version: 0, delay: 1e3, onError: true, repeat: 60, random: 1, aid: true, device: true, pagePerformance: true, webVitals: true, speedSample: true, onClose: true, reportLoadPackageSpeed: true, hostUrl: "https://aegis.qq.com", env: "production", url: "", offlineUrl: "", whiteListUrl: "", pvUrl: "", speedUrl: "", customTimeUrl: "", performanceUrl: "", performanceUrlForHippy: "", webVitalsUrl: "", eventUrl: "", setDataReportUrl: "", reportImmediately: true }, this.isWhiteList = false, this.lifeCycle = new B(), this.bean = {}, this.normalLogPipeline = y([m(this, 5), ne, function(e3, t3) {
+      function S(e2) {
+        var n2, t2, r2, i2, a2, o2, s2, c2, u2, l2, f2, d2, p2, h2, g2 = this;
+        this.isGetSample = false, this.isHidden = false, this.config = { version: 0, delay: 1e3, onError: true, repeat: 60, random: 1, aid: true, device: true, pagePerformance: true, webVitals: true, speedSample: true, onClose: true, reportLoadPackageSpeed: true, hostUrl: "https://rumt-zh.com", env: "production", url: "", offlineUrl: "", whiteListUrl: "", pvUrl: "", speedUrl: "", customTimeUrl: "", performanceUrl: "", performanceUrlForHippy: "", webVitalsUrl: "", eventUrl: "", setDataReportUrl: "", reportImmediately: true }, this.isWhiteList = false, this.lifeCycle = new K(), this.bean = {}, this.normalLogPipeline = b([ee(this, 5), te, function(e3, t3) {
           var r3 = n2.config;
           t3(e3 = e3.map(function(e4) {
-            var t4, n3 = r3.maxLength || 102400;
+            var t4, n3 = r3.maxLength || 10240;
             try {
               if (!e4.msg || e4.msg.length <= n3) return e4;
               e4.msg = null == (t4 = e4.msg) ? void 0 : t4.substring(0, n3);
             } catch (t5) {
-              e4.msg = E(e4.msg).substring(0, r3.maxLength);
+              e4.msg = v(e4.msg).substring(0, r3.maxLength);
             }
             return e4;
           }));
         }, (h2 = (n2 = this).config, function(e3, t3) {
           var n3 = "number" == typeof h2.repeat ? h2.repeat : 60;
           if (n3 <= 0) return t3(e3);
-          var r3 = (null == h2 ? void 0 : h2.id) + "_error", o3 = R[r3] || {};
+          var r3 = (null == h2 ? void 0 : h2.id) + "_error", i3 = w[r3] || {};
           t3(e3.filter(function(e4) {
-            if (e4.level === v.ERROR || e4.level === v.PROMISE_ERROR || e4.level === v.AJAX_ERROR || e4.level === v.SCRIPT_ERROR || e4.level === v.IMAGE_ERROR || e4.level === v.CSS_ERROR || e4.level === v.MEDIA_ERROR || e4.level === v.RET_ERROR || e4.level === v.BRIDGE_ERROR || e4.level === v.PAGE_NOT_FOUND_ERROR || e4.level === v.WEBSOCKET_ERROR || e4.level === v.LAZY_LOAD_ERROR) {
+            if (e4.level === F.ERROR || e4.level === F.PROMISE_ERROR || e4.level === F.AJAX_ERROR || e4.level === F.SCRIPT_ERROR || e4.level === F.IMAGE_ERROR || e4.level === F.CSS_ERROR || e4.level === F.MEDIA_ERROR || e4.level === F.RET_ERROR || e4.level === F.BRIDGE_ERROR || e4.level === F.PAGE_NOT_FOUND_ERROR || e4.level === F.WEBSOCKET_ERROR || e4.level === F.LAZY_LOAD_ERROR) {
               e4 = e4.msg.slice(0, 200);
-              if (o3[e4] > n3) return O[r3] || Se(r3), false;
-              o3[e4] = 1 + ~~o3[e4], R[r3] = o3;
+              if (i3[e4] > n3) return y[r3] || me(r3), false;
+              i3[e4] = 1 + ~~i3[e4], w[r3] = i3;
             }
             return true;
           }));
-        }), (p2 = this.lifeCycle.emit, d2 = this.config, function(e3, t3) {
-          var n3, r3 = d2.logCreated;
+        }), (d2 = this.lifeCycle.emit, p2 = this.config, function(e3, t3) {
+          var n3, r3 = p2.logCreated;
           return "function" == typeof r3 ? (n3 = e3.filter(function(e4) {
             return false !== r3(e4);
-          }), p2("beforeWrite", n3), t3(n3)) : (p2("beforeWrite", e3), t3(e3));
+          }), d2("beforeWrite", n3), t3(n3)) : (d2("beforeWrite", e3), t3(e3));
         }), (f2 = this, setTimeout(function() {
-          var e3 = f2.config, t3 = e3.pvUrl, n3 = void 0 === t3 ? "" : t3, t3 = e3.spa, e3 = -1 < ["web-sdk", "mp-sdk"].indexOf("mp-sdk");
+          var e3 = f2.config, t3 = e3.pvUrl, n3 = void 0 === t3 ? "" : t3, t3 = e3.spa, e3 = -1 < ["web-sdk", "mp-sdk"].indexOf("web-sdk");
           n3 && (e3 && !t3 || !e3) && f2.sendPipeline([function(e4, t4) {
-            t4({ url: n3, type: b.PV });
-          }], b.PV)(null);
+            t4({ url: n3, type: m.PV });
+          }], m.PV)(null);
         }, 100), function(e3, t3) {
           t3(e3);
-        }), (c2 = l2 = s2 = false, u2 = [], (a2 = this).lifeCycle.on("onConfigChange", function() {
-          i2 && clearTimeout(i2), i2 = setTimeout(function() {
+        }), (u2 = c2 = s2 = false, l2 = [], (a2 = this).lifeCycle.on("onConfigChange", function() {
+          o2 && clearTimeout(o2), o2 = setTimeout(function() {
             var e3, n3;
-            !c2 && a2.config && (c2 = true, e3 = a2.config.whiteListUrl, (n3 = void 0 === e3 ? "" : e3) && a2.sendPipeline([function(e4, t3) {
-              t3({ url: n3, type: b.WHITE_LIST, success: function(e5) {
-                l2 = true;
+            !u2 && a2.config && (u2 = true, e3 = a2.config.whiteListUrl, (n3 = void 0 === e3 ? "" : e3) && a2.sendPipeline([function(e4, t3) {
+              t3({ url: n3, type: m.WHITE_LIST, success: function(e5) {
+                c2 = true;
                 try {
-                  var t4 = e5.data || JSON.parse(e5), n4 = t4.retcode, r3 = t4.result, o3 = void 0 === r3 ? {} : r3, i3 = (0 === n4 && (s2 = o3.is_in_white_list, a2.isWhiteList = s2, 0 <= o3.rate) && o3.rate <= 1 && (a2.config.random = o3.rate, a2.isGetSample = false), a2.isWhiteList && u2.length ? Pe(a2)(u2.splice(0), function() {
-                  }) : !a2.isWhiteList && u2.length && (u2.length = 0), a2.config.onWhitelist);
-                  "function" == typeof i3 && i3(s2);
+                  var t4 = e5.data || JSON.parse(e5), n4 = t4.retcode, r3 = t4.result, i3 = void 0 === r3 ? {} : r3, o3 = (0 === n4 && (s2 = i3.is_in_white_list, a2.isWhiteList = s2, 0 <= i3.rate) && i3.rate <= 1 && (a2.config.random = i3.rate, a2.isGetSample = false), a2.isWhiteList && l2.length ? ye(a2)(l2.splice(0), function() {
+                  }) : !a2.isWhiteList && l2.length && (l2.length = 0), a2.config.onWhitelist);
+                  "function" == typeof o3 && o3(s2);
                 } catch (e6) {
                 }
               }, fail: function() {
-                l2 = true;
+                c2 = true;
               } });
-            }], b.WHITE_LIST)(null), c2 = false);
+            }], m.WHITE_LIST)(null), u2 = false);
           }, a2.config.uin ? 50 : 500);
         }), a2.lifeCycle.on("destroy", function() {
-          u2.length = 0;
+          l2.length = 0;
         }), function(e3, t3) {
           var n3;
-          s2 || null != (n3 = null == (n3 = a2.config) ? void 0 : n3.api) && n3.reportRequest ? t3(e3.concat(u2.splice(0)).map(function(e4) {
-            return xe(e4), e4;
+          s2 || null != (n3 = null == (n3 = a2.config) ? void 0 : n3.api) && n3.reportRequest ? t3(e3.concat(l2.splice(0)).map(function(e4) {
+            return ge(e4), e4;
           })) : (n3 = e3.filter(function(e4) {
-            return e4.level !== v.INFO && e4.level !== v.API_RESPONSE ? (xe(e4), true) : (l2 || (u2.push(e4), 200 <= u2.length && (u2.length = 200)), false);
+            return e4.level !== F.INFO && e4.level !== F.API_RESPONSE ? (ge(e4), true) : (c2 || (l2.push(e4), 200 <= l2.length && (l2.length = 200)), false);
           })).length && t3(n3);
         }), function(e3, t3) {
           try {
-            var n3 = JSON.parse(JSON.stringify(e3)), r3 = (g2.lifeCycle.emit("beforeReport", n3), g2.config.beforeReport);
-            (e3 = "function" == typeof r3 ? e3.filter(function(e4) {
-              return false !== r3(e4);
+            var n3 = e3.filter(function(e4) {
+              return [F.ERROR, F.PROMISE_ERROR, F.AJAX_ERROR, F.SCRIPT_ERROR, F.IMAGE_ERROR, F.CSS_ERROR, F.MEDIA_ERROR, F.WEBSOCKET_ERROR, F.BRIDGE_ERROR, F.BLANK_SCREEN, F.RET_ERROR, F.PAGE_NOT_FOUND_ERROR, F.LAZY_LOAD_ERROR].includes(e4.level);
+            }), r3 = (n3.length && g2.lifeCycle.emit("errorOccurred", n3), e3.forEach(function(n4) {
+              ["ext1", "ext2", "ext3"].forEach(function(e4) {
+                n4[e4] && "string" == typeof n4[e4] && (n4[e4] = n4[e4].slice(0, 1024));
+              }), ["ext4", "ext5", "ext6", "ext7", "ext8", "ext9", "ext10"].forEach(function(e4) {
+                var t4;
+                n4[e4] && (t4 = Number(n4[e4]), n4[e4] = isNaN(t4) ? "-1" : String(g2.validateRange(t4)));
+              });
+            }), JSON.parse(JSON.stringify(e3))), i3 = (g2.lifeCycle.emit("beforeReport", r3), g2.config.beforeReport);
+            (e3 = "function" == typeof i3 ? e3.filter(function(e4) {
+              return false !== i3(e4);
             }) : e3).length && t3(e3);
           } catch (e4) {
           }
-        }, Pe(this)]), this.eventPipeline = y([m(this, 10), (o2 = this, function(e3) {
-          o2.sendPipeline([function(e4, t3) {
+        }, ye(this)]), this.eventPipeline = b([ee(this, 10), (i2 = this, function(e3) {
+          i2.sendPipeline([function(e4, t3) {
             var n3 = e4.map(function(e5) {
-              return { name: e5.name, ext1: e5.ext1 || o2.config.ext1 || "", ext2: e5.ext2 || o2.config.ext2 || "", ext3: e5.ext3 || o2.config.ext3 || "" };
+              var t4 = { name: e5.name, ext1: String(e5.ext1 || i2.config.ext1 || "").slice(0, 1024), ext2: String(e5.ext2 || i2.config.ext2 || "").slice(0, 1024), ext3: String(e5.ext3 || i2.config.ext3 || "").slice(0, 1024) };
+              return (e5.ext4 || i2.config.ext4) && (t4.ext4 = e5.ext4 && i2.validateRange(e5.ext4) || i2.config.ext4 && i2.validateRange(i2.config.ext4)), (e5.ext5 || i2.config.ext5) && (t4.ext5 = e5.ext5 && i2.validateRange(e5.ext5) || i2.config.ext5 && i2.validateRange(i2.config.ext5)), (e5.ext6 || i2.config.ext6) && (t4.ext6 = e5.ext6 && i2.validateRange(e5.ext6) || i2.config.ext6 && i2.validateRange(i2.config.ext6)), (e5.ext7 || i2.config.ext7) && (t4.ext7 = e5.ext7 && i2.validateRange(e5.ext7) || i2.config.ext7 && i2.validateRange(i2.config.ext7)), (e5.ext8 || i2.config.ext8) && (t4.ext8 = e5.ext8 && i2.validateRange(e5.ext8) || i2.config.ext8 && i2.validateRange(i2.config.ext8)), (e5.ext9 || i2.config.ext9) && (t4.ext9 = e5.ext9 && i2.validateRange(e5.ext9) || i2.config.ext9 && i2.validateRange(i2.config.ext9)), (e5.ext10 || i2.config.ext10) && (t4.ext10 = e5.ext10 && i2.validateRange(e5.ext10) || i2.config.ext10 && i2.validateRange(i2.config.ext10)), t4;
             });
-            t3({ url: o2.config.eventUrl + "?payload=" + encodeURIComponent(JSON.stringify(n3)), type: b.EVENT, log: e4 });
-          }], b.EVENT)(e3);
-        })]), this.customTimePipeline = y([m(this, 10), (r2 = this, function(e3) {
+            t3({ url: i2.config.eventUrl + "?payload=" + encodeURIComponent(JSON.stringify(n3)), type: m.EVENT, log: e4 });
+          }], m.EVENT)(e3);
+        })]), this.customTimePipeline = b([ee(this, 10), (r2 = this, function(e3) {
           return r2.sendPipeline([function(e4, t3) {
-            t3({ url: r2.config.customTimeUrl + "?payload=" + encodeURIComponent(JSON.stringify({ custom: e4 })), type: b.CUSTOM, log: e4 });
-          }], b.CUSTOM)(e3);
-        })]), this.timeMap = {}, this.failRequestCount = 0, this.config = (t2 = this.config, void 0 === (e2 = e2.hostUrl) && (e2 = "https://aegis.qq.com"), t2.url = t2.url || e2 + "/collect", t2.offlineUrl = t2.offlineUrl || e2 + "/offline", t2.whiteListUrl = t2.whiteListUrl || e2 + "/collect/whitelist", t2.pvUrl = t2.pvUrl || e2 + "/collect/pv", t2.eventUrl = t2.eventUrl || e2 + "/collect/events", t2.speedUrl = t2.speedUrl || e2 + "/speed", t2.customTimeUrl = t2.customTimeUrl || e2 + "/speed/custom", t2.performanceUrl = t2.performanceUrl || e2 + "/speed/performance", t2.performanceUrlForHippy = t2.performanceUrlForHippy || e2 + "/speed/hippyPerformance", t2.webVitalsUrl = t2.webVitalsUrl || e2 + "/speed/webvitals", t2.setDataReportUrl = t2.SetDataReportUrl || e2 + "/speed/miniProgramData", t2), L.instances.push(this);
+            t3({ url: r2.config.customTimeUrl + "?payload=" + encodeURIComponent(JSON.stringify({ custom: e4 })), type: m.CUSTOM, log: e4 });
+          }], m.CUSTOM)(e3);
+        })]), this.timeMap = {}, this.failRequestCount = 0, this.config = (t2 = this.config, "string" != typeof (e2 = void 0 === (e2 = e2.hostUrl) ? "https://rumt-zh.com" : e2) && (e2 = "https://rumt-zh.com"), t2.url = t2.url || e2 + "/collect", t2.offlineUrl = t2.offlineUrl || e2 + "/offline", t2.whiteListUrl = t2.whiteListUrl || e2 + "/collect/whitelist", t2.pvUrl = t2.pvUrl || e2 + "/collect/pv", t2.eventUrl = t2.eventUrl || e2 + "/collect/events", t2.speedUrl = t2.speedUrl || e2 + "/speed", t2.customTimeUrl = t2.customTimeUrl || e2 + "/speed/custom", t2.performanceUrl = t2.performanceUrl || e2 + "/speed/performance", t2.performanceUrlForHippy = t2.performanceUrlForHippy || e2 + "/speed/hippyPerformance", t2.webVitalsUrl = t2.webVitalsUrl || e2 + "/speed/webvitals", t2.setDataReportUrl = t2.SetDataReportUrl || e2 + "/speed/miniProgramData", t2), S.instances.push(this);
       }
-      function _e() {
-        return null !== me && me.apply(this, arguments) || this;
+      function c(e2, t2, n2, r2) {
+        void 0 === n2 && (n2 = null), this.traceType = e2, this.ignoreUrls = t2, this.urls = n2, this.traceFlag = null == r2 ? 1 : Number(!!r2);
       }
-      e(_e, me = w), _e.prototype.defineApiProperty = function() {
-        var e2 = this;
-        Object.defineProperty(je, "request", { get: function() {
-          return e2.hackHandler.bind(e2);
-        } });
+      o.macos = function() {
+        return t("mac");
+      }, o.ios = function() {
+        return o.iphone() || o.ipod() || o.ipad();
+      }, o.iphone = function() {
+        return !o.windows() && t("iphone");
+      }, o.ipod = function() {
+        return t("ipod");
+      }, o.ipad = function() {
+        var e2 = "MacIntel" === navigator.platform && 1 < navigator.maxTouchPoints;
+        return t("ipad") || e2;
+      }, o.android = function() {
+        return !o.windows() && t("android");
+      }, o.androidPhone = function() {
+        return o.android() && t("mobile");
+      }, o.androidTablet = function() {
+        return o.android() && !t("mobile");
+      }, o.blackberry = function() {
+        return t("blackberry") || t("bb10");
+      }, o.blackberryPhone = function() {
+        return o.blackberry() && !t("tablet");
+      }, o.blackberryTablet = function() {
+        return o.blackberry() && t("tablet");
+      }, o.windows = function() {
+        return t("windows");
+      }, o.windowsPhone = function() {
+        return o.windows() && t("phone");
+      }, o.windowsTablet = function() {
+        return o.windows() && t("touch") && !o.windowsPhone();
+      }, o.fxos = function() {
+        return (t("(mobile") || t("(tablet")) && t(" rv:");
+      }, o.fxosPhone = function() {
+        return o.fxos() && t("mobile");
+      }, o.fxosTablet = function() {
+        return o.fxos() && t("tablet");
+      }, o.meego = function() {
+        return t("meego");
+      }, o.cordova = function() {
+        return window.cordova && "file:" === location.protocol;
+      }, o.nodeWebkit = function() {
+        return "object" == typeof window.process;
+      }, o.mobile = function() {
+        return o.androidPhone() || o.iphone() || o.ipod() || o.windowsPhone() || o.blackberryPhone() || o.fxosPhone() || o.meego();
+      }, o.tablet = function() {
+        return o.ipad() || o.androidTablet() || o.blackberryTablet() || o.windowsTablet() || o.fxosTablet();
+      }, o.desktop = function() {
+        return !o.tablet() && !o.mobile();
       };
-      function q(r2, e2, o2) {
+      function Me() {
+        return { host: new URL(location.href).host, pathname: location.pathname };
+      }
+      function je(r2, e2, i2) {
         return null != e2 && e2.length && "object" == typeof r2 ? e2.reduce(function(e3, t2) {
-          var n2 = r2[t2];
-          return n2 ? e3 + ("" === e3 ? "\n" : "\n\n") + o2 + " header " + t2 + ": " + n2 : e3;
+          var n2 = window.Headers && r2 instanceof Headers ? r2.get(t2) : r2[t2];
+          return n2 ? e3 + ("" === e3 ? "" : "\n\n") + i2 + " header " + t2 + ": " + n2 : e3;
         }, "") : "";
       }
-      var U, Me, De = new f({ name: "reportApiSpeed", override: !(_e.prototype.hackHandler = function(e2) {
-        var t2 = this, n2 = this.prefixHandler(e2);
-        return this.onStartHandler(n2), He(p(p({}, n2), { success: function(e3) {
-          t2.successHandler(e3, n2);
-        }, fail: function(e3) {
-          t2.failHandler(e3, n2);
-        }, complete: function(e3) {
-          t2.completeHandler(e3, n2);
-        } }));
-      }), onNewAegis: function(e2) {
+      function qe(e2, t2) {
+        return e2 && -1 === ["null", "undefined"].indexOf(e2) ? t2 + ": " + e2 : "";
+      }
+      function Be(e2, t2, n2) {
+        void 0 === t2 && (t2 = "");
+        var r2, i2, e2 = "function" == typeof (null == (i2 = e2.api) ? void 0 : i2.resourceTypeHandler) ? null == (i2 = e2.api) ? void 0 : i2.resourceTypeHandler(n2) : "";
+        return -1 === V.indexOf(e2) && (r2 = void 0 === t2 ? "" : t2, i2 = (void 0 === n2 ? "" : n2).split("?")[0], e2 = ae.test(i2) || oe.some(function(e3) {
+          return -1 !== String(r2).indexOf(e3);
+        }) ? "static" : "fetch"), e2;
+      }
+      function Fe(e2, t2) {
+        return e2 ? F.AJAX_ERROR : t2 ? F.RET_ERROR : F.API_RESPONSE;
+      }
+      function We(e2) {
+        return !!e2 && 1e3 < e2;
+      }
+      function Ge(e2, t2) {
+        if (null != (e2 = e2.api) && e2.usePerformanceTiming && "string" == typeof t2.url) {
+          e2 = null == (e2 = performance.getEntriesByName(t2.url)) ? void 0 : e2.pop();
+          if (e2) return { url: t2.url, isHttps: Q(t2.url), method: t2.method, type: t2.type, status: t2.status, duration: Number(e2.duration.toFixed(2)), nextHopProtocol: e2.nextHopProtocol || "", domainLookup: J(e2.domainLookupEnd - e2.domainLookupStart), connectTime: J(e2.connectEnd - e2.connectStart) };
+        }
+        return { url: t2.url, isHttps: Q(t2.url), method: t2.method, type: t2.type, status: t2.status, duration: Number(t2.duration.toFixed(2)), nextHopProtocol: "", domainLookup: n.number, connectTime: n.number };
+      }
+      function Xe() {
+        return window.location.href;
+      }
+      function Ve(e2) {
+        return (e2 = ((e3) => {
+          var t2 = "", n2 = e3.nodeType;
+          if (1 === n2 || 9 === n2 || 11 === n2) {
+            if ("string" == typeof e3.textContent) return e3.textContent;
+            for (var r2 = e3.firstChild; r2; r2 = r2.nextSibling) t2 += Tt(e3);
+          } else if (3 === n2 || 4 === n2) return e3.nodeValue;
+          return t2;
+        })(e2)) ? e2.replace(/^\s+|\s+$/g, "") : "";
+      }
+      var Ke, $e, Je, ze, f, Qe, Ye, d, Ze, et, tt, nt, rt, it, ot, at, st, ct, ut = !(o.isIE = function() {
+        return "ActiveXObject" in window;
+      }), p = [], lt = /^\/[^/]/, ft = false, h = [], dt = (new i({ name: "reportApiSpeed" }), new i({ name: "reportApiSpeed", override: false, onNewAegis: function(e2) {
         var t2, n2;
-        this.override || (null != (n2 = (e2.config || {}).api) && n2.injectTraceHeader && (this.traceRequestHeader = new Z(n2.injectTraceHeader, null != (t2 = null == n2 ? void 0 : n2.injectTraceIgnoreUrls) ? t2 : [], null == n2 ? void 0 : n2.injectTraceUrls)), this.override = true, this.hackRequest(e2.config), this.overrideCallFunction(e2.config), this.overrideCallContainer(e2.config));
-      }, hackRequest: function(u2) {
-        var f2 = this;
-        pe({ apiName: "request", onStart: function(e2) {
-          var t2 = ((null == u2 ? void 0 : u2.api) || {}).injectTraceHeader, n2 = (e2 || {}).url;
-          t2 && (t2 = { host: ((t2 = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/.exec(t2 = n2) || [])[1], t2[2], [t2[3], t2[4], t2[5]][0]), pathname: (t2 = getCurrentPages()).length ? t2[t2.length - 1].route : "" }, t2 = (n2 = f2.traceRequestHeader.generate(n2, {}, { host: t2.host, pathname: t2.pathname }) || {}).name, n2 = n2.value, t2) && n2 && e2 && (e2.header = p(p({}, e2.header), ((e2 = {})[t2] = n2, e2)));
-        }, success: function(e2, t2) {
-          var n2, r2, o2, i2, a2, s2, l2, c2;
-          h(t2.url, u2.hostUrl) || (n2 = { method: t2.method || "get", url: X(t2.url), duration: Date.now() - t2.aegisRequestStartTime, status: e2.statusCode || 0, nextHopProtocol: "", isHttps: ee(t2.url), type: "fetch" }, i2 = null == (i2 = u2.api) ? void 0 : i2.apiDetail, r2 = (o2 = te(e2.data, u2.api, { url: t2.url, ctx: e2, payload: t2.data }) || {}).code, o2 = o2.isErr, c2 = i2 ? d(t2.data, null == (c2 = u2.api) ? void 0 : c2.reqParamHandler, { url: t2.url }) : "", i2 = i2 ? d(e2.data, null == (i2 = u2.api) ? void 0 : i2.resBodyHandler, { url: t2.url }) : "", a2 = (null == (a2 = u2.api) ? void 0 : a2.reqHeaders) || [], a2 = q(null == t2 ? void 0 : t2.header, a2, "req"), s2 = (null == (s2 = u2.api) ? void 0 : s2.resHeaders) || [], s2 = q(null == e2 ? void 0 : e2.header, s2, "res"), l2 = K(null == t2 ? void 0 : t2.header), c2 = "req url: " + n2.url + " \n                        \nres status: " + (e2.statusCode || 0) + " \n                        \nres duration: " + n2.duration + "ms \n                        \nreq method: " + n2.method + " \n                        \nreq param: " + c2 + "  \n                        \nres retcode: " + r2 + " \n                        \nres data: " + i2 + "\n                        " + a2 + "\n                        " + s2, n2.ret = r2, n2.isErr = +o2, n2.payload = t2.data, f2.publishNormalLog({ msg: c2, level: o2 ? v.RET_ERROR : v.API_RESPONSE, ctx: e2, trace: l2 }), f2.publishSpeedLog(n2));
-        }, fail: function(e2, t2) {
-          h(t2.url, u2.hostUrl) || (t2 = { method: t2.method || "get", url: X(t2.url), duration: Date.now() - t2.aegisRequestStartTime, status: 0, nextHopProtocol: "", isHttps: ee(t2.url), type: "fetch" }, f2.publishSpeedLog(t2));
-        } });
-      }, overrideCallFunction: function(n2) {
+        this.override || (this.override = true, null != (n2 = e2.config.api) && n2.injectTraceHeader && (this.traceRequestHeader = new Ce(n2.injectTraceHeader, null != (t2 = null == n2 ? void 0 : n2.injectTraceIgnoreUrls) ? t2 : [], null == n2 ? void 0 : n2.injectTraceUrls, null == n2 ? void 0 : n2.traceFlag)), this.overrideFetch(e2.config, e2), this.overrideXhr(e2.config, e2));
+      }, overrideFetch: function(y2, w2) {
+        var b2 = this, e2 = y2.api, e2 = { name: this.name, traceRequestHeader: null != e2 && e2.injectTraceHeader ? this.traceRequestHeader : null, then: function(d2, p2, h2, g2, m2) {
+          var e3, v2;
+          T(h2, y2.hostUrl) || (e3 = d2.headers ? d2.headers.get("content-type") : "", "fetch" === (v2 = Be(y2, e3 || "", h2)) ? d2.clone().text().then(function(r2) {
+            var e4, i2 = d2.status <= 0 || 400 <= d2.status, t2 = (null == (t2 = y2.api) ? void 0 : t2.reqHeaders) || [], o2 = je(null == g2 ? void 0 : g2.headers, t2, "req"), t2 = (null == (t2 = y2.api) ? void 0 : t2.resHeaders) || [], a2 = je(d2.headers, t2, "res"), s2 = xe(null == g2 ? void 0 : g2.headers), t2 = Y(r2, y2.api, { url: h2, ctx: d2, payload: null == g2 ? void 0 : g2.body }), c2 = t2.code, u2 = t2.isErr, t2 = null == (t2 = y2.api) ? void 0 : t2.apiDetail, l3 = t2 ? Z(null == g2 ? void 0 : g2.body, null == (e4 = y2.api) ? void 0 : e4.reqParamHandler, { url: h2 }) : "", f3 = t2 ? Z(r2, null == (e4 = y2.api) ? void 0 : e4.resBodyHandler, { url: h2, ctx: d2 }) : "";
+            setTimeout(function() {
+              var e5 = Ge(y2, { url: h2, duration: p2, type: v2, status: d2.status || 0, method: (null == g2 ? void 0 : g2.method) || "get" }), t3 = [i2 ? "FETCH_ERROR: " + r2 : "", "fetch req url: " + h2, "res status: " + (e5.status || 0), "res duration: " + e5.duration + "ms", "res startTime: " + m2, o2, a2, "req method: " + (e5.method || "GET"), "res retcode: " + c2, qe(l3, "req param"), qe(f3, "res data")].filter(function(e6) {
+                return e6;
+              }).join("\n\n"), t3 = (e5.payload = null == g2 ? void 0 : g2.body, e5.ret = c2, e5.isErr = +u2, { msg: t3, code: c2, trace: s2, errorMsg: "", level: F.API_RESPONSE }), n2 = y2.slowApiLog && We(null == e5 ? void 0 : e5.duration);
+              t3.level = n2 ? F.SLOW_NET_REQUEST : Fe(i2, u2), !n2 && t3.level === F.API_RESPONSE || b2.publishNormalLog(t3, w2), b2.publishSpeed(e5, w2);
+            }, 0);
+          }).catch(function(e4) {
+            console.info("ignore something error when process resp " + e4);
+          }) : setTimeout(function() {
+            var e4 = Ge(y2, { url: h2, duration: p2, type: v2, status: d2.status || 0, method: (null == g2 ? void 0 : g2.method) || "get" });
+            e4.type = "static", e4.urlQuery = R(h2, true), b2.publishSpeed(e4, w2);
+          }, 0));
+        }, catch: function(t2, n2, r2, i2, o2) {
+          var a2, e3, s2, c2, u2;
+          throw T(r2, y2.hostUrl) || (a2 = Be(y2, "", r2), e3 = (null == (e3 = y2.api) ? void 0 : e3.reqHeaders) || [], s2 = je(null == i2 ? void 0 : i2.headers, e3, "req"), c2 = xe(null == i2 ? void 0 : i2.headers), u2 = null != (e3 = y2.api) && e3.apiDetail ? Z(null == i2 ? void 0 : i2.body, null == (e3 = y2.api) ? void 0 : e3.reqParamHandler, { url: r2 }) : "", setTimeout(function() {
+            var e4 = Ge(y2, { url: r2, duration: n2, type: a2, status: 0, method: (null == i2 ? void 0 : i2.method) || "get" }), e4 = (b2.publishSpeed(e4, w2), "AJAX_ERROR: " + t2 + "\n                          \nreq url: " + r2 + "\n                          \nres status: 0\n                          \nres duration: " + e4.duration + "ms\n                          \nreq method: " + ((null == i2 ? void 0 : i2.method) || "get") + "\n                          \nreq param: " + u2 + "\n                          \nres startTime: " + o2 + "\n                          \n" + s2);
+            b2.publishNormalLog({ msg: e4, level: F.AJAX_ERROR, code: -400, trace: c2, errorMsg: "" }, w2);
+          }, 0)), t2;
+        } }, l2 = (this.hackFetchOptions = e2, this.hackFetchOptions), f2 = null == (e2 = y2.api) ? void 0 : e2.ignoreHackReg;
+        if (void 0 === f2 && (f2 = /\.flv(\?|$)/i), h.find(function(e3) {
+          return e3.name === l2.name;
+        })) throw new Error("name '" + l2.name + "' is already in hackFetch option list");
+        h.push(l2), !ft && window.fetch && (ft = true, ze = window.fetch, window.fetch = function(e3, i2) {
+          void 0 === i2 && (i2 = {});
+          var o2 = "string" == typeof e3 ? e3 : null == e3 ? void 0 : e3.url;
+          if (null != (a2 = null == f2 ? void 0 : f2.test) && a2.call(f2, o2)) return ze(o2, i2);
+          lt.test(o2) && (o2 = "" + location.origin + o2);
+          var t2, n2, r2, a2 = (l2 || {}).traceRequestHeader;
+          a2 && (t2 = void 0 === (t2 = (i2 || {}).headers) ? {} : t2, n2 = (r2 = Me()).host, n2 = (a2 = a2.generate(o2, t2, { host: n2, pathname: r2.pathname }) || {}).name, r2 = a2.value) && n2 && (i2.headers = Object.assign(t2, ((a2 = {})[n2] = r2, a2)));
+          for (var s2 = 0; s2 < h.length; s2++) {
+            var c2 = h[s2];
+            try {
+              "function" == typeof c2.beforeFetch && c2.beforeFetch(o2, i2);
+            } catch (e4) {
+            }
+          }
+          var u2 = Date.now();
+          return ze(e3, i2).then(function(e4) {
+            for (var t3 = e4.clone(), n3 = 0; n3 < h.length; n3++) {
+              var r3 = h[n3];
+              try {
+                "function" == typeof r3.then && r3.then(t3, Date.now() - u2, o2, i2, u2);
+              } catch (e5) {
+              }
+            }
+            return t3;
+          }).catch(function(e4) {
+            for (var t3 = 0; t3 < h.length; t3++) {
+              var n3 = h[t3];
+              try {
+                "function" == typeof n3.catch && n3.catch(e4, Date.now() - u2, o2, i2, u2);
+              } catch (e5) {
+              }
+            }
+            throw e4;
+          });
+        });
+      }, overrideXhr: function(y2, w2) {
+        var i2, b2 = this, e2 = { name: this.name, ignoreHackReg: null == (e2 = y2.api) ? void 0 : e2.ignoreHackReg, traceRequestHeader: null != (e2 = y2.api) && e2.injectTraceHeader ? this.traceRequestHeader : null, send: function(d2, p2) {
+          var e3, t2, h2 = Date.now(), g2 = (((null == y2 ? void 0 : y2.api) || {}).injectTraceHeader && (t2 = (e3 = Me()).host, e3 = (t2 = b2.traceRequestHeader.generate(d2.aegisUrl, {}, { host: t2, pathname: e3.pathname }) || {}).name, t2 = t2.value, e3) && t2 && d2.setRequestHeader(e3, t2), d2.addEventListener("loadend", function() {
+            var u2, n2, e4, l2, f2 = d2.aegisUrl || "";
+            T(f2, y2.hostUrl) || "abort" === d2.failType || (u2 = "", (d2.failType || !d2.status || 400 <= d2.status) && (u2 = d2.failType || "failed"), n2 = Date.now() - h2, e4 = d2.getResponseHeader("content-type") || "", l2 = Be(y2, e4, f2), setTimeout(function() {
+              var r2 = Ge(y2, { url: f2, duration: n2, type: l2, status: d2.status, method: d2.aegisMethod || "get" });
+              if ("fetch" === l2) {
+                var e5 = (null == (e5 = y2.api) ? void 0 : e5.reqHeaders) || [], i3 = je(d2.aegisXhrReqHeader, e5, "req"), e5 = (null == (e5 = y2.api) ? void 0 : e5.resHeaders) || [], t3 = d2.getAllResponseHeaders().split("\r\n").reduce(function(e6, t4) {
+                  t4 = t4.split(": ");
+                  return t4[0] && t4[1] && (e6[t4[0]] = t4[1]), e6;
+                }, {}), o2 = je(t3, e5, "res"), a2 = xe(d2.aegisXhrReqHeader), e5 = null == (t3 = y2.api) ? void 0 : t3.apiDetail, s2 = e5 ? Z(p2, null == (t3 = y2.api) ? void 0 : t3.reqParamHandler, { url: f2 }) : "", c2 = e5 ? Z(d2.response, null == (t3 = y2.api) ? void 0 : t3.resBodyHandler, { url: f2 }) : "";
+                try {
+                  ((e6, t4, n3, r3) => {
+                    var i4, o3, a3;
+                    try {
+                      if ("function" == typeof (null == t4 ? void 0 : t4.retCodeHandlerAsync)) return t4.retCodeHandlerAsync(e6, null == n3 ? void 0 : n3.url, null == n3 ? void 0 : n3.ctx, function(e7) {
+                        var t5 = e7.code;
+                        null != r3 && r3({ code: void 0 === t5 ? E : t5, isErr: e7.isErr });
+                      });
+                      if ("function" == typeof (null == t4 ? void 0 : t4.retCodeHandler)) return a3 = (o3 = t4.retCodeHandler(e6, null == n3 ? void 0 : n3.url, null == n3 ? void 0 : n3.ctx, null == n3 ? void 0 : n3.payload) || {}).code, null != r3 && r3({ code: void 0 === a3 ? E : a3, isErr: o3.isErr });
+                      if (!(e6 = "string" == typeof e6 ? JSON.parse(e6) : e6)) return null != r3 && r3({ code: E, isErr: false });
+                      "function" == typeof (null == (i4 = null == t4 ? void 0 : t4.ret) ? void 0 : i4.join) && (se = [].concat(t4.ret.map(function(e7) {
+                        return e7.toLowerCase();
+                      })));
+                      var s3 = Object.getOwnPropertyNames(e6).filter(function(e7) {
+                        return -1 !== se.indexOf(e7.toLowerCase());
+                      });
+                      if (s3.length) return "\u672A\u77E5" !== (a3 = e6[s3[0]]) && "" !== a3 || (a3 = E), null != r3 && r3({ code: "" + a3, isErr: 0 !== a3 && "0" !== a3 && a3 !== E });
+                      null != r3 && r3({ code: E, isErr: false });
+                    } catch (e7) {
+                      null != r3 && r3({ code: E, isErr: false });
+                    }
+                  })(d2.response, y2.api, { url: f2, ctx: d2, payload: p2 }, function(e6) {
+                    var t4 = e6.code, e6 = e6.isErr, n3 = [u2 ? "AJAX_ERROR: request " + u2 : "", "fetch req url: " + f2, "res status: " + (r2.status || 0), "res duration: " + r2.duration + "ms", "res startTime: " + h2, i3, o2, "req method: " + (r2.method || "GET"), "res retcode: " + t4, qe(s2, "req param"), qe(c2, "res data")].filter(function(e7) {
+                      return e7;
+                    }).join("\n\n");
+                    r2.ret = t4, r2.isErr = +e6, r2.payload = p2, y2.slowApiLog && We(null == r2 ? void 0 : r2.duration) ? b2.publishNormalLog({ msg: n3, level: F.SLOW_NET_REQUEST, code: t4, trace: a2, errorMsg: "" }, w2) : b2.publishNormalLog({ msg: n3, level: Fe(!!u2, e6), code: t4, trace: a2, errorMsg: "" }, w2), b2.publishSpeed(r2, w2);
+                  });
+                } catch (e6) {
+                  r2.ret = E, b2.publishSpeed(r2, w2);
+                }
+              } else r2.type = "static", r2.urlQuery = R(f2, true), b2.publishSpeed(r2, w2);
+              d2.removeEventListener("abort", g2), d2.removeEventListener("error", m2), d2.removeEventListener("timeout", v2);
+            }, 0));
+          }), function() {
+            d2.failType = "abort";
+          }), m2 = function() {
+            d2.failType = "error";
+          }, v2 = function() {
+            d2.failType = "timeout";
+          };
+          d2.addEventListener("abort", g2), d2.addEventListener("error", m2), d2.addEventListener("timeout", v2);
+        } };
+        this.hackXHROptions = e2, i2 = this.hackXHROptions, p.find(function(e3) {
+          return e3.name === i2.name;
+        }) || (p.push(i2), !ut && window.XMLHttpRequest && (Ke = window.XMLHttpRequest.prototype.send, $e = window.XMLHttpRequest.prototype.open, Je = window.XMLHttpRequest.prototype.setRequestHeader, ut = true, window.XMLHttpRequest.prototype.open = function() {
+          this.aegisMethod = arguments[0];
+          var e3, t2 = arguments[1];
+          if (lt.test(t2) && (t2 = "" + location.origin + t2), this.aegisUrl = t2, null == (t2 = null == (e3 = i2.ignoreHackReg) ? void 0 : e3.test) || !t2.call(e3, this.aegisUrl)) if (this.aegisXhrStartTime = Date.now(), this.sendByAegis) o.isIE() || (this.timeout = 5e3);
+          else for (var n2 = 0; n2 < p.length; n2++) {
+            var r2 = p[n2];
+            try {
+              "function" == typeof r2.open && r2.open(this);
+            } catch (e4) {
+            }
+          }
+          return $e.apply(this, arguments);
+        }, window.XMLHttpRequest.prototype.setRequestHeader = function() {
+          var e3, t2, n2;
+          return null != (t2 = null == (n2 = i2.ignoreHackReg) ? void 0 : n2.test) && t2.call(n2, this.aegisUrl) ? Je.apply(this, arguments) : (t2 = arguments[0], n2 = arguments[1], this.aegisXhrReqHeader = null != (e3 = this.aegisXhrReqHeader) ? e3 : {}, null != i2 && i2.traceRequestHeader && -1 < ["traceparent", "b3", "sw8", "sentry-trace"].indexOf(t2) && (this.aegisXhrReqHeader[t2] || (arguments[1] = n2), this.aegisXhrReqHeader[t2]) ? void 0 : (this.aegisXhrReqHeader[t2] = arguments[1], Je.apply(this, arguments)));
+        }, window.XMLHttpRequest.prototype.send = function() {
+          var e3, t2;
+          if (!(null != (t2 = null == (e3 = i2.ignoreHackReg) ? void 0 : e3.test) && t2.call(e3, this.aegisUrl) || this.sendByAegis)) for (var n2 = 0; n2 < p.length; n2++) {
+            var r2 = p[n2];
+            try {
+              "function" == typeof r2.send && r2.send(this, arguments[0]);
+            } catch (e4) {
+            }
+          }
+          return Ke.apply(this, arguments);
+        }));
+      }, publishSpeed: function(n2) {
         var r2 = this;
-        fe({ apiName: "callFunction", success: function(e2, t2) {
-          r2.cloudSuccessCallback(n2, t2, e2, "callFunction");
-        }, fail: function(e2, t2) {
-          t2 = { method: "call", url: "wx.cloud.callFunction." + t2.name, duration: Date.now() - t2.aegisRequestStartTime, status: 0, nextHopProtocol: "", type: "fetch", errMsg: e2.errMsg, isHttps: true };
-          r2.publishSpeedLog(t2);
-        } });
-      }, overrideCallContainer: function(n2) {
-        var r2 = this;
-        fe({ apiName: "callContainer", success: function(e2, t2) {
-          r2.cloudSuccessCallback(n2, t2, e2, "callContainer");
-        }, fail: function(e2, t2) {
-          t2 = { method: "call", url: "wx.cloud.callContainer." + t2.path, duration: Date.now() - t2.aegisRequestStartTime, status: 0, nextHopProtocol: "", type: "fetch", errMsg: e2.errMsg, isHttps: true };
-          r2.publishSpeedLog(t2);
-        } });
-      }, cloudSuccessCallback: function(e2, n2, t2, r2) {
-        var o2 = "callFunction" === r2 ? n2.name : n2.path, i2 = "callFunction" === r2 ? t2.result : t2.data, o2 = { method: "call", url: "wx.cloud." + r2 + "." + o2, duration: Date.now() - n2.aegisRequestStartTime, status: 200, nextHopProtocol: "", type: "fetch", isHttps: true }, a2 = ["apiName", "aegisRequestStartTime", "config", "success", "fail", "complete"], s2 = Object.keys(n2).reduce(function(e3, t3) {
-          return a2.includes(t3) || (e3[t3] = n2[t3]), e3;
-        }, {}), r2 = "callFunction" === r2 ? (null == (r2 = t2.data) ? void 0 : r2.code) || 0 : t2.statusCode, l2 = te(i2, e2.api, { url: o2.url, ctx: t2, payload: s2 }) || {}, c2 = l2.code, l2 = l2.isErr, l2 = void 0 !== l2 && l2, c2 = (o2.ret = c2, o2.isErr = +l2, o2.payload = s2, null == (c2 = e2.api) ? void 0 : c2.apiDetail), s2 = c2 ? d(s2, null == (s2 = e2.api) ? void 0 : s2.reqParamHandler, { url: o2.url }) : "", i2 = c2 ? d(i2, null == (c2 = e2.api) ? void 0 : c2.resBodyHandler, { url: o2.url }) : "", c2 = (null == (c2 = e2.api) ? void 0 : c2.reqHeaders) || [], c2 = q(null == n2 ? void 0 : n2.header, c2, "req"), e2 = (null == (e2 = e2.api) ? void 0 : e2.resHeaders) || [], e2 = q(null == t2 ? void 0 : t2.header, e2, "res"), u2 = K(null == n2 ? void 0 : n2.header), r2 = "req url: " + o2.url + "\n                    \nres status: " + r2 + "\n                    \nres duration: " + o2.duration + "ms \n                    \nreq type: " + o2.type + "\n                    \nreq params: " + s2 + "\n                    \nres retcode: " + o2.ret + "\n                    \nres data: " + i2 + "\n                    " + c2 + "\n                    " + e2;
-        this.publishNormalLog({ msg: r2, level: l2 ? v.RET_ERROR : v.API_RESPONSE, ctx: t2, trace: u2 }), this.publishSpeedLog(o2);
-      }, publishSpeedLog: function(t2) {
         this.$walk(function(e2) {
-          e2.speedLogPipeline(t2);
+          var t2 = r2.$getConfig(e2);
+          "fetch" !== n2.type || "function" != typeof (null == t2 ? void 0 : t2.urlHandler) ? (n2.url = R(n2.url), e2.speedLogPipeline(n2)) : e2.speedLogPipeline(B(B({}, n2), { url: R(t2.urlHandler(n2.url, n2.payload)) }));
         });
       }, publishNormalLog: function(t2) {
         this.$walk(function(e2) {
           e2.normalLogPipeline(t2);
         });
-      } }), Fe = wx || qq, Be = Fe.connectSocket, We = (Ke.prototype.addConfig = function(e2) {
-        var t2 = e2.send, e2 = e2.onError;
-        t2 && this.sends.push(t2), e2 && this.onErrors.push(e2);
-      }, Ke.prototype.toHack = function(t2) {
-        var o2 = this, n2 = (this.onErrors.forEach(function(e2) {
-          t2.onError(e2);
-        }), t2.send);
-        return Object.defineProperty(t2, "send", { get: function() {
-          return function(r2) {
-            return new Promise(function(e2) {
-              n2.call(t2, p(p({}, r2), { fail: function(n3) {
-                o2.sends.forEach(function(e3) {
-                  var t3;
-                  null != (t3 = e3.fail) && t3.call(e3, n3, r2);
-                }), e2(n3);
-              } }));
+      }, destroy: function() {
+        var t2, n2, e2;
+        this.option.publishSpeed = function() {
+        }, this.option.publishNormalLog = function() {
+        }, this.option.hackXHROptions && (t2 = this.option.hackXHROptions, -1 !== (e2 = p.findIndex(function(e3) {
+          return e3.name === t2.name;
+        }))) && p.splice(e2, 1), this.option.hackFetchOptions && (n2 = this.option.hackFetchOptions, -1 !== (e2 = h.findIndex(function(e3) {
+          return e3.name === n2.name;
+        }))) && h.splice(e2, 1), this.option.override = false;
+      } })), pt = {}, ht = new i({ name: "reportBridgeSpeed", override: false, onNewAegis: function(e2) {
+        this.override || (this.override = true, this.overrideBridge(e2));
+      }, publishSpeed: function(t2, n2) {
+        this.$walk(function(e2) {
+          e2 === n2 && e2.speedLogPipeline(t2);
+        });
+      }, overrideBridge: function(c2) {
+        var u2 = this, l2 = c2.config;
+        l2.reportBridgeSpeed && l2.h5Bridge && l2.h5BridgeFunc.length && l2.h5BridgeFunc.forEach(function(e2) {
+          var s2 = l2.h5Bridge[e2];
+          pt[e2] = s2, l2.h5Bridge[e2] = function() {
+            for (var e3 = [], t2 = 0; t2 < arguments.length; t2++) e3[t2] = arguments[t2];
+            var r2 = e3[0], i2 = e3[1], n2 = e3[2], o2 = e3[3], a2 = Date.now();
+            s2(r2, i2, n2, function(e4) {
+              var t3 = Y(e4, l2.api), n3 = t3.code, t3 = t3.isErr, n3 = { url: r2 + "-" + i2, name: r2 + "-" + i2, duration: Date.now() - a2, type: "bridge", ret: n3, isErr: +t3 };
+              u2.publishSpeed(n3, c2), o2(e4);
             });
           };
-        } }), t2;
-      }, Ke), Ve = (e(I, Me = w), I.prototype.addTaskConf = function(e2) {
-        this.taskHack.addConfig(e2);
-      }, I.prototype.defineApiProperty = function() {
-        var e2 = this;
-        Object.defineProperty(Fe, "connectSocket", { get: function() {
-          return e2.hackHandler.bind(e2);
-        } });
-      }, I.prototype.hackHandler = function(e2) {
-        var t2 = this, n2 = this.prefixHandler(e2), e2 = Be(p(p({}, n2), { success: function(e3) {
-          t2.successHandler(e3, n2);
-        }, fail: function(e3) {
-          t2.failHandler(e3, n2);
-        }, complete: function(e3) {
-          t2.completeHandler(e3, n2);
-        } }));
-        return this.taskHack.toHack(e2), e2;
-      }, I), w = new f({ name: "onError", onNewAegis: function(e2) {
-        var t2 = g.getSystemInfoSync().SDKVersion;
-        this.listenError(), this.hackNetWork(e2), this.hackCloud(e2), e2.config.websocketHack && le(t2, "1.7.0") && this.hackWsConnect();
-      }, listenError: function() {
-        var n2 = this;
-        "function" == typeof g.onError && g.onError(function(e2) {
-          e2 && n2.publishErrorLog({ msg: e2, level: v.ERROR });
-        }), i("onUnhandledRejection") && g.onUnhandledRejection(function(e2) {
-          var t2, e2 = e2.reason;
-          !e2 || -1 < JSON.stringify(e2).indexOf("request:fail") || n2.publishErrorLog({ msg: e2, errorMsg: null == (t2 = null == (e2 = (null == e2 ? void 0 : e2.message) || (null == e2 ? void 0 : e2.errMsg) || E(e2)) ? void 0 : e2.slice) ? void 0 : t2.call(e2, 0, 150), level: v.PROMISE_ERROR });
-        }), i("onPageNotFound") && g.onPageNotFound(function(e2) {
-          e2 && n2.publishErrorLog({ msg: e2, level: v.PAGE_NOT_FOUND_ERROR });
-        }), i("onLazyLoadError") && g.onLazyLoadError(function(e2) {
-          e2 && n2.publishErrorLog({ msg: e2, level: v.LAZY_LOAD_ERROR });
         });
-      }, publishErrorLog: function(t2) {
-        this.$walk(function(e2) {
-          e2.normalLogPipeline(t2);
+      }, unHackBridge: function(t2) {
+        Object.keys(pt).forEach(function(e2) {
+          pt[e2] && (t2.config.h5Bridge[e2] = pt[e2]);
+        }), pt = {};
+      }, destroy: function(e2) {
+        this.option.publishSpeed = function() {
+        }, this.option.unHackBridge(e2), this.option.override = false;
+      } }), g = ((g = f = f || {})[g.unknown = 100] = "unknown", g[g.wifi = 1] = "wifi", g[g.net2g = 2] = "net2g", g[g.net3g = 3] = "net3g", g[g.net4g = 4] = "net4g", g[g.net5g = 5] = "net5g", g[g.net6g = 6] = "net6g", (g = Qe = Qe || {})[g.android = 1] = "android", g[g.ios = 2] = "ios", g[g.windows = 3] = "windows", g[g.macos = 4] = "macos", g[g.linux = 5] = "linux", g[g.other = 100] = "other", (g = Ye = Ye || {})[g.unknown = 100] = "unknown", g[g.normal = 0] = "normal", g[g.weak = 1] = "weak", g[g.disconnected = 2] = "disconnected", new i({ name: "device", onNewAegis: function(e2) {
+        e2.extendBean("platform", this.getPlatform()), e2.extendBean("netType", f.unknown), this.getDpi(e2), this.refreshNetworkTypeToBean(e2), this.refreshNetworkStatusToBean(e2);
+      }, getDpi: function(e2) {
+        e2.extendBean("vp", Math.round(window.innerWidth) + " * " + Math.round(window.innerHeight)), window.screen && e2.extendBean("sr", Math.round(window.screen.width) + " * " + Math.round(window.screen.height));
+      }, getPlatform: function() {
+        var t2 = { android: /\bAndroid\s*([^;]+)/, ios: /\b(iPad|iPhone|iPod)\b.*? OS ([\d_]+)/, windows: /\b(Windows NT)/, macos: /\b(Mac OS)/, linux: /\b(Linux)/i }, e2 = Object.keys(t2).find(function(e3) {
+          return t2[e3].test(navigator.userAgent);
         });
-      }, hackNetWork: function(e2) {
-        for (var n2 = this, r2 = e2.config, t2 = 0, o2 = [{ apiName: "request", complete: function(e3, t3) {
-          return n2.requestCompleteError(e3, t3, r2);
-        } }, { apiName: "uploadFile", complete: function(e3, t3) {
-          return n2.uploadFileCompleteError(e3, t3, r2);
-        } }, { apiName: "downloadFile", complete: function(e3, t3) {
-          return n2.downloadFileCompleteError(e3, t3, r2);
-        } }]; t2 < o2.length; t2++) {
-          var i2 = o2[t2], a2 = i2.apiName, i2 = i2.complete;
-          pe({ apiName: a2, complete: i2 });
-        }
-      }, requestCompleteError: function(e2, t2, n2) {
-        var r2 = e2.errMsg, o2 = e2.statusCode;
-        h(t2.url, n2.hostUrl) || (r2 = this.getErrorType({ errMsg: r2, statusCode: o2 })) && this.publishNetWorkError({ apiName: "request", opts: t2, res: e2, config: n2, type: r2 });
-      }, downloadFileCompleteError: function(e2, t2, n2) {
-        var r2 = e2.errMsg, o2 = e2.statusCode, i2 = e2.filePath, a2 = e2.tempFilePath, r2 = this.getErrorType({ errMsg: r2, statusCode: o2 });
-        r2 && this.publishNetWorkError({ apiName: "downloadFile", opts: t2, res: e2, config: n2, type: r2 }, { extraInfo: "\nres filePath: " + i2 + "\nres tempFilePath: " + a2 });
-      }, uploadFileCompleteError: function(e2, t2, n2) {
-        var r2 = e2.errMsg, o2 = e2.statusCode, r2 = this.getErrorType({ errMsg: r2, statusCode: o2 });
-        r2 && this.publishNetWorkError({ apiName: "uploadFile", opts: t2, res: e2, config: n2, type: r2 });
-      }, hackCloud: function(e2) {
-        for (var n2 = this, r2 = e2.config, t2 = 0, o2 = [{ apiName: "callFunction", complete: function(e3, t3) {
-          return n2.callFunctionCompleteError(e3, t3, r2);
-        } }, { apiName: "callContainer", complete: function(e3, t3) {
-          return n2.callContainerCompleteError(e3, t3, r2);
-        } }]; t2 < o2.length; t2++) {
-          var i2 = o2[t2], a2 = i2.apiName, i2 = i2.complete;
-          fe({ apiName: a2, complete: i2 });
-        }
-      }, callFunctionCompleteError: function(e2, t2, n2) {
-        var r2 = e2.errMsg, r2 = this.getErrorType({ errMsg: r2 });
-        r2 && this.publishNetWorkError({ apiName: "cloud.callFunction", opts: t2, res: e2, config: n2, type: r2 });
-      }, callContainerCompleteError: function(e2, t2, n2) {
-        var r2 = e2.errMsg, o2 = e2.statusCode, r2 = this.getErrorType({ errMsg: r2, statusCode: o2 });
-        r2 && this.publishNetWorkError({ apiName: "cloud.callContainer", opts: t2, res: e2, config: n2, type: r2 });
-      }, publishNetWorkError: function(e2, t2) {
-        var t2 = (null == t2 ? void 0 : t2.extraInfo) || "", n2 = e2.apiName, r2 = e2.opts, o2 = e2.res, i2 = e2.config, e2 = e2.type, a2 = o2.errMsg, s2 = o2.statusCode, l2 = o2.data, c2 = r2.url, u2 = te(l2, i2.api, { url: c2, ctx: o2, payload: r2.data }).code, f2 = null == (f2 = i2.api) ? void 0 : f2.apiDetail, p2 = f2 ? d(r2.data, null == (p2 = i2.api) ? void 0 : p2.reqParamHandler, { url: c2 }) : "", l2 = f2 ? d(l2, null == (f2 = i2.api) ? void 0 : f2.resBodyHandler, { url: c2 }) : "", c2 = (null == (f2 = i2.api) ? void 0 : f2.reqHeaders) || [], f2 = q(null == r2 ? void 0 : r2.header, c2, "req"), i2 = (null == (c2 = i2.api) ? void 0 : c2.resHeaders) || [], c2 = q(null == o2 ? void 0 : o2.header, i2, "res"), o2 = K(null == r2 ? void 0 : r2.header);
-        this.publishErrorLog({ msg: "AJAX_ERROR: " + n2 + " " + e2 + "\n                  \nreq url: " + r2.url + "\n                  \nres status: " + (s2 || 0) + "\n                  \nres duration: " + (Date.now() - r2.aegisRequestStartTime) + "ms\n                  \nreq method: " + (r2.method || "get") + "\n                  \nreq param: " + p2 + "\n                  \nres retcode: " + u2 + "\n                  \nres data: " + l2 + "\n                  \nerrMsg: " + a2.slice(0, 1e3) + "\n                  " + t2 + "\n                  " + f2 + "\n                  " + c2, level: v.AJAX_ERROR, trace: o2 });
-      }, getErrorType: function(e2) {
-        var t2 = e2.errMsg, e2 = e2.statusCode, n2 = "", r2 = t2;
-        return ["timeout", "time out", "ERR_CONNECTION_TIMED_OUT", "ERR_TIMED_OUT", "\u8D85\u65F6"].some(function(e3) {
-          return String(r2 || "").includes(e3);
-        }) ? n2 = "timeout" : 400 <= e2 ? n2 = "error" : (-1 < t2.indexOf("fail") || !e2 || e2 < 0) && (n2 = "failed"), n2;
-      }, hackWsConnect: function() {
-        var e2, t2, n2 = this;
-        pe({ apiName: "sendSocketMessage", fail: function(e3) {
-          n2.publishSocketError(e3);
-        } }), e2 = (t2 = { connectCallback: { fail: function(e3) {
-          n2.publishSocketError(e3);
-        } }, taskOpt: { onError: function(e3) {
-          n2.publishSocketError(e3);
-        }, send: { fail: function(e3) {
-          n2.publishSocketError(e3);
-        } } } }).connectCallback, t2 = t2.taskOpt, U ? U.addCallback(e2) : U = new Ve(e2), t2 && U.addTaskConf(t2);
-      }, publishSocketError: function(e2) {
-        e2 && this.publishErrorLog({ msg: e2.errMsg, level: v.WEBSOCKET_ERROR });
-      } }), Ge = new f({ name: "reportAssetSpeed", isStart: false, onNewAegis: function(e2) {
-        this.isStart || (this.isStart = true, this.start(e2));
-      }, start: function(t2) {
-        var e2, n2 = this;
-        g.getPerformance && "function" == typeof (e2 = g.getPerformance()).createObserver && e2.createObserver(function(e3) {
-          e3 = e3.getEntries();
-          null != e3 && e3.forEach(function(e4) {
-            h(e4.uri, t2.config.hostUrl) || "number" != typeof e4.duration || e4.duration <= 0 || n2.publishAssetLog(e4);
+        return e2 ? Qe[e2] : Qe.other;
+      }, refreshNetworkTypeToBean: function(t2) {
+        var n2 = this, e2 = t2.config;
+        e2 && ("function" == typeof e2.getNetworkType ? e2.getNetworkType : gt)(function(e3) {
+          f[e3] || (e3 = f.unknown), t2.extendBean("netType", e3), n2.NetworkRefreshTimer = setTimeout(function() {
+            n2.refreshNetworkTypeToBean(t2), clearTimeout(n2.NetworkRefreshTimer);
+          }, 1e4);
+        });
+      }, refreshNetworkStatusToBean: function(t2) {
+        var e2, n2 = this, r2 = t2.config;
+        r2 && null != (e2 = "function" == typeof r2.getNetworkStatus ? r2.getNetworkStatus : e2) && e2(function(e3) {
+          void 0 === Ye[e3] && (e3 = Ye.unknown), t2.extendBean("netStatus", e3), n2.NetworkStatusRefreshTimer = setTimeout(function() {
+            n2.refreshNetworkStatusToBean(t2), clearTimeout(n2.NetworkStatusRefreshTimer);
+          }, 1e4);
+        });
+      } })), gt = function(e2) {
+        var t2 = "", n2 = navigator.userAgent.match(/NetType\/(\w+)/);
+        n2 ? t2 = n2[1] : navigator.connection && (t2 = navigator.connection.effectiveType || navigator.connection.type), e2((n2 = t2 = t2 || E, 0 <= (n2 = String(n2).toLowerCase()).indexOf("4g") ? f.net4g : 0 <= n2.indexOf("wifi") ? f.wifi : 0 <= n2.indexOf("5g") ? f.net5g : 0 <= n2.indexOf("6g") ? f.net6g : 0 <= n2.indexOf("3g") ? f.net3g : 0 <= n2.indexOf("2g") ? f.net2g : f.unknown));
+      }, mt = window.WebSocket, O = [], vt = { construct: function(e2, t2) {
+        var r2 = new e2(t2[0], t2[1]);
+        return r2.originSend = r2.send, r2.addEventListener("error", function(e3) {
+          var e3 = (null == e3 ? void 0 : e3.currentTarget) || {}, t3 = e3.url, n2 = e3.readyState;
+          null != O && O.forEach(function(e4) {
+            e4 = e4.onErr;
+            null != e4 && e4({ msg: "\u65E0\u6CD5\u83B7\u77E5\u5177\u4F53\u9519\u8BEF\u4FE1\u606F\uFF0C\u9700\u5728\u6D4F\u89C8\u5668\u63A7\u5236\u53F0\u67E5\u770B\uFF01", readyState: n2, connectUrl: t3 });
           });
-        }).observe({ entryTypes: ["resource"] });
-      }, generateLog: function(e2) {
-        var t2, n2, r2 = e2.transferSize;
-        return { url: (t2 = e2.uri, void 0 === n2 && (n2 = 2048), String(t2).replace(M, "").slice(0, n2)), method: "get", duration: Math.round(100 * e2.duration) / 100, status: 200, type: "static", isHttps: true, urlQuery: X(e2.uri, true), nextHopProtocol: "", domainLookup: 0, connectTime: 0, transferSize: 0 < r2 ? r2 : -1 };
-      }, publishAssetLog: function(t2) {
-        var n2 = this;
-        this.$walk(function(e2) {
-          e2.speedLogPipeline(n2.generateLog(t2));
-        });
-      } }), Je = ["onLaunch", "onHide", "onError", "onLoad", "onReady", "onShow", "onUnload"], ze = new f({ name: "pagePerformance", pageNavigationStartTime: {}, onNewAegis: function(e2) {
-        try {
-          i("getPerformance") && this.reportPerformance(e2), this.setPagePV(e2), this.reportSetDataTiming(e2);
-        } catch (e3) {
-        }
-      }, reportPerformance: function(f2) {
-        var p2 = this, e2 = g.getPerformance();
-        "function" == typeof e2.createObserver && null != (e2 = null == e2 ? void 0 : e2.createObserver(function(e3) {
-          var t2 = {}, n2 = null == (n2 = e3.getEntriesByName("appLaunch")) ? void 0 : n2[0], r2 = null == (r2 = e3.getEntriesByName("firstRender")) ? void 0 : r2[0], o2 = null == (o2 = e3.getEntriesByName("evaluateScript")) ? void 0 : o2[0], i2 = null == (i2 = e3.getEntriesByName("route")) ? void 0 : i2[0], a2 = null == (a2 = null == (a2 = e3.getEntriesByName("firstPaint")) ? void 0 : a2[0]) ? void 0 : a2.startTime, s2 = null == (s2 = null == (s2 = e3.getEntriesByName("largestContentfulPaint")) ? void 0 : s2[0]) ? void 0 : s2.startTime, l2 = null == (l2 = null == (l2 = e3.getEntriesByName("firstContentfulPaint")) ? void 0 : l2[0]) ? void 0 : l2.startTime, c2 = null == (c2 = (null == (c2 = e3.getEntriesByName("firstPaint")) ? void 0 : c2[0]) || (null == (c2 = e3.getEntriesByName("route")) ? void 0 : c2[0]) || (null == (c2 = e3.getEntriesByName("appLaunch")) ? void 0 : c2[0])) ? void 0 : c2.pageId, u2 = null == (e3 = (null == (u2 = e3.getEntriesByName("route")) ? void 0 : u2[0]) || (null == (u2 = e3.getEntriesByName("appLaunch")) ? void 0 : u2[0])) ? void 0 : e3.startTime;
-          c2 && (p2.pageNavigationStartTime[c2] = null, u2) && (p2.pageNavigationStartTime[c2] = u2), n2 && (t2.appLaunch = n2.duration || -1), r2 && (t2.firstScreenTiming = r2.duration || -1), o2 && (t2.scriptEvaluateTiming = o2.duration || -1), i2 && (t2.pageRouteTiming = i2.duration || -1), a2 && u2 ? t2.firstPaintTiming = Math.max(a2 - u2, -1) : a2 && p2.pageNavigationStartTime[c2] && (t2.firstPaintTiming = Math.max(a2 - p2.pageNavigationStartTime[c2], -1)), s2 && u2 ? t2.LCP = Math.max(s2 - u2, -1) : s2 && p2.pageNavigationStartTime[c2] && (t2.LCP = Math.max(s2 - p2.pageNavigationStartTime[c2], -1)), l2 && u2 ? t2.FCP = Math.max(l2 - u2, -1) : l2 && p2.pageNavigationStartTime[c2] && (t2.FCP = Math.max(l2 - p2.pageNavigationStartTime[c2], -1)), 0 < Object.keys(t2).length && p2.publish(t2, f2);
-        })) && e2.observe({ entryTypes: ["navigation", "render", "script"] });
-      }, publish: function(t2, n2) {
-        var e2, r2, o2, i2 = [], a2 = n2.config, s2 = -1 === (null == (e2 = n2.config.performanceUrl) ? void 0 : e2.indexOf("?")) ? "?" : "&";
-        for (r2 in t2) i2.push(r2 + "=" + t2[r2]);
-        "function" == typeof a2.urlHandler ? (o2 = a2.urlHandler() || window.location.href, this.$walk(function(e3) {
-          e3.send({ url: n2.config.performanceUrl + s2 + i2.join("&") + "&from=" + encodeURIComponent(o2), beanFilter: ["from"], type: b.PERFORMANCE, log: t2 });
-        })) : this.$walk(function(e3) {
-          e3.send({ url: n2.config.performanceUrl + s2 + i2.join("&"), type: b.PERFORMANCE, log: t2 });
-        });
-      }, setPagePV: function(t2) {
-        var n2 = this;
-        g.onAppRoute && g.onAppRoute(function(e2) {
-          "appLaunch" === e2.openType && !t2.config.spa || (n2.$walk(function(e3) {
-            e3.send({ url: "" + e3.config.pvUrl, type: b.PV });
-          }), n2.reportPageLoaded(e2));
-        });
-      }, reportPageLoaded: function(e2) {
-        e2 = "infoType: behaviorBacktracking\ndataType: pageLoadAndRoute\npageLoadedPath: " + e2.path + "\nopenType: " + e2.openType;
-        this.publishNormalLog({ msg: e2, level: v.INFO });
-      }, publishNormalLog: function(t2) {
-        this.$walk(function(e2) {
-          e2.normalLogPipeline(t2);
-        });
-      }, reportSetDataTiming: function(t2) {
-        var e2, o2, s2, l2, n2, i2, a2, c2, u2 = this, r2 = t2.config.setDataReportConfig, r2 = void 0 === r2 ? {} : r2;
-        true !== r2.disabled && (e2 = r2.timeThreshold, o2 = false !== r2.withDataPaths, s2 = e2 && 0 < +e2 ? +e2 : 30, l2 = y([m(t2, 10), function(e3) {
-          e3 = e3.map(function(e4) {
-            return { type: b.SET_DATA, component: e4.from, duration: e4.duration, fields: e4.dataPaths && e4.dataPaths.length ? e4.dataPaths.sort().join(";") : void 0, size: e4.size };
-          });
-          t2.send({ url: t2.config.setDataReportUrl + "?payload=" + encodeURIComponent(JSON.stringify({ miniProgramData: e3 })), type: b.SET_DATA, log: e3 });
-        }]), n2 = Page, i2 = Component, a2 = function(e3, t3) {
-          var i3, a3, n3 = t3.updateStartTimestamp, r3 = t3.updateEndTimestamp, t3 = t3.dataPaths, t3 = void 0 === t3 ? [] : t3, r3 = r3 - n3;
-          isNaN(r3) || r3 < s2 || (n3 = { from: e3.is, duration: r3 }, o2 && 0 < t3.length && Object.assign(n3, { dataPaths: t3.slice(0, 30), size: (r3 = t3, a3 = 0, null != (i3 = e3) && i3.data ? (r3.forEach(function(e4) {
-            for (var t4 = i3.data[e4[0]], n4 = 1, r4 = e4.length; n4 < r4; n4++) t4[e4[n4]] && (t4 = t4[e4[n4]]);
-            var o3 = "";
-            try {
-              o3 = JSON.stringify(t4);
-            } catch (e5) {
-              o3 = "";
+        }), Object.defineProperty(r2, "send", { get: function() {
+          return function(e3) {
+            null != (t3 = r2.originSend) && t3.call(r2, e3);
+            var t3 = r2.readyState;
+            if (t3 !== WebSocket.OPEN) {
+              var n2 = { readyState: t3, connectUrl: r2.url };
+              switch (t3) {
+                case WebSocket.CLOSED:
+                  O.forEach(function(e4) {
+                    e4 = e4.sendErr;
+                    null != e4 && e4(B({ msg: "\u6D88\u606F\u53D1\u9001\u5931\u8D25\uFF0C\u8FDE\u63A5\u5DF2\u5173\u95ED\uFF01" }, n2));
+                  });
+                  break;
+                case WebSocket.CONNECTING:
+                  O.forEach(function(e4) {
+                    (0, e4.sendErr)(B({ msg: "\u6D88\u606F\u53D1\u9001\u5931\u8D25\uFF0C\u6B63\u5728\u8FDE\u63A5\u4E2D\uFF01" }, n2));
+                  });
+                  break;
+                case WebSocket.CLOSING:
+                  O.forEach(function(e4) {
+                    (0, e4.sendErr)(B({ msg: "\u6D88\u606F\u53D1\u9001\u5931\u8D25\uFF0C\u8FDE\u63A5\u6B63\u5728\u5173\u95ED\uFF01" }, n2));
+                  });
+              }
             }
-            a3 += 2 * (void 0 === o3 ? "" : o3).replace(/[\u4e00-\u9fa5]/g, "aa").length;
-          }), a3 = Math.min(a3, 10485760)) : a3) }), l2(n3));
-        }, c2 = function(r3) {
-          var e3 = "infoType: behaviorBacktracking\ndataType: tapEvent" + Object.keys(r3[0]).reduce(function(e4, t3) {
-            var n3 = "";
-            try {
-              n3 = t3 + ": " + JSON.stringify(r3[0][t3]);
-            } catch (e5) {
-              n3 = "";
+          };
+        } }), r2;
+      } }, yt = new i({ name: "onError" }), wt = yt = new i({ name: "onError", onNewAegis: function(e2) {
+        this.startListen(e2);
+      }, startListen: function(i2) {
+        function e2(e3) {
+          var t3, n3 = e3 && v(e3.reason);
+          n3 && s2.publishErrorLog({ msg: "PROMISE_ERROR: " + n3, errorMsg: null == (t3 = null == (e3 = (null == (t3 = e3.reason) ? void 0 : t3.message) || (null == (t3 = e3.reason) ? void 0 : t3.errMsg) || n3) ? void 0 : e3.slice) ? void 0 : t3.call(e3, 0, 150), level: F.PROMISE_ERROR }, i2);
+        }
+        function t2(e3) {
+          var t3;
+          if (e3 = (null == e3 ? void 0 : e3.target) || (null == e3 ? void 0 : e3.srcElement)) {
+            var n3 = e3.src || e3.href || "", e3 = e3.tagName, e3 = void 0 === e3 ? "script" : e3;
+            if (!(T(t3 = n3, i2.config.hostUrl) || -1 < window.location.href.indexOf(t3))) {
+              var r3 = { msg: e3 + " load fail: " + n3, level: F.INFO };
+              if (/\.js$/.test(n3)) r3.level = F.SCRIPT_ERROR;
+              else if (/\.css$/.test(n3)) r3.level = F.CSS_ERROR;
+              else switch (e3.toLowerCase()) {
+                case "script":
+                  r3.level = F.SCRIPT_ERROR;
+                  break;
+                case "link":
+                  r3.level = F.CSS_ERROR;
+                  break;
+                case "img":
+                  r3.level = F.IMAGE_ERROR;
+                  break;
+                case "audio":
+                case "video":
+                  r3.level = F.MEDIA_ERROR;
+                  break;
+                default:
+                  return;
+              }
+              s2.publishErrorLog(r3, i2);
             }
-            return e4 + "\n" + n3;
-          }, "");
-          u2.publishNormalLog({ msg: e3, level: v.INFO });
-        }, Page = function(t3) {
-          var e3 = t3.onReady;
-          return t3.onReady = function() {
-            var t4 = this;
-            return "function" == typeof this.setUpdatePerformanceListener && this.setUpdatePerformanceListener({ withDataPaths: o2 }, function(e4) {
-              a2(t4, e4);
-            }), null == e3 ? void 0 : e3.call(this);
-          }, Object.keys(t3).forEach(function(e4) {
-            var n3;
-            "function" != typeof t3[e4] || Je.includes(e4) || (n3 = t3[e4], t3[e4] = function() {
-              for (var e5 = [], t4 = 0; t4 < arguments.length; t4++) e5[t4] = arguments[t4];
-              return null != e5 && e5[0] && "tap" === e5[0].type && c2(e5), null == n3 ? void 0 : n3.apply(this, e5);
-            });
-          }), n2(t3);
-        }, Component = function(e3) {
-          e3.lifetimes && e3.lifetimes.attached ? (n3 = e3.lifetimes.attached, e3.lifetimes.attached = function() {
-            var t4 = this;
-            return "function" == typeof this.setUpdatePerformanceListener && this.setUpdatePerformanceListener({ withDataPaths: o2 }, function(e4) {
-              a2(t4, e4);
-            }), null == n3 ? void 0 : n3.call(this);
-          }) : (r3 = e3.attached, e3.attached = function() {
-            var t4 = this;
-            return "function" == typeof this.setUpdatePerformanceListener && this.setUpdatePerformanceListener({ withDataPaths: o2 }, function(e4) {
-              a2(t4, e4);
-            }), null == r3 ? void 0 : r3.call(this);
-          });
-          var n3, r3, t3 = e3.methods;
-          return t3 && "[object Object]" === Object.prototype.toString.call(t3) && Object.keys(t3).forEach(function(e4) {
-            var n4;
-            "function" == typeof t3[e4] && (n4 = t3[e4], t3[e4] = function() {
-              for (var e5 = [], t4 = 0; t4 < arguments.length; t4++) e5[t4] = arguments[t4];
-              return null != e5 && e5[0] && "tap" === e5[0].type && c2(e5), null == n4 ? void 0 : n4.apply(this, e5);
-            });
-          }), i2(e3);
-        });
-      } }), f = new f({ name: "reportLoadPackageSpeed", isLoaded: false, onNewAegis: function(e2) {
-        this.isLoaded || (this.isLoaded = true, this.start(e2));
-      }, start: function() {
-        var e2, t2 = this;
-        g.getPerformance && "function" == typeof (e2 = g.getPerformance()).createObserver && e2.createObserver(function(e3) {
-          e3 = e3.getEntries();
-          null != e3 && e3.forEach(function(e4) {
-            "number" != typeof e4.duration || e4.duration <= 0 || t2.publishPackageLog(e4);
-          });
-        }).observe({ entryTypes: ["loadPackage"] });
-      }, generateLog: function(e2) {
-        return [{ type: b.LOAD_PACKAGE, packageName: e2.packageName, size: Math.round(100 * e2.packageSize) / 100, duration: Math.round(100 * e2.duration) / 100 }];
-      }, publishPackageLog: function(n2) {
-        var r2 = this;
+          }
+        }
+        var n2, r2, o2, a2, s2 = this, c2 = window.onerror;
+        window.onerror = function() {
+          for (var e3 = [], t3 = 0; t3 < arguments.length; t3++) e3[t3] = arguments[t3];
+          var n3, r3 = v(e3[0]);
+          "string" != typeof (n3 = r3) || !n3 || q.some(function(e4) {
+            return -1 < n3.indexOf(e4);
+          }) || j.some(function(e4) {
+            return -1 < n3.indexOf(e4);
+          }) || s2.publishErrorLog({ msg: (r3 || "") + " @ (" + (v(e3[1]) || "") + ":" + (e3[2] || 0) + ":" + (e3[3] || 0) + ")\n          \n" + v(e3[4] || ""), level: F.ERROR }, i2), null != c2 && c2.call.apply(c2, u([window], e3));
+        }, window.addEventListener("unhandledrejection", e2);
+        window.document.addEventListener("error", t2, true), i2.lifeCycle.on("destroy", function() {
+          0 === yt.countInstance() && (window.document.removeEventListener("unhandledrejection", e2), window.document.removeEventListener("error", t2, true));
+        }), i2.config.websocketHack && (n2 = { key: i2.config.id + "-" + this.name, onErr: function(e3) {
+          var t3;
+          null != (t3 = s2.publishWsErrorLog) && t3.call(s2, e3, i2);
+        }, sendErr: function(e3) {
+          var t3;
+          null != (t3 = s2.publishWsErrorLog) && t3.call(s2, e3, i2);
+        } }, this.hackWebsocketConfig = n2, n2 = this.hackWebsocketConfig, window.Proxy) && window.WebSocket && (r2 = window.WebSocket, window && !r2.isHack && (o2 = new Proxy(WebSocket, vt), r2.isHack = true, window.WebSocket = o2), a2 = n2, O.find(function(e3) {
+          return e3.key === a2.key;
+        }) || a2 && O.push(a2));
+      }, publishErrorLog: function(t2, n2) {
         this.$walk(function(e2) {
-          var t2 = r2.generateLog(n2);
-          e2.send({ url: e2.config.setDataReportUrl + "?payload=" + encodeURIComponent(JSON.stringify({ miniProgramData: t2 })), type: b.LOAD_PACKAGE, log: t2 });
+          e2 === n2 && e2.normalLogPipeline(t2);
+        });
+      }, publishWsErrorLog: function(e2, t2) {
+        var n2 = e2.connectUrl;
+        this.publishErrorLog({ msg: "WEBSOCKET_ERROR: \n              connect: " + n2 + "\n              readyState: " + e2.readyState + "\n              msg: " + e2.msg, level: F.WEBSOCKET_ERROR }, t2);
+      }, destroy: function() {
+        var t2, e2;
+        this.option.publishErrorLog = function() {
+        }, this.option.hackWebsocketConfig && (t2 = this.option.hackWebsocketConfig, window.WebSocket = mt, -1 !== (e2 = O.findIndex(function(e3) {
+          return e3.key === t2.key;
+        }))) && O.splice(e2, 1);
+      } }), bt = (new i({ name: "clickElementLog" }), function(e2) {
+        if ("" !== e2.id && e2.id) return 'id("' + e2.id + '")';
+        if (e2 === document.body) return e2.tagName;
+        if (e2 instanceof Document) return "document";
+        var t2 = 0;
+        if (e2.parentNode) for (var n2 = e2.parentNode.childNodes, r2 = 0; r2 < n2.length; r2 += 1) {
+          var i2 = n2[r2];
+          if (i2 === e2) return bt(e2.parentNode) + "/" + e2.tagName + "[" + (t2 + 1) + "]";
+          1 === i2.nodeType && i2.tagName === e2.tagName && (t2 += 1);
+        }
+        return 0;
+      }), Et = function(e2) {
+        return e2 instanceof Array ? new Map(e2.map(function(e3) {
+          return [e3, true];
+        })) : /* @__PURE__ */ new Map();
+      }, Rt = function(e2, t2) {
+        return "string" == typeof e2 ? e2.split(t2) : [];
+      }, Tt = function(e2) {
+        if (3 === e2.nodeType || 4 === e2.nodeType) return e2.nodeValue || "";
+        if (1 !== e2.nodeType) return "";
+        if ("string" == typeof e2.textContent) return e2.textContent;
+        for (var t2 = "", n2 = e2.firstChild; n2; n2 = n2.nextSibling) t2 += Tt(n2);
+        return t2;
+      }, St = new i({ name: "clickElementLog", listeners: [], onNewAegis: function(e2) {
+        this.startListen(e2);
+      }, startListen: function(a2) {
+        for (var e2 = function(o2) {
+          t2.listeners.push(((e3, t3, n3, r3) => {
+            function i2(e4) {
+              var t4 = document.documentElement;
+              t4 && n3.call(t4, e4, e4.target);
+            }
+            return void 0 === r3 && (r3 = true), e3.addEventListener(t3, i2, r3), { destroy: function() {
+              e3.removeEventListener(t3, i2, r3);
+            } };
+          })(document, o2, function(e3, t3) {
+            var n3, r3, i2;
+            t3 && !((e4, t4) => {
+              n4 = Et((null == (n4 = (e4 = e4).ignoreElements) ? void 0 : n4.ignoreClasses) || []) || /* @__PURE__ */ new Map();
+              for (var n4, r4 = (e4 = { ignoreIds: Et((null == (e4 = e4.ignoreElements) ? void 0 : e4.ignoreIds) || []) || /* @__PURE__ */ new Map(), ignoreClasses: n4 }).ignoreClasses, i3 = e4.ignoreIds, o3 = !(0 === i3.size && 0 === r4.size), a3 = t4, s2 = (Rt(t4.getAttribute("id") || "", " "), Rt(t4.getAttribute("class") || "", ""), 0), c2 = false; a3 && o3 && a3.getAttribute; ) {
+                if (c2) return true;
+                if (10 <= s2) break;
+                for (var u2 = Rt(a3.getAttribute("id") || "", " "), l2 = Rt(a3.getAttribute("class") || "", ""), f2 = 0, d2 = u2; f2 < d2.length; f2++) {
+                  var p2 = d2[f2];
+                  if (i3.has(p2)) {
+                    c2 = true;
+                    break;
+                  }
+                }
+                for (var h2 = 0, g2 = l2; h2 < g2.length; h2++) {
+                  var m2 = g2[h2];
+                  if (r4.has(m2)) {
+                    c2 = true;
+                    break;
+                  }
+                }
+                s2 += 1, a3 = a3.parentNode || a3.parentElement;
+              }
+              return false;
+            })(a2.config, t3) && (n3 = bt(t3), r3 = Ve(t3), i2 = t3.getBoundingClientRect && t3.getBoundingClientRect(), t3 = { op: o2, view_type: (null == t3 ? void 0 : t3.nodeName) || "", view_text: r3.slice(0, 127), view_tag: n3, page: Xe(), page_id: Xe(), view_pos: { p0: (parseInt(String(i2.left), 10) || -1) + "," + (parseInt(String(i2.top), 10) || -1), p1: (parseInt(String(i2.left + window.scrollX), 10) || -1) + "," + (parseInt(String(i2.top + window.scrollY), 10) || -1) } }, a2.normalLogPipeline({ msg: t3, level: F.CLICK_EVENT, errorMsg: "" }));
+          }, true));
+        }, t2 = this, n2 = 0, r2 = Object.entries({ click: 1, longpress: 2 }); n2 < r2.length; n2++) e2(r2[n2][0]);
+      }, destroy: function() {
+        this.listeners.forEach(function(e2) {
+          return e2.destroy();
+        }), this.listeners = [];
+      } }), Ot = (new i({ name: "consoleLog" }), { log: console.log, error: console.error, warn: console.warn, info: console.info, debug: console.debug, trace: console.trace }), xt = new i({ name: "consoleLog", onNewAegis: function(e2) {
+        this.startListen(e2);
+      }, startListen: function(e2) {
+        var o2;
+        o2 = e2, ["log", "error", "warn", "info", "debug", "trace"].forEach(function(r2) {
+          var i2 = Ot[r2];
+          console[r2] = function() {
+            for (var e3, t2 = [], n2 = 0; n2 < arguments.length; n2++) t2[n2] = arguments[n2];
+            try {
+              i2.apply(console, t2), !o2.isWhiteList && ["log", "info", "debug", "trace"].includes(r2) || (e3 = t2.map(function(e4) {
+                if ("object" == typeof e4) try {
+                  return JSON.stringify(e4);
+                } catch (e5) {
+                }
+                return String(e4);
+              }).join(" "), o2.normalLogPipeline({ msg: "method: console." + r2 + "\nmessage: " + e3, level: F.true, errorMsg: "" }));
+            } catch (e4) {
+              Ot.error("Console hook error:", e4);
+            }
+          };
+        });
+      }, destroy: function() {
+        Object.keys(Ot).forEach(function(e2) {
+          console[e2] = Ot[e2];
         });
       } });
+      function Lt() {
+        tt = [], Ze = -1, d = null, st(addEventListener);
+      }
+      nt = { passive: true, capture: true }, rt = /* @__PURE__ */ new Date(), it = function(e2, t2) {
+        d || (d = t2, Ze = e2, et = /* @__PURE__ */ new Date(), st(removeEventListener), ot());
+      }, ot = function() {
+        var t2;
+        0 <= Ze && Ze < et - rt && (t2 = { entryType: "first-input", name: d.type, target: d.target, cancelable: d.cancelable, startTime: d.timeStamp, processingStart: d.timeStamp + Ze }, tt.forEach(function(e2) {
+          e2(t2);
+        }), tt = []);
+      }, at = function(e2) {
+        var t2, n2, r2, i2, o2, a2;
+        e2.cancelable && (t2 = (1e12 < e2.timeStamp ? /* @__PURE__ */ new Date() : performance.now()) - e2.timeStamp, "pointerdown" == e2.type ? (n2 = t2, r2 = e2, i2 = function() {
+          it(n2, r2), a2();
+        }, o2 = function() {
+          a2();
+        }, a2 = function() {
+          removeEventListener("pointerup", i2, nt), removeEventListener("pointercancel", o2, nt);
+        }, addEventListener("pointerup", i2, nt), addEventListener("pointercancel", o2, nt)) : it(t2, e2));
+      }, st = function(t2) {
+        ["mousedown", "keydown", "touchstart", "pointerdown"].forEach(function(e2) {
+          return t2(e2, at, nt);
+        });
+      }, ct = "hidden" === document.visibilityState ? 0 : 1 / 0, addEventListener("visibilitychange", function e2(t2) {
+        "hidden" === document.visibilityState && (ct = t2.timeStamp, removeEventListener("visibilitychange", e2, true));
+      }, true), Lt(), self.webVitals = { firstInputPolyfill: function(e2) {
+        tt.push(e2), ot();
+      }, resetFirstInputPolyfill: Lt, get firstHiddenTime() {
+        return ct;
+      } };
+      function x(e2, t2) {
+        var n2 = zt(), r2 = "navigate";
+        return 0 <= $t ? r2 = "back-forward-cache" : n2 && (document.prerendering || 0 < Qt() ? r2 = "prerender" : document.wasDiscarded ? r2 = "restore" : n2.type && (r2 = n2.type.replace(/_/g, "-"))), { name: e2, value: void 0 === t2 ? -1 : t2, rating: "good", delta: 0, entries: [], id: "v3-".concat(Date.now(), "-").concat(Math.floor(8999999999999 * Math.random()) + 1e12), navigationType: r2 };
+      }
+      function Pt(e2, t2, n2) {
+        try {
+          var r2;
+          if (PerformanceObserver.supportedEntryTypes.includes(e2)) return (r2 = new PerformanceObserver(function(e3) {
+            Promise.resolve().then(function() {
+              t2(e3.getEntries());
+            });
+          })).observe(Object.assign({ type: e2, buffered: true }, n2 || {})), r2;
+        } catch (e3) {
+        }
+      }
+      function L(t2, n2, r2, i2) {
+        var o2, a2;
+        return function(e2) {
+          0 <= n2.value && (e2 || i2) && ((a2 = n2.value - (o2 || 0)) || void 0 === o2) && (o2 = n2.value, n2.delta = a2, n2.rating = (e2 = n2.value) > r2[1] ? "poor" : e2 > r2[0] ? "needs-improvement" : "good", t2(n2));
+        };
+      }
+      function kt(e2) {
+        requestAnimationFrame(function() {
+          return requestAnimationFrame(function() {
+            return e2();
+          });
+        });
+      }
+      function Ct(t2) {
+        function e2(e3) {
+          "pagehide" !== e3.type && "hidden" !== document.visibilityState || t2(e3);
+        }
+        addEventListener("visibilitychange", e2, true), addEventListener("pagehide", e2, true);
+      }
+      function At(t2) {
+        var n2 = false;
+        return function(e2) {
+          n2 || (t2(e2), n2 = true);
+        };
+      }
+      function It() {
+        return Yt < 0 && (Yt = Zt(), tn(), Jt(function() {
+          setTimeout(function() {
+            Yt = Zt(), tn();
+          }, 0);
+        })), { get firstHiddenTime() {
+          return Yt;
+        } };
+      }
+      function Nt(e2) {
+        document.prerendering ? addEventListener("prerenderingchange", function() {
+          return e2();
+        }, true) : e2();
+      }
+      function _t(o2, a2) {
+        a2 = a2 || {}, Nt(function() {
+          var t2, n2 = It(), r2 = x("FCP"), i2 = Pt("paint", function(e2) {
+            e2.forEach(function(e3) {
+              "first-contentful-paint" === e3.name && (i2.disconnect(), e3.startTime < n2.firstHiddenTime) && (r2.value = Math.max(e3.startTime - Qt(), 0), r2.entries.push(e3), t2(true));
+            });
+          });
+          i2 && (t2 = L(o2, r2, rn, a2.reportAllChanges), Jt(function(e2) {
+            r2 = x("FCP"), t2 = L(o2, r2, rn, a2.reportAllChanges), kt(function() {
+              r2.value = performance.now() - e2.timeStamp, t2(true);
+            });
+          }));
+        });
+      }
+      function Ut(e2) {
+        var t2, n2, r2, i2, o2, a2;
+        e2.cancelable && (t2 = (1e12 < e2.timeStamp ? /* @__PURE__ */ new Date() : performance.now()) - e2.timeStamp, "pointerdown" == e2.type ? (n2 = t2, r2 = e2, i2 = function() {
+          cn(n2, r2), a2();
+        }, o2 = function() {
+          a2();
+        }, a2 = function() {
+          removeEventListener("pointerup", i2, an), removeEventListener("pointercancel", o2, an);
+        }, addEventListener("pointerup", i2, an), addEventListener("pointercancel", o2, an)) : cn(t2, e2));
+      }
+      function Ht(e2) {
+        e2.forEach(function(e3) {
+          e3.interactionId && (pn = Math.min(pn, e3.interactionId), hn = Math.max(hn, e3.interactionId), dn = hn ? (hn - pn) / 7 + 1 : 0);
+        });
+      }
+      function Dt() {
+        return gn() - vn;
+      }
+      function Mt(e2) {
+        var t2 = C[C.length - 1], n2 = yn[e2.interactionId];
+        (n2 || C.length < 10 || e2.duration > t2.latency) && (n2 ? (n2.entries.push(e2), n2.latency = Math.max(n2.latency, e2.duration)) : (t2 = { id: e2.interactionId, latency: e2.duration, entries: [e2] }, yn[t2.id] = t2, C.push(t2)), C.sort(function(e3, t3) {
+          return t3.latency - e3.latency;
+        }), C.splice(10).forEach(function(e3) {
+          delete yn[e3.id];
+        }));
+      }
+      function jt(e2, t2) {
+        function n2(t3, n3, r3, i2) {
+          function o2(e3) {
+            "visibilitychange" === t3 && "hidden" !== document.visibilityState || (i2 ? setTimeout(function() {
+              return n3(e3);
+            }, i2) : n3(e3), r3 && removeEventListener(t3, o2, true));
+          }
+          addEventListener(t3, o2, true);
+        }
+        var r2;
+        n2("visibilitychange", e2, null == t2 ? void 0 : t2.once, null == (r2 = null == t2 ? void 0 : t2.delay) ? void 0 : r2.visibilitychange), n2("pagehide", e2, null == t2 ? void 0 : t2.once, null == (r2 = null == t2 ? void 0 : t2.delay) ? void 0 : r2.pagehide);
+      }
+      function qt(e2) {
+        var t2 = e2.name;
+        0 < (e2 = e2.value) && (Rn[t2] = e2);
+      }
+      function P(e2, t2, n2, r2) {
+        return void 0 === n2 && (n2 = 15e3), void 0 === r2 && (r2 = 0), (t2 = void 0 === t2 ? 0 : t2) <= e2 && e2 <= n2 ? e2 : r2;
+      }
+      var k, Bt, Ft, Wt, Gt, Xt, Vt, Kt, $t = -1, Jt = function(t2) {
+        addEventListener("pageshow", function(e2) {
+          e2.persisted && ($t = e2.timeStamp, t2(e2));
+        }, true);
+      }, zt = function() {
+        return window.performance && performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      }, Qt = function() {
+        var e2 = zt();
+        return e2 && e2.activationStart || 0;
+      }, Yt = -1, Zt = function() {
+        return "hidden" !== document.visibilityState || document.prerendering ? 1 / 0 : 0;
+      }, en = function(e2) {
+        "hidden" === document.visibilityState && -1 < Yt && (Yt = "visibilitychange" === e2.type ? e2.timeStamp : 0, nn());
+      }, tn = function() {
+        addEventListener("visibilitychange", en, true), addEventListener("prerenderingchange", en, true);
+      }, nn = function() {
+        removeEventListener("visibilitychange", en, true), removeEventListener("prerenderingchange", en, true);
+      }, rn = [1800, 3e3], on = [0.1, 0.25], an = { passive: true, capture: true }, sn = /* @__PURE__ */ new Date(), cn = function(e2, t2) {
+        k || (k = t2, Bt = e2, Ft = /* @__PURE__ */ new Date(), ln(removeEventListener), un());
+      }, un = function() {
+        var t2;
+        0 <= Bt && Bt < Ft - sn && (t2 = { entryType: "first-input", name: k.type, target: k.target, cancelable: k.cancelable, startTime: k.timeStamp, processingStart: k.timeStamp + Bt }, Wt.forEach(function(e2) {
+          e2(t2);
+        }), Wt = []);
+      }, ln = function(t2) {
+        ["mousedown", "keydown", "touchstart", "pointerdown"].forEach(function(e2) {
+          return t2(e2, Ut, an);
+        });
+      }, fn = [100, 300], dn = 0, pn = 1 / 0, hn = 0, gn = function() {
+        return Gt ? dn : performance.interactionCount || 0;
+      }, mn = [200, 500], vn = 0, C = [], yn = {}, wn = [2500, 4e3], bn = {}, En = (I.prototype.start = function() {
+        var t2 = this, n2 = new PerformanceObserver(function(e2) {
+          e2 = e2.getEntriesByName("first-contentful-paint");
+          0 < e2.length && (t2.fcp = e2[0].startTime, t2.slientWindowStartTime = t2.fcp, n2.disconnect(), setTimeout(function() {
+            t2.checkTTI();
+          }, Math.max(t2.slienceTimeInterval - (performance.now() - t2.fcp) + 20, 1)));
+        });
+        n2.observe({ entryTypes: ["paint"] }), this.longtaskObserver = new PerformanceObserver(function(e2) {
+          e2 = e2.getEntries();
+          t2.longTaskEntries = t2.longTaskEntries.concat(e2);
+        }), this.longtaskObserver.observe({ entryTypes: ["longtask"] }), this.resourceObserver = new PerformanceObserver(function(e2) {
+          e2 = e2.getEntries();
+          t2.resourceEntries = t2.resourceEntries.concat(e2);
+        }), this.resourceObserver.observe({ entryTypes: ["resource"] });
+      }, I.prototype.checkTTI = function() {
+        var e2 = this;
+        this.hasSlientWindow() ? (this.calculateTTI(), this.longtaskObserver.disconnect(), this.resourceObserver.disconnect()) : setTimeout(function() {
+          e2.checkTTI();
+        }, this.checkInterval);
+      }, I.prototype.hasSlientWindow = function() {
+        var e2, t2 = performance.now();
+        return !(t2 - this.slientWindowStartTime < 5e3 || ((e2 = this.getLastLongTaskEndTime()) > this.slientWindowStartTime ? (this.slientWindowStartTime = e2, this.resourceEntries = []) : this.getRequestCount(this.slientWindowStartTime, t2) <= 2 ? (this.lastLongtaskEndTime = e2, 0) : (t2 = this.resourceEntries.sort(function(e3, t3) {
+          return e3.startTime - t3.startTime;
+        }), this.slientWindowStartTime = t2[this.resourceEntries.length - 2].startTime, 1)));
+      }, I.prototype.getLastLongTaskEndTime = function() {
+        var t2;
+        return 0 === this.longTaskEntries.length ? -1 : (t2 = 0, this.longTaskEntries.forEach(function(e2) {
+          e2.startTime + e2.duration > t2 && (t2 = e2.startTime + e2.duration);
+        }), t2);
+      }, I.prototype.getRequestCount = function(t2, n2) {
+        var r2 = 0;
+        return this.resourceEntries.forEach(function(e2) {
+          e2.startTime >= t2 && e2.startTime + e2.duration <= n2 && (r2 += 1);
+        }), r2;
+      }, I.prototype.calculateTTI = function() {
+        var e2 = -1 === this.lastLongtaskEndTime ? this.slientWindowStartTime : this.lastLongtaskEndTime, t2 = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart, e2 = Math.max(t2, e2);
+        this.onTTICallback(e2);
+      }, I), Rn = (new i({ name: "webVitals" }), { FCP: -1, LCP: -1, FID: -1, CLS: -1, INP: -1, TTI: -1 }), Tn = new i({ name: "webVitals", onNewAegis: function(e2) {
+        var t2, o2, a2, s2, c2, u2, l2, f2, d2;
+        if (Pe() && "function" == typeof window.PerformanceObserver && "function" == typeof performance.getEntriesByName) try {
+          _t(qt), f2 = qt, d2 = {}, Nt(function() {
+            function e3(e4) {
+              (e4 = e4[e4.length - 1]) && e4.startTime < r2.firstHiddenTime && (i2.value = Math.max(e4.startTime - Qt(), 0), i2.entries = [e4], t3());
+            }
+            var t3, n2, r2 = It(), i2 = x("LCP"), o3 = Pt("largest-contentful-paint", e3);
+            o3 && (t3 = L(f2, i2, wn, d2.reportAllChanges), n2 = At(function() {
+              bn[i2.id] || (e3(o3.takeRecords()), o3.disconnect(), bn[i2.id] = true, t3(true));
+            }), ["keydown", "click"].forEach(function(e4) {
+              addEventListener(e4, function() {
+                return setTimeout(n2, 0);
+              }, true);
+            }), Ct(n2), Jt(function(e4) {
+              i2 = x("LCP"), t3 = L(f2, i2, wn, d2.reportAllChanges), kt(function() {
+                i2.value = performance.now() - e4.timeStamp, bn[i2.id] = true, t3(true);
+              });
+            }));
+          }), u2 = qt, l2 = {}, Nt(function() {
+            function t3(e4) {
+              e4.startTime < n2.firstHiddenTime && (r2.value = e4.processingStart - e4.startTime, r2.entries.push(e4), o3(true));
+            }
+            function e3(e4) {
+              e4.forEach(t3);
+            }
+            var n2 = It(), r2 = x("FID"), i2 = Pt("first-input", e3), o3 = L(u2, r2, fn, l2.reportAllChanges);
+            i2 && Ct(At(function() {
+              e3(i2.takeRecords()), i2.disconnect();
+            })), i2 && Jt(function() {
+              r2 = x("FID"), o3 = L(u2, r2, fn, l2.reportAllChanges), Wt = [], Bt = -1, k = null, ln(addEventListener), Wt.push(t3), un();
+            });
+          }), s2 = qt, c2 = {}, _t(At(function() {
+            function e3(e4) {
+              e4.forEach(function(e5) {
+                var t4, n3;
+                e5.hadRecentInput || (t4 = i2[0], n3 = i2[i2.length - 1], r2 && e5.startTime - n3.startTime < 1e3 && e5.startTime - t4.startTime < 5e3 ? (r2 += e5.value, i2.push(e5)) : (r2 = e5.value, i2 = [e5]));
+              }), r2 > n2.value && (n2.value = r2, n2.entries = i2, t3());
+            }
+            var t3, n2 = x("CLS", 0), r2 = 0, i2 = [], o3 = Pt("layout-shift", e3);
+            o3 && (t3 = L(s2, n2, on, c2.reportAllChanges), Ct(function() {
+              e3(o3.takeRecords()), t3(true);
+            }), Jt(function() {
+              n2 = x("CLS", r2 = 0), t3 = L(s2, n2, on, c2.reportAllChanges), kt(function() {
+                return t3();
+              });
+            }), setTimeout(t3, 0));
+          })), o2 = qt, a2 = {}, Nt(function() {
+            var e3;
+            "interactionCount" in performance || (Gt = Gt || Pt("event", Ht, { type: "event", buffered: true, durationThreshold: 0 }));
+            function t3(e4) {
+              e4.forEach(function(t4) {
+                t4.interactionId && Mt(t4), "first-input" !== t4.entryType || C.some(function(e5) {
+                  return e5.entries.some(function(e6) {
+                    return t4.duration === e6.duration && t4.startTime === e6.startTime;
+                  });
+                }) || Mt(t4);
+              }), e4 = Math.min(C.length - 1, Math.floor(Dt() / 50)), (e4 = C[e4]) && e4.latency !== n2.value && (n2.value = e4.latency, n2.entries = e4.entries, i2());
+            }
+            var n2 = x("INP"), r2 = Pt("event", t3, { durationThreshold: null != (e3 = a2.durationThreshold) ? e3 : 40 }), i2 = L(o2, n2, mn, a2.reportAllChanges);
+            r2 && ("PerformanceEventTiming" in window && "interactionId" in PerformanceEventTiming.prototype && r2.observe({ type: "first-input", buffered: true }), Ct(function() {
+              t3(r2.takeRecords()), n2.value < 0 && 0 < Dt() && (n2.value = 0, n2.entries = []), i2(true);
+            }), Jt(function() {
+              C = [], vn = gn(), n2 = x("INP"), i2 = L(o2, n2, mn, a2.reportAllChanges);
+            }));
+          }), t2 = function(e3) {
+            qt({ name: "TTI", value: e3 });
+          }, Pe() && new En(t2).start(), jt(this.publish.bind(this, e2), { once: true, delay: { visibilitychange: 10 } });
+        } catch (e3) {
+        }
+      }, publish: function(t2) {
+        this.$walk(function(o2) {
+          var e2;
+          o2 === t2 && null != (e2 = o2.sendPipeline) && e2.call(o2, [function(e3, t3) {
+            var n2, r2 = [];
+            for (n2 in e3) r2.push(n2 + "=" + e3[n2]);
+            var i2 = -1 === (null == (i2 = null == (i2 = o2.config) ? void 0 : i2.performanceUrl) ? void 0 : i2.indexOf("?")) ? "?" : "&";
+            t3({ url: o2.config.webVitalsUrl + i2 + r2.join("&"), type: m.VITALS, log: e3, sendBeacon: true });
+          }], m.VITALS)(B({}, Rn));
+        });
+      }, destroy: function() {
+        this.option.publish = function() {
+        };
+      } }), Sn = (new i({ name: "pagePerformance" }), 3), On = new i({ name: "pagePerformance", performanceMap: {}, onNewAegis: function(e2) {
+        Pe() && (Xt ? this.publish(Xt, e2) : this.startCalcPerformance(e2));
+      }, publish: function(i2, o2) {
+        var s2 = this;
+        this.$walk(function(a2) {
+          a2 === o2 && (a2.sendPipeline([function(e2, t2) {
+            var n2, r2 = [];
+            for (n2 in e2) r2.push(n2 + "=" + e2[n2]);
+            var i3, o3 = s2.$getConfig(a2);
+            if (o3) return i3 = -1 === (null == (i3 = a2.config.performanceUrl) ? void 0 : i3.indexOf("?")) ? "?" : "&", "function" == typeof o3.urlHandler ? t2({ url: a2.config.performanceUrl + i3 + r2.join("&") + "&from=" + (encodeURIComponent(o3.urlHandler()) || window.location.href), beanFilter: ["from"], type: m.PERFORMANCE, log: e2 }) : t2({ url: a2.config.performanceUrl + i3 + r2.join("&"), type: m.PERFORMANCE, log: e2 });
+          }], m.PERFORMANCE)(B({}, i2)), setTimeout(function() {
+            var e2 = ["duration: " + (i2.dnsLookup + i2.tcp + i2.ssl + i2.ttfb + i2.contentDownload + i2.domParse + i2.resourceDownload) + "ms", "firstScreenTiming: " + i2.firstScreenTiming + "ms", "dnsLookup: " + i2.dnsLookup + "ms", "tcp: " + i2.tcp + "ms", "ssl: " + i2.ssl + "ms", "ttfb: " + i2.ttfb + "ms", "contentDownload: " + i2.contentDownload + "ms", "domParse: " + i2.domParse + "ms", "resourceDownload: " + i2.resourceDownload + "ms", "lcp: " + Rn.LCP + "ms", "fid: " + Rn.FID + "ms", "cls: " + Rn.CLS + "ms", "fcp: " + Rn.FCP + "ms", i2.engineInit ? "engineInit: " + i2.engineInit + "ms" : "", i2.bundleLoad ? "bundleLoad: " + i2.bundleLoad + "ms" : ""].filter(function(e3) {
+              return e3;
+            }).join("\n\n"), t2 = 1e3 < i2.firstScreenTiming, n2 = o2.config.pageLoadLog, r2 = o2.config.slowPageLoadLog && t2, e2 = { msg: e2, ext1: (null == (e2 = i2.firstScreenTiming) ? void 0 : e2.toString()) || "", level: t2 ? F.SLOW_PAGE_LOAD : F.PAGE_LOAD, errorMsg: "" };
+            (n2 || r2) && a2.normalLogPipeline(e2);
+          }, 3e3));
+        });
+      }, startCalcPerformance: function(n2) {
+        var r2 = this;
+        try {
+          this.getFirstScreenTiming(n2, function(e2) {
+            var t2 = performance.timing;
+            t2 && (Xt = { dnsLookup: P(t2.domainLookupEnd - t2.domainLookupStart), tcp: P(t2.connectEnd - t2.connectStart), ssl: P(0 === t2.secureConnectionStart ? 0 : t2.requestStart - t2.secureConnectionStart), ttfb: P(t2.responseStart - t2.requestStart), contentDownload: P(t2.responseEnd - t2.responseStart), domParse: P(t2.domInteractive - t2.domLoading, 0, 15e3, 1070), resourceDownload: P(t2.loadEventStart - t2.domInteractive, 0, 15e3, 1070), firstScreenTiming: P(Math.floor(e2), 0, 15e3, 15e3) }, (t2 = n2.config).extraPerformanceData && "{}" !== JSON.stringify(t2.extraPerformanceData) && (t2 = (e2 = t2.extraPerformanceData).engineInit, e2 = e2.bundleLoad, Xt = B(B({}, Xt), { engineInit: P(t2, 0, 1e4), bundleLoad: P(e2, 0, 1e4) })), r2.publish(Xt, n2));
+          });
+        } catch (n3) {
+        }
+      }, getFirstScreenTiming: function(s2, c2) {
+        var u2 = this;
+        s2.lifeCycle.on("destroy", function() {
+          m2 && clearTimeout(m2);
+        });
+        var l2, f2 = this, n2 = ["script", "style", "link", "br"], d2 = [], p2 = {}, h2 = (-1 < (null == (e2 = null == (e2 = window.PerformanceObserver) ? void 0 : e2.supportedEntryTypes) ? void 0 : e2.indexOf("paint")) && (l2 = new PerformanceObserver(function(e3) {
+          e3.getEntries().forEach(function(e4) {
+            var t2;
+            "paint" === e4.entryType && "first-contentful-paint" === e4.name && 0 < (t2 = document.querySelectorAll("[AEGIS-FIRST-SCREEN-TIMING]")).length && s2.config.id && !u2.performanceMap[s2.config.id] && (u2.setFirstScreenInfo(s2, e4.startTime, t2[0], t2), null != c2 && c2(e4.startTime), h2.disconnect(), l2.disconnect(), m2) && clearTimeout(m2);
+          });
+        })).observe({ entryTypes: ["paint"] }), new MutationObserver(function(e3) {
+          var t2 = { roots: [], ignores: [], rootsDomNum: [], time: performance.now() };
+          e3.forEach(function(e4) {
+            e4 && e4.addedNodes && Array.prototype.slice.call(e4.addedNodes).forEach(function(e5) {
+              f2.isEleInArray(e5, t2.ignores) ? t2.ignores.push(e5) : 1 === e5.nodeType && e5.hasAttribute("AEGIS-FIRST-SCREEN-TIMING") ? (Object.prototype.hasOwnProperty.apply(p2, [t2.time]) || (p2[t2.time] = []), p2[t2.time].push(e5)) : 1 === e5.nodeType && (f2.hasAncestorOrSelfWithAttribute(e5, "AEGIS-IGNORE-FIRST-SCREEN-TIMING") ? t2.ignores.push(e5) : -1 !== n2.indexOf(e5.nodeName.toLocaleLowerCase()) || f2.isEleInArray(e5, t2.roots) || (t2.roots.push(e5), t2.rootsDomNum.push(f2.walkAndCount(e5) || 0)));
+            });
+          }), t2.roots.length && d2.push(t2);
+        }));
+        h2.observe(document, { childList: true, subtree: true });
+        var e2, g2 = function(n3) {
+          (n3 = void 0 === n3 ? 0 : n3) || (r2 = 0, (e3 = Object.keys(p2)).length ? (n3 = Math.max.apply(null, e3), u2.setFirstScreenInfo(s2, n3, null == (e3 = p2[n3]) ? void 0 : e3[0], p2)) : d2.forEach(function(e4) {
+            for (var t3 = 0; t3 < e4.roots.length; t3++) e4.rootsDomNum[t3] > r2 && f2.isInFirstScreen(e4.roots[t3]) && (r2 = e4.rootsDomNum[t3], n3 = e4.time, u2.setFirstScreenInfo(s2, n3, e4.roots[t3]));
+          }), d2.length = 0, Object.keys(p2).forEach(function(e4) {
+            p2[e4] = p2[e4].map(function(e5) {
+              var t3 = { tagName: e5.tagName }, n4 = e5.attributes;
+              if (!n4) return e5;
+              for (var r3 = 0; r3 < n4.length; r3++) {
+                var i3 = n4[r3];
+                i3.name && (t3[i3.name] = e5.getAttribute(i3.name));
+              }
+              return t3;
+            });
+          }));
+          var r2, e3 = performance.timing, t2 = e3.domInteractive - e3.domLoading, i2 = n3;
+          m2 = null;
+          for (var o2 = 0, a2 = [t2, e3.loadEventStart - e3.domInteractive, i2]; o2 < a2.length; o2++) if (a2[o2] <= 0 && 0 < Sn) {
+            m2 = setTimeout(function() {
+              return g2(i2);
+            }, 3e3);
+            break;
+          }
+          m2 ? --Sn : (h2.disconnect(), null != l2 && l2.disconnect(), null != c2 && c2(n3));
+        }, m2 = setTimeout(function() {
+          return g2();
+        }, 3e3);
+      }, setFirstScreenInfo: function(e2, t2, n2, r2) {
+        var i2;
+        e2.config.id && this.performanceMap[e2.config.id] || (e2.config.id && (this.performanceMap[e2.config.id] = true), ("object" != typeof (null == (i2 = e2.config) ? void 0 : i2.pagePerformance) || null != (i2 = e2.config.pagePerformance) && i2.firstScreenInfo) && (e2.firstScreenInfo = { element: n2, timing: t2, markDoms: r2 }));
+      }, isEleInArray: function(e2, t2) {
+        return !(!e2 || e2 === document.documentElement) && (-1 !== t2.indexOf(e2) || this.isEleInArray(e2.parentElement, t2));
+      }, isInFirstScreen: function(e2) {
+        var t2;
+        return !(!e2 || "function" != typeof e2.getBoundingClientRect) && (e2 = e2.getBoundingClientRect(), t2 = window.innerHeight, 0 <= e2.left) && e2.left < window.innerWidth && 0 <= e2.top && e2.top < t2 && 0 < e2.width && 0 < e2.height;
+      }, walkAndCount: function(e2) {
+        var t2 = 0;
+        if (e2 && 1 === e2.nodeType) {
+          t2 += 1;
+          var n2 = e2.children;
+          if (null != n2 && n2.length) for (var r2 = 0; r2 < n2.length; r2++) 1 === n2[r2].nodeType && n2[r2].hasAttribute("AEGIS-IGNORE-FIRST-SCREEN-TIMING") || (t2 += this.walkAndCount(n2[r2]));
+        }
+        return t2;
+      }, hasAncestorOrSelfWithAttribute: function(e2, t2) {
+        for (var n2 = e2; n2 && n2 !== document.body; ) {
+          if (n2.hasAttribute(t2)) return true;
+          n2 = n2.parentElement;
+        }
+        return false;
+      } }), xn = (new i({ name: "spa" }), ["replaceState", "pushState", "popstate", "hashchange"]), Ln = new i({ name: "spa", originFireUrl: "", onNewAegis: function(t2) {
+        var n2 = this;
+        history.pushState = this.wr("pushState") || history.pushState, history.replaceState = this.wr("replaceState") || history.replaceState, this.sendPv = this.sendPv.bind(this), t2.config.spa && this.sendPv(t2), xn.forEach(function(e2) {
+          return window.addEventListener(e2, function() {
+            return n2.sendPv.call(n2, t2);
+          });
+        });
+      }, wr: function(n2) {
+        var r2 = history[n2], e2 = "__" + n2 + "__hasWrittenByTamSpa";
+        return "function" == typeof r2 && !history[e2] && (Object.defineProperty(history, e2, { value: true, enumerable: false }), function() {
+          var e3 = r2.apply(this, arguments), t2 = null;
+          return "function" == typeof Event ? t2 = new Event(n2) : (t2 = document.createEvent("HTMLEvents")).initEvent(n2, false, true), window.dispatchEvent(t2), e3;
+        });
+      }, sendPv: function(r2) {
+        var i2 = this;
+        setTimeout(function() {
+          var t2 = location.pathname + location.hash + r2.config.id;
+          i2.$walk(function(e2) {
+            var n2;
+            e2 === r2 && (n2 = e2.config.pvUrl) && t2 && t2 !== i2.originFireUrl && (e2.sendPipeline([function(e3, t3) {
+              t3({ url: "" + n2, type: m.PV });
+            }], m.PV)(null), i2.originFireUrl = t2);
+          });
+        }, 0);
+      }, destroy: function() {
+        this.option.sendPv = function() {
+        };
+      } }), r = (D(Kt = A, r = Vt = r), Kt.prototype = null === r ? Object.create(r) : (Pn.prototype = r.prototype, new Pn()), A.prototype.addExtBean = function(e2, t2) {
+        t2 && this.extendBean(e2, encodeURIComponent("string" == typeof t2 ? t2.slice(0, 1024) : this.validateRange(t2)));
+      }, A.prototype.getBean = function(t2) {
+        var n2 = this;
+        return void 0 === t2 && (t2 = []), "" + Object.getOwnPropertyNames(this.bean).filter(function(e2) {
+          return -1 === t2.indexOf(e2);
+        }).map(function(e2) {
+          return "from" === e2 ? "from=" + n2.getCurrentPageUrl() : e2 + "=" + n2.bean[e2];
+        }).join("&");
+      }, A.prototype.getCurrentPageUrl = function() {
+        var e2 = this.config.pageUrl || location.href, e2 = (e2 = "function" == typeof this.config.urlHandler ? this.config.urlHandler() || location.href : e2).slice(0, 2048);
+        return encodeURIComponent(e2);
+      }, A.prototype.ready = function() {
+        function o2() {
+          var e2, n2, r2, i2;
+          t2.reportRequestQueue.length && (e2 = t2.reportRequestQueue.splice(0, 1)[0], n2 = e2.options, r2 = e2.success, i2 = e2.fail, t2.$request(n2, function() {
+            for (var e3 = [], t3 = 0; t3 < arguments.length; t3++) e3[t3] = arguments[t3];
+            try {
+              return null == r2 ? void 0 : r2.apply(n2, e3);
+            } finally {
+              o2();
+            }
+          }, function() {
+            for (var e3 = [], t3 = 0; t3 < arguments.length; t3++) e3[t3] = arguments[t3];
+            try {
+              return null == i2 ? void 0 : i2.apply(n2, e3);
+            } finally {
+              o2();
+            }
+          }));
+        }
+        var t2 = this;
+        o2(), this.isReportReady = true;
+      }, A.prototype.request = function(e2, t2, n2) {
+        this.config.reportImmediately || this.isReportReady ? this.$request(e2, t2, n2) : this.reportRequestQueue.push({ options: e2, success: t2, fail: n2 });
+      }, A.prototype.$request = function(s2, e2, t2) {
+        var n2, r2, i2, o2;
+        if (s2 && "string" == typeof s2.url && "" !== s2.url && this.bean.id) return o2 = s2.url, false !== s2.addBean && (o2 = ((e3, t3) => {
+          var n3, r3, i3, o3 = e3, a2 = s2.beanFilter || [];
+          for (n3 in t3) -1 === a2.indexOf(n3) && ((i3 = (r3 = new RegExp("([?&])" + n3 + "(=([^&]*))?(?=&|$)")).exec(o3)) ? i3[2] && "" !== i3[3] && "undefined" !== i3[3] || (o3 = o3.replace(r3, "$1" + n3 + "=" + t3[n3])) : (i3 = -1 < o3.indexOf("?") ? "&" : "?", o3 += i3 + n3 + "=" + t3[n3]));
+          return o3;
+        })(o2, B(B({}, this.bean), { from: this.getCurrentPageUrl() }))), s2.url = o2, o2 = s2.method || "get", r2 = this.config.onBeforeRequest, (s2 = r2 ? r2(s2, this) : s2) ? s2.url ? void ((null != s2 && s2.sendBeacon || this.sendNow) && "function" == typeof (null == navigator ? void 0 : navigator.sendBeacon) ? navigator.sendBeacon(s2.url, s2.data) : ((n2 = new XMLHttpRequest()).sendByAegis = true, n2.addEventListener("readystatechange", function() {
+          4 === n2.readyState && (400 <= n2.status || 0 === n2.status ? null != t2 && t2(n2.response) : null != e2 && e2(n2.response));
+        }), "get" === o2.toLocaleLowerCase() ? (n2.open("get", (r2 = s2.url, i2 = s2.data, "string" != typeof r2 ? "" : "object" == typeof i2 && i2 ? (o2 = Object.getOwnPropertyNames(i2).map(function(e3) {
+          var t3 = i2[e3];
+          return e3 + "=" + ("string" == typeof t3 ? encodeURIComponent(t3) : encodeURIComponent(JSON.stringify(t3)));
+        }).join("&").replace(/eval/gi, "evaI"), r2 + (-1 === r2.indexOf("?") ? "?" : "&") + o2) : r2)), n2.send()) : (n2.open("post", s2.url), s2.contentType && n2.setRequestHeader("Content-Type", s2.contentType), "string" == typeof s2.data && (s2.data = s2.data.replace(/eval/gi, "evaI")), n2.send(s2.data)))) : console.warn("Please handle the parameters reasonably, options.url is necessary") : console.warn("Sending request blocked");
+      }, A.prototype.publishPluginsLogs = function() {
+        var e2 = A.installedPlugins.find(function(e3) {
+          return "reportAssetSpeed" === e3.name;
+        });
+        null != e2 && e2.option.collectNotReportedLog(this);
+      }, A.prototype.uploadLogs = function(e2, t2) {
+        var n2;
+        void 0 === e2 && (e2 = {}), void 0 === t2 && (t2 = {}), null != (n2 = this.lifeCycle) && n2.emit("uploadLogs", e2, t2);
+      }, A.sessionID = "session-" + Date.now(), A);
+      function A(e2) {
+        var t2, n2, r2, a2, s2 = Vt.call(this, e2) || this;
+        s2.sendNow = false, s2.isReportReady = false, s2.reportRequestQueue = [], s2.speedLogPipeline = b([ee(s2), (a2 = s2.config, function(e3, t3) {
+          var n3, r3, i3, o2 = "number" == typeof a2.repeat ? a2.repeat : 60;
+          !a2.speedSample || o2 <= 0 ? t3(e3) : (n3 = (null == a2 ? void 0 : a2.id) || "0", r3 = w[n3] || {}, Array.isArray(e3) ? (i3 = e3.filter(function(e4) {
+            var t4 = !r3[e4.url] || r3[e4.url] < o2;
+            return t4 ? (r3[e4.url] = 1 + ~~r3[e4.url], w[n3] = r3) : y[n3] || me(n3), t4;
+          })).length && t3(i3) : !r3[e3.url] || r3[e3.url] < o2 ? (r3[e3.url] = 1 + ~~r3[e3.url], w[n3] = r3, t3(e3)) : y[n3] || me(n3));
+        }), (r2 = s2, function(t3, n3) {
+          gt(function(e3) {
+            r2.extendBean("netType", e3), n3(t3);
+          });
+        }), function(e3, t3) {
+          null != (n3 = s2.lifeCycle) && n3.emit("beforeReportSpeed", e3);
+          var n3, r3 = s2.config.beforeReportSpeed;
+          if ((e3 = "function" == typeof r3 ? e3.filter(function(e4) {
+            return false !== r3(e4);
+          }) : e3).length) return t3(e3);
+        }, function(e3, t3) {
+          t3(e3.map(function(e4) {
+            return void 0 !== e4.payload && delete e4.payload, e4;
+          }));
+        }, function(e3) {
+          return s2.sendPipeline([function(e4, t3) {
+            var n3, r3, i3, o2;
+            t3({ type: m.SPEED, url: "" + s2.config.speedUrl, method: "post", data: (t3 = e4, n3 = B(B({}, s2.bean), { from: s2.getCurrentPageUrl() }), i3 = { fetch: [], static: [], bridge: [] }, o2 = new FormData(), Array.isArray(t3) ? t3.forEach(function(e5) {
+              var t4 = _e(e5);
+              i3[e5.type].push(t4);
+            }) : (r3 = _e(t3), i3[t3.type].push(r3)), o2.append("payload", ue(B({ duration: i3 }, n3))), o2), log: e4 });
+          }], m.SPEED)(e3);
+        }]), e2.asyncPlugin = true;
+        try {
+          "undefined" != typeof document && (e2.uin = e2.uin || (null != (t2 = document.cookie.match(/\buin=\D+(\d*)/)) ? t2 : [])[1] || (null != (n2 = document.cookie.match(/\bilive_uin=\D*(\d+)/)) ? n2 : [])[1] || ""), s2.init(e2), s2.extendBean("sessionId", A.sessionID), s2.extendBean("from", s2.getCurrentPageUrl()), "undefined" != typeof document && s2.extendBean("referer", encodeURIComponent(document.referrer || ""));
+          for (var i2 = 1; i2 <= 10; i2++) s2.addExtBean("ext" + i2, e2["ext" + i2]);
+        } catch (e3) {
+          console.warn(e3), console.log("%cThe above error occurred in the process of initializing Aegis, which will affect your normal use of Aegis.\nIt is recommended that you contact us for feedback and thank you for your support.", "color: red"), s2.sendSDKError(e3);
+        }
+        return s2;
+      }
+      function Pn() {
+        this.constructor = Kt;
+      }
       function I(e2) {
-        e2 = Me.call(this, e2) || this;
-        return e2.taskHack = new We(), e2;
+        this.slienceTimeInterval = 5e3, this.checkInterval = 100, this.fcp = 0, this.longTaskEntries = [], this.resourceEntries = [], this.slientWindowStartTime = performance.now(), this.onTTICallback = e2;
       }
-      function Ke() {
-        this.onErrors = [], this.sends = [];
+      new i({ name: "ie" }), new i({ name: "onClose" });
+      var kn = new i({ name: "onClose", onNewAegis: function(n2) {
+        var r2, i2 = this;
+        o.desktop() ? (r2 = window.onunload, window.onunload = function() {
+          for (var e2 = [], t2 = 0; t2 < arguments.length; t2++) e2[t2] = arguments[t2];
+          i2.publishNotReportedLog(n2), null != r2 && r2.call.apply(r2, u([window], e2));
+        }) : jt(this.publishNotReportedLog.bind(this, n2), { once: true });
+      }, publishNotReportedLog: function(t2) {
+        var n2 = this;
+        this.$walk(function(e2) {
+          e2 === t2 && (e2.sendNow = true, e2.publishPluginsLogs(), n2.publishThrottlePipeLogs(e2));
+        });
+      }, publishThrottlePipeLogs: function(e2) {
+        null != e2 && e2.speedLogPipeline([]), null != e2 && e2.eventPipeline([]), null != e2 && e2.customTimePipeline([]), null != e2 && e2.normalLogPipeline([]);
+      } });
+      new i({ name: "aid" });
+      function Cn(e2, t2, n2) {
+        var r2 = (e2 = e2.map(function(e3) {
+          return Hn(e3);
+        }))[0];
+        return r2 ? (t2 = t2.some(function(e3) {
+          return r2.includes(e3);
+        }), n2 = !n2.some(function(e3) {
+          return r2.includes(e3);
+        }), { isWhitePoint: t2 && n2, selectorPointers: e2 }) : { isWhitePoint: false, selectorPointers: e2 };
       }
-      return c.use(w), c.use(De), c.use(Le), c.use(Ge), c.use(ze), c.use(f), c.use(Ne), c;
+      function An(e2) {
+        try {
+          var t2 = e2.config.blankScreen;
+          return true === t2 ? _n : Dn(_n, t2);
+        } catch (e3) {
+          return _n;
+        }
+      }
+      function In(n2, r2) {
+        function i2(e3) {
+          var t2 = e3[0];
+          return t2 && null !== t2.shadowRoot && (t2 = (null == (t2 = null == t2 ? void 0 : t2.shadowRoot) ? void 0 : t2.elementsFromPoint(n2, r2)) || []).length > e3.length ? i2(t2 || []) : e3;
+        }
+        var e2 = document.elementsFromPoint(n2, r2);
+        return i2(e2);
+      }
+      var Nn, _n = { containers: ["body", "html", "#app", "#root"], ignoreContainers: [], detectStartPosition: { x: 0, y: 0 }, emptyElementsPercent: 70, sameElementsPercent: 70, debounceDuration: 2e3, everySideSampleNumber: 9, disableSameElementsCheck: true, ignoreElesWhenDomChange: [], reDetectInterval: 2e3, samePointDepth: 5, customBlankScreenDector: null }, Un = ["canvas", "img", "svg", "iframe"], Hn = ((N = Nn = Nn || {})[N.UNKNOWN = 0] = "UNKNOWN", N[N.ERROR = 1] = "ERROR", N[N.DOM_CHANGE = 2] = "DOM_CHANGE", function(e2) {
+        var t2 = e2.nodeName.toLowerCase();
+        return e2.id ? t2 + "#" + e2.id : e2.className && "string" == typeof e2.className ? t2 + "." + e2.className.split(" ").filter(function(e3) {
+          return !!e3;
+        }).join(".") : t2;
+      }), Dn = function(e2) {
+        for (var t2 = [], n2 = 1; n2 < arguments.length; n2++) t2[n2 - 1] = arguments[n2];
+        if (!t2.length) return e2;
+        var r2, i2 = t2.shift();
+        for (r2 in i2) "object" == typeof i2[r2] && null !== i2[r2] && e2.hasOwnProperty(r2) && "object" == typeof e2[r2] && null !== e2[r2] ? Dn(e2[r2], i2[r2]) : e2[r2] = i2[r2];
+        return Dn.apply(void 0, u([e2], t2));
+      }, N = new i({ name: "blankScreen", onNewAegis: function(x2) {
+        var L2, P2, e2, k2, t2, C2, A2, I2, n2, N2, _2, U2, r2, H2, D2, i2, M2, j2, o2, a2, q2, s2, c2, u2, l2, f2, d2, p2, h2, g2, m2, v2, y2, w2 = this;
+        document.elementFromPoint && (e2 = An(x2), k2 = e2.everySideSampleNumber, t2 = e2.sameElementsPercent, C2 = e2.containers, A2 = e2.ignoreContainers, I2 = e2.detectStartPosition, n2 = e2.ignoreElesWhenDomChange, N2 = e2.reDetectInterval, _2 = e2.disableSameElementsCheck, U2 = e2.samePointDepth, r2 = 4 * k2 - 3, H2 = Math.floor(r2 * e2.emptyElementsPercent / 100), D2 = Math.floor(r2 * t2 / 100), i2 = Nn.UNKNOWN, j2 = null, o2 = M2 = false, a2 = function() {
+          return W(w2, void 0, void 0, function() {
+            var i3, o3, a3, s3, c3, u3, l3, f3, d3, p3, h3, g3, m3, v3, y3, w3, b2, E2, R2, T2, S2, O2 = this;
+            return G(this, function(e3) {
+              if (i3 = window.innerHeight, o3 = window.innerWidth, a3 = I2.x, s3 = I2.y, !(o3 <= a3 || i3 <= s3)) {
+                for (c3 = a3 + (o3 - a3) / 2, u3 = s3 + (i3 - s3) / 2, l3 = [], f3 = k2 + 1, d3 = 0, p3 = 1; p3 < f3; p3++) m3 = s3 + (i3 - s3) * p3 / f3, y3 = In(h3 = a3 + (o3 - a3) * p3 / f3, u3), g3 = In(c3, m3), v3 = In(h3, m3), h3 = In(h3, i3 - m3), m3 = Cn(y3, C2, A2), m3.isWhitePoint && (d3 += 1), l3.push(m3.selectorPointers), p3 !== f3 / 2 && (y3 = Cn(g3, C2, A2), m3 = y3.isWhitePoint, g3 = y3.selectorPointers, m3 && (d3 += 1), y3 = Cn(v3, C2, A2), m3 = y3.isWhitePoint, v3 = y3.selectorPointers, m3 && (d3 += 1), y3 = Cn(h3, C2, A2), y3.isWhitePoint && (d3 += 1), l3.push(g3, v3, y3.selectorPointers));
+                w3 = H2 <= d3, b2 = false, E2 = { samePointerMap: {}, maximumSamePointer: {} }, _2 || (T2 = l3.map(function(e4) {
+                  return e4.slice(0, U2);
+                }), t3 = T2.map(function(e4) {
+                  return e4.join(" < ");
+                }).reduce(function(e4, t4) {
+                  return e4[t4] = e4[t4] ? e4[t4] + 1 : 1, e4;
+                }, {}), n3 = Object.keys(t3).map(function(e4) {
+                  return [e4, t3[e4]];
+                }).sort(function(e4, t4) {
+                  return t4[1] - e4[1];
+                })[0], r3 = n3[0], T2 = { samePointerMap: t3, maximumSamePointerClass: r3, maximumSamePointerCounter: n3[1] }, E2 = { samePointerMap: T2.samePointerMap, maximumSamePointer: ((S2 = {})[R2 = T2.maximumSamePointerClass] = T2 = T2.maximumSamePointerCounter, S2) }, S2 = Un.some(function(e4) {
+                  return R2.startsWith(e4);
+                }), b2 = D2 <= T2 && !S2), w3 || b2 ? M2 ? (T2 = { msg: "decect blankscreen whitePointCount: " + (null == j2 ? void 0 : j2.whitePointCount) + " whitePointerThreshold: " + H2 + " reDetectInterval: " + N2, level: F.BLANK_SCREEN }, x2.normalLogPipeline(T2), M2 = false, j2 = null) : (j2 = B(B({ msg: "blank_screen", level: F.BLANK_SCREEN, whitePointCount: d3 }, E2), L2 ? { linkLogType: null == L2 ? void 0 : L2.type, linkLogLevel: null == L2 ? void 0 : L2.level, linkErrorMsg: null == L2 ? void 0 : L2.errorMsg } : {}), M2 = true, P2 = setTimeout(function() {
+                  return W(O2, void 0, void 0, function() {
+                    return G(this, function(e4) {
+                      switch (e4.label) {
+                        case 0:
+                          return [4, q2()];
+                        case 1:
+                          return e4.sent(), [2];
+                      }
+                    });
+                  });
+                }, N2)) : (M2 = false, j2 = null);
+              }
+              return [2];
+              var t3, n3, r3;
+            });
+          });
+        }, q2 = function() {
+          return W(w2, void 0, void 0, function() {
+            var n3 = this;
+            return G(this, function(e3) {
+              switch (e3.label) {
+                case 0:
+                  return "requestIdleCallback" in window ? (window.requestIdleCallback(function(t3) {
+                    return W(n3, void 0, void 0, function() {
+                      return G(this, function(e4) {
+                        switch (e4.label) {
+                          case 0:
+                            return 0 < t3.timeRemaining() ? [4, a2()] : [3, 2];
+                          case 1:
+                            e4.sent(), e4.label = 2;
+                          case 2:
+                            return [2];
+                        }
+                      });
+                    });
+                  }), [3, 3]) : [3, 1];
+                case 1:
+                  return [4, a2()];
+                case 2:
+                  e3.sent(), e3.label = 3;
+                case 3:
+                  return [2];
+              }
+            });
+          });
+        }, s2 = function() {
+          var e3;
+          M2 || i2 === Nn.ERROR && !L2 || (i2 = L2 ? Nn.ERROR : Nn.DOM_CHANGE, clearTimeout(P2), e3 = An(x2).debounceDuration, P2 = setTimeout(function() {
+            return W(w2, void 0, void 0, function() {
+              return G(this, function(e4) {
+                switch (e4.label) {
+                  case 0:
+                    return clearTimeout(P2), [4, q2()];
+                  case 1:
+                    return e4.sent(), [2];
+                }
+              });
+            });
+          }, e3));
+        }, x2.lifeCycle.on("errorOccurred", c2 = function(e3) {
+          e3 = e3.filter(function(e4) {
+            return e4.level !== F.BLANK_SCREEN;
+          });
+          0 < e3.length && (L2 = e3[e3.length - 1], s2());
+        }), u2 = null, window.MutationObserver && (g2 = m2 = null, l2 = window.cancelAnimationFrame || function(e3) {
+          clearTimeout(e3);
+        }, f2 = window.requestAnimationFrame || function(e3) {
+          return setTimeout(e3, 1e3 / 60);
+        }, d2 = function() {
+          (u2 = new MutationObserver(function(e3) {
+            var t3 = n2.includes(Hn(e3[0].target));
+            1 === e3.length && t3 || s2();
+          })).observe(document.body, { childList: true, subtree: true });
+        }, p2 = function() {
+          m2 && (clearTimeout(m2), m2 = null), g2 && (l2(g2), g2 = null);
+        }, document.body ? d2() : (g2 = f2(h2 = function() {
+          document.body ? (p2(), d2()) : g2 = f2(h2);
+        }), m2 = setTimeout(function() {
+          p2();
+        }, 1e4))), v2 = function() {
+          o2 && (o2 = true, M2) && (clearTimeout(P2), a2());
+        }, y2 = function() {
+          "visible" === document.visibilityState && (o2 = false), "hidden" === document.visibilityState && v2();
+        }, window.addEventListener("pagehide", v2), window.addEventListener("beforeunload", v2), window.addEventListener("visibilitychange", y2), this.destroyBlanckScreenDetect = function() {
+          window.removeEventListener("pagehide", v2), window.removeEventListener("beforeunload", v2), window.removeEventListener("visibilitychange", y2), x2.lifeCycle.remove("errorOccurred", c2), null != u2 && u2.disconnect();
+        });
+      }, destroy: function() {
+        this.destroyBlanckScreenDetect();
+      } });
+      return r.use(wt), r.use(dt), r.use(He), r.use(On), r.use(Tn), r.use(Ne), r.use(g), r.use(Ln), r.use(kn), r.use(St), r.use(xt), r.use(ht), r.use(N), r;
     });
   }
 });
 
 // src/common/reportLog.js
-var import_aegis_mp_sdk = __toESM(require_aegis_min(), 1);
-var aegis = new import_aegis_mp_sdk.default({
+var import_aegis_web_sdk = __toESM(require_aegis_min(), 1);
+var aegis = new import_aegis_web_sdk.default({
   id: "pGUVFTCZyewxxxxx",
-  // 项目上报ID
+  // 项目上报id
   uin: "xxx",
-  // 用户唯一 ID（可选）
+  // 用户唯一标识（可选）
   reportApiSpeed: true,
   // 接口测速
   reportAssetSpeed: true,
