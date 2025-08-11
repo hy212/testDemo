@@ -30,7 +30,7 @@ async function handleRequest(req) {
       msg: e?.message || JSON.stringify(e),
     };
     reportLog(errorData);
-    return new Response("报错了", {
+    return new Response(`报错了: ${errorData.msg}`, {
       status: 500,
     });
   }
