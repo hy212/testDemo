@@ -17,19 +17,14 @@ addEventListener("fetch", async (event) => {
  * 1、未 return new Response() 会报 500 （ScriptDebugInfo:Uncaught TypeError: Param's Type Invalid）
  */
 async function handleRequest(req) {
-  try {
-    console.error("报错信息打印 error---");
-    console.log("报错信息打印---log", AI);
-    return new Response("111", {
-      status: 200,
-      headers: {
-        "Server-Timing":
-          'fetch;desc="fetch请求耗时";dur=300,compute;dur=100,loadresource;dur=150,test;dur=50',
-      },
-    });
-  } catch (e) {
-    return new Response("报错了", {
-      status: 500,
-    });
-  }
+  // try {
+  await req.json();
+  return new Response("111", {
+    status: 200,
+  });
+  // } catch (e) {
+  //   return new Response("报错了", {
+  //     status: 500,
+  //   });
+  // }
 }
