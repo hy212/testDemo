@@ -46,7 +46,9 @@ function reportLog(errorData) {
       {
         timestamp: Date.now(),
         message: msg,
-        url,
+        fields: {
+          url,
+        },
       },
     ],
   };
