@@ -28,6 +28,7 @@ async function handleRequest(req) {
     const errorData = {
       host: new URL(req.url).host,
       msg: e?.message || JSON.stringify(e),
+      url: new URL(req.url).pathname,
     };
     reportLog(errorData);
     return new Response(`报错了: ${errorData.msg}`, {
@@ -37,7 +38,7 @@ async function handleRequest(req) {
 }
 
 function reportLog(errorData) {
-  const { host, msg } = errorData;
+  const { host, msg, url } = errorData;
   const queryArgs = {
     topic: "sdk-cce19ccdcee273db",
     host: host,
@@ -45,6 +46,7 @@ function reportLog(errorData) {
       {
         timestamp: Date.now(),
         message: msg,
+        url,
       },
     ],
   };
