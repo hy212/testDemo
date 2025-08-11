@@ -13,15 +13,23 @@ addEventListener("fetch", async (event) => {
  * 处理HTTP请求并返回响应
  * @param {Request} req - 传入的HTTP请求对象
  * @returns {Response} 处理后的HTTP响应
+ * 报错情况：
+ * 1、未 return new Response() 会报 500 （ScriptDebugInfo:Uncaught TypeError: Param's Type Invalid）
  */
 async function handleRequest(req) {
-  console.error("报错信息打印 error---");
-  console.log("报错信息打印---log");
-  // return new Response("111", {
-  //   status: 200,
-  //   headers: {
-  //     "Server-Timing":
-  //       'fetch;desc="fetch请求耗时";dur=300,compute;dur=100,loadresource;dur=150,test;dur=50',
-  //   },
-  // });
+  try {
+    console.error("报错信息打印 error---");
+    console.log("报错信息打印---log", AI);
+    return new Response("111", {
+      status: 200,
+      headers: {
+        "Server-Timing":
+          'fetch;desc="fetch请求耗时";dur=300,compute;dur=100,loadresource;dur=150,test;dur=50',
+      },
+    });
+  } catch (e) {
+    return new Response("报错了", {
+      status: 500,
+    });
+  }
 }
