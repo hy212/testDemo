@@ -17,11 +17,11 @@ addEventListener("fetch", async (event) => {
 async function handleRequest(req) {
   console.error("报错信息打印 error---");
   console.log("报错信息打印---log");
-  return new Response("111", {
-    status: 200,
-    headers: {
-      "Server-Timing":
-        'fetch;desc="fetch请求耗时";dur=300,compute;dur=100,loadresource;dur=150,test;dur=50',
-    },
-  });
+  // return new Response("111", {
+  //   status: 200,
+  //   headers: {
+  //     "Server-Timing":
+  //       'fetch;desc="fetch请求耗时";dur=300,compute;dur=100,loadresource;dur=150,test;dur=50',
+  //   },
+  // });
 }
