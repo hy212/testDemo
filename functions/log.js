@@ -25,10 +25,11 @@ async function handleRequest(req) {
       status: 200,
     });
   } catch (e) {
+    const { host, pathname } = new URL(req.url);
     const errorData = {
-      host: new URL(req.url).host,
+      host,
+      url: pathname,
       msg: e?.message || JSON.stringify(e),
-      url: new URL(req.url).pathname,
     };
     reportLog(errorData);
     return new Response(`报错了: ${errorData.msg}`, {
