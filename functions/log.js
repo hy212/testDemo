@@ -26,10 +26,21 @@ async function handleRequest(req) {
     });
   } catch (e) {
     const { host, pathname } = new URL(req.url);
+    const httpCode = e?.httpCode;
+    const msgData = {
+      // js层报错信息
+      name: e.name,
+      message: e.message,
+    };
+    if (httpCode !== undefined) {
+      // 容器服务http状态码
+      msgData.httpCode = httpCode;
+    }
+
     const errorData = {
       host,
       url: pathname,
-      msg: e?.message || JSON.stringify(e),
+      msg: JSON.stringify(msgData),
     };
     reportLog(errorData);
     return new Response(`报错了: ${errorData.msg}`, {
