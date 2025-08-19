@@ -20,7 +20,7 @@ async function handleRequest(req) {
   try {
     console.error("报错信息打印 error---");
     console.log("报错信息打印---log", AI);
-    const a = await req.json();
+    const rsp = await AI.run("@less/xyinghu/test", JSON.stringify({}));
     return new Response("111", {
       status: 200,
     });
