@@ -47,7 +47,9 @@ async function handleRequest(req) {
       reqArgs = await req.json();
     }
 
-    const res = await fetch("https://vjs.zencdn.net/v/oceans.mp4");
+    const res = await fetch(
+      "https://9da6c3ee-4bd4-4f0a-8a69-e962b857144f.mdnplay.dev/shared-assets/videos/flower.mp4",
+    );
     const blob = await res.arrayBuffer();
     // const rsp = await AI.run(`@less/chauncyhu/video-trans/vt/`, {video: [...new Uint8Array(blob)]});
 
