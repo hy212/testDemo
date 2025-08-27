@@ -28,7 +28,7 @@ addEventListener("fetch", async (event) => {
 async function handleRequest(req) {
   try {
     const res = await fetch("https://www.w3schools.com/html/movie.mp4");
-    return new Response(res.body, {
+    return new Response("111", {
       headers: {
         "Content-Type": "application/octet-stream",
       },
