@@ -30,7 +30,7 @@ async function handleRequest(req) {
     const res = await fetch("https://www.w3schools.com/html/movie.mp4");
     return new Response(res.body, {
       headers: {
-        "Content-Type": "video/mp4",
+        "Content-Type": "application/octet-stream",
       },
     });
   } catch (e) {
