@@ -24,7 +24,10 @@ async function handleRequest(req) {
       });
     }
     const reqArgs = await req.json();
-    if (!reqArgs.key || !reqArgs.key?.trim()) {
+    if (
+      !reqArgs.key ||
+      (typeof reqArgs.key === "string" && !reqArgs.key.trim())
+    ) {
       return new Response("key不能为空", {
         status: 400,
       });
@@ -42,11 +45,13 @@ async function handleRequest(req) {
 
     if (params.action === "update") {
       await KV.put(reqArgs.key, reqArgs.value);
+      return new Response(
+        `更新成功，key: ${reqArgs.key}, value: ${reqArgs.value}`,
+      );
     } else if (params.action === "delete") {
       await KV.delete(reqArgs.key);
+      return new Response(`删除成功，key: ${reqArgs.key}`);
     }
-
-    return new Response(`操作成功, ${JSON.stringify(reqArgs)}`);
   } catch (e) {
     const msgData = {
       name: e.name,
