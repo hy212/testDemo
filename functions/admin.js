@@ -44,7 +44,7 @@ async function handleRequest(req) {
 
     const apiUrl = new URL(req.url).pathname;
     const paramsArr = apiUrl.split("/").slice(1);
-    if (paramsArr.length !== 6) {
+    if (paramsArr.length !== 5) {
       return new Response("请检查接口路径是否正确", {
         status: 400,
       });
