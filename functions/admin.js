@@ -19,7 +19,7 @@ async function handleRequest(req) {
     const { method } = req;
     if (method !== "POST") {
       // 暂不支持${method}请求，请使用POST请求
-      return new Response(null, {
+      return new Response(`暂不支持${method}请求，请使用POST请求`, {
         status: 405,
       });
     }
