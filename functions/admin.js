@@ -24,7 +24,9 @@ async function handleRequest(req) {
       });
     }
     const reqArgs = await req.json();
-
+    return new Response(JSON.stringify(reqArgs), {
+      status: 400,
+    });
     if (!reqArgs.key?.trim()) {
       return new Response("key不能为空", {
         status: 400,
