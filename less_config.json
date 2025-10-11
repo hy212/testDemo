@@ -10,7 +10,8 @@
       "/testbody": "functions/testbody.js",
       "/servertime": "functions/servertime.js",
       "/reportlog": "functions/log.js",
-      "/video": "functions/video.js"
+      "/video": "functions/video.js",
+      "/admin": "functions/admin.js"
     }
   }
 }
