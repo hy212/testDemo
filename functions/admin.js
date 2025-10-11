@@ -24,10 +24,7 @@ async function handleRequest(req) {
       });
     }
     const reqArgs = await req.json();
-    if (
-      !reqArgs.key ||
-      (typeof reqArgs.key === "string" && !reqArgs.key.trim())
-    ) {
+    if (!reqArgs.key) {
       return new Response("key不能为空", {
         status: 400,
       });
