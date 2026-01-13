@@ -25774,8 +25774,32 @@ app.use(
     exposeHeaders: ["mcp-session-id", "mcp-protocol-version"]
   })
 );
-app.get("/health", (c) => c.json({ status: "ok" }));
 app.all("/mcp", (c) => transport.handleRequest(c.req.raw));
 
+// node_modules/hono/dist/adapter/service-worker/handler.js
+var handle = (app2, opts = {
+  // To use `fetch` on a Service Worker correctly, bind it to `globalThis`.
+  fetch: globalThis.fetch.bind(globalThis)
+}) => {
+  return (evt) => {
+    evt.respondWith(
+      (async () => {
+        const res = await app2.fetch(evt.request, {}, evt);
+        if (opts.fetch && res.status === 404) {
+          return await opts.fetch(evt.request);
+        }
+        return res;
+      })()
+    );
+  };
+};
+
+// node_modules/hono/dist/adapter/service-worker/index.js
+var fire = (app2, options = {
+  fetch: void 0
+}) => {
+  addEventListener("fetch", handle(app2, options));
+};
+
 // src/webMcp/build.ts
-app.fire();
+fire(app);
