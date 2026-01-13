@@ -25774,6 +25774,7 @@ app.use(
     exposeHeaders: ["mcp-session-id", "mcp-protocol-version"]
   })
 );
+app.get("/health", (c) => c.json({ status: "ok" }));
 app.all("/mcp", (c) => transport.handleRequest(c.req.raw));
 
 // node_modules/hono/dist/adapter/service-worker/handler.js
