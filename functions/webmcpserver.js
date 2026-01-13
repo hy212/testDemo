@@ -25803,4 +25803,6 @@ var fire = (app2, options = {
 };
 
 // src/webMcp/build.ts
-fire(app);
+server.connect(transport).then(() => {
+  fire(app);
+});
