@@ -11,7 +11,8 @@
       "/servertime": "functions/servertime.js",
       "/reportlog": "functions/log.js",
       "/video": "functions/video.js",
-      "/admin": "functions/admin.js"
+      "/admin": "functions/admin.js",
+      "/webmcpserver": "functions/webmcpserver.js"
     }
   }
 }
