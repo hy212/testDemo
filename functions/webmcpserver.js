@@ -25748,18 +25748,29 @@ server.registerTool(
   },
   async ({ name }) => {
     return {
-      content: [{ type: "text", text: `Hello, ${name}! (from Hono + WebStandard transport)` }]
+      content: [
+        {
+          type: "text",
+          text: `Hello, ${name}! (from Hono + WebStandard transport)`
+        }
+      ]
     };
   }
 );
 var transport = new WebStandardStreamableHTTPServerTransport();
-var app = new Hono2();
+var BASE_URL = "/webmcpserver";
+var app = new Hono2().basePath(BASE_URL);
 app.use(
   "*",
   cors({
     origin: "*",
     allowMethods: ["GET", "POST", "DELETE", "OPTIONS"],
-    allowHeaders: ["Content-Type", "mcp-session-id", "Last-Event-ID", "mcp-protocol-version"],
+    allowHeaders: [
+      "Content-Type",
+      "mcp-session-id",
+      "Last-Event-ID",
+      "mcp-protocol-version"
+    ],
     exposeHeaders: ["mcp-session-id", "mcp-protocol-version"]
   })
 );
