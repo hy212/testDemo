@@ -25734,6 +25734,265 @@ var cors = (options) => {
   };
 };
 
+// node_modules/hono/dist/helper/factory/index.js
+var createMiddleware = (middleware) => middleware;
+
+// node_modules/hono/dist/helper/adapter/index.js
+var knownUserAgents = {
+  deno: "Deno",
+  bun: "Bun",
+  workerd: "Cloudflare-Workers",
+  node: "Node.js"
+};
+var getRuntimeKey = () => {
+  var _a2, _b;
+  const global = globalThis;
+  const userAgentSupported = typeof navigator !== "undefined" && typeof navigator.userAgent === "string";
+  if (userAgentSupported) {
+    for (const [runtimeKey, userAgent] of Object.entries(knownUserAgents)) {
+      if (checkUserAgentEquals(userAgent)) {
+        return runtimeKey;
+      }
+    }
+  }
+  if (typeof (global == null ? void 0 : global.EdgeRuntime) === "string") {
+    return "edge-light";
+  }
+  if ((global == null ? void 0 : global.fastly) !== void 0) {
+    return "fastly";
+  }
+  if (((_b = (_a2 = global == null ? void 0 : global.process) == null ? void 0 : _a2.release) == null ? void 0 : _b.name) === "node") {
+    return "node";
+  }
+  return "other";
+};
+var checkUserAgentEquals = (platform) => {
+  const userAgent = navigator.userAgent;
+  return userAgent.startsWith(platform);
+};
+
+// node_modules/hono-geo-middleware/dist/index.js
+function createInsensitiveHeaderProxy(header) {
+  return new Proxy(header, {
+    get(target, prop) {
+      for (const key in target) {
+        if (key.toLowerCase() === prop.toLowerCase()) {
+          return target[key];
+        }
+      }
+      return void 0;
+    }
+  });
+}
+function tryDecodeURIText(text) {
+  if (text) {
+    return decodeURIComponent(text);
+  }
+  return void 0;
+}
+var EMOJI_FLAG_UNICODE_STARTING_POSITION = 127397;
+function getFlagFromCountryCode(countryCode) {
+  const regex = new RegExp("^[A-Z]{2}$").test(countryCode);
+  if (!countryCode || !regex) return void 0;
+  return String.fromCodePoint(
+    ...countryCode.split("").map((char) => EMOJI_FLAG_UNICODE_STARTING_POSITION + char.charCodeAt(0))
+  );
+}
+var CITY_HEADER_NAME = "x-vercel-ip-city";
+var COUNTRY_HEADER_NAME = "x-vercel-ip-country";
+var IP_HEADER_NAME = "x-real-ip";
+var LATITUDE_HEADER_NAME = "x-vercel-ip-latitude";
+var LONGITUDE_HEADER_NAME = "x-vercel-ip-longitude";
+var REGION_HEADER_NAME = "x-vercel-ip-country-region";
+var REQUEST_ID_HEADER_NAME = "x-vercel-id";
+var vercel = (headers) => {
+  if (!headers[REQUEST_ID_HEADER_NAME]) {
+    return null;
+  }
+  return {
+    reqId: headers[REQUEST_ID_HEADER_NAME],
+    ip: headers[IP_HEADER_NAME],
+    city: tryDecodeURIText(headers[CITY_HEADER_NAME]),
+    // country: ?,
+    countryCode: headers[COUNTRY_HEADER_NAME],
+    // region: ?,
+    regionCode: headers[REGION_HEADER_NAME],
+    latitude: headers[LATITUDE_HEADER_NAME],
+    longitude: headers[LONGITUDE_HEADER_NAME],
+    // continent: ?
+    // postalCode: ?
+    // metroCode: ?
+    // timezone: ?
+    // asn: ?
+    flag: getFlagFromCountryCode(headers[COUNTRY_HEADER_NAME]),
+    // Vercel Edge Network region name
+    idcRegion: getRegionFromRequestId(headers[REQUEST_ID_HEADER_NAME])
+  };
+};
+function getRegionFromRequestId(requestId) {
+  if (!requestId) {
+    return "dev1";
+  }
+  return requestId.split(":")[0];
+}
+var REQUEST_ID_HEADER_NAME2 = "CF-ray";
+var IP_HEADER_NAME2 = "CF-Connecting-IP";
+var cloudflareWorker = (headers, c) => {
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+  if (getRuntimeKey() !== "workerd" && !headers[REQUEST_ID_HEADER_NAME2]) {
+    return null;
+  }
+  const req = c.req.raw;
+  return {
+    reqId: headers[REQUEST_ID_HEADER_NAME2],
+    ip: headers[IP_HEADER_NAME2],
+    city: tryDecodeURIText((_a2 = req.cf) == null ? void 0 : _a2.city),
+    /* ISO 3166-2 code */
+    countryCode: (_b = req.cf) == null ? void 0 : _b.country,
+    continent: (_c = req.cf) == null ? void 0 : _c.continent,
+    region: (_d = req.cf) == null ? void 0 : _d.region,
+    regionCode: (_e = req.cf) == null ? void 0 : _e.regionCode,
+    latitude: (_f = req.cf) == null ? void 0 : _f.latitude,
+    longitude: (_g = req.cf) == null ? void 0 : _g.longitude,
+    postalCode: (_h = req.cf) == null ? void 0 : _h.postalCode,
+    metroCode: (_i = req.cf) == null ? void 0 : _i.metroCode,
+    timezone: (_j = req.cf) == null ? void 0 : _j.timezone,
+    asn: (_l = (_k = req.cf) == null ? void 0 : _k.asn) == null ? void 0 : _l.toString(),
+    /** flag emoji */
+    flag: getFlagFromCountryCode((_m = req.cf) == null ? void 0 : _m.country)
+  };
+};
+var REQUEST_ID_HEADER_NAME3 = "CF-ray";
+var IP_HEADER_NAME3 = "CF-Connecting-IP";
+var COUNTRY_HEADER_NAME2 = "CF-IPCountry";
+var CITY_HEADER_NAME2 = "CF-ipcity";
+var CONTINENT_HEADER_NAME = "cf-ipcontinent";
+var LATITUDE_HEADER_NAME2 = "cf-iplatitude";
+var LONGITUDE_HEADER_NAME2 = "cf-iplongitude";
+var REGION_HEADER_NAME2 = "cf-region";
+var REGION_CODE_HEADER_NAME = "cf-region-code";
+var TIMEZONE_HEADER_NAME = "cf-timezone";
+var METRO_HEADER_NAME = "cf-metro-code";
+var POSTAL_HEADER_NAME = "cf-postal-code";
+var cloudflare = (headers) => {
+  if (!headers[REQUEST_ID_HEADER_NAME3]) {
+    return null;
+  }
+  return {
+    reqId: headers[REQUEST_ID_HEADER_NAME3],
+    ip: headers[IP_HEADER_NAME3],
+    city: tryDecodeURIText(headers[CITY_HEADER_NAME2]),
+    countryCode: headers[COUNTRY_HEADER_NAME2],
+    region: headers[REGION_HEADER_NAME2],
+    regionCode: headers[REGION_CODE_HEADER_NAME],
+    latitude: headers[LATITUDE_HEADER_NAME2],
+    longitude: headers[LONGITUDE_HEADER_NAME2],
+    continent: headers[CONTINENT_HEADER_NAME],
+    metroCode: headers[METRO_HEADER_NAME],
+    postalCode: headers[POSTAL_HEADER_NAME],
+    timezone: headers[TIMEZONE_HEADER_NAME],
+    flag: getFlagFromCountryCode(headers[COUNTRY_HEADER_NAME2])
+  };
+};
+var REQUEST_ID_HEADER_NAME4 = "X-Nf-request-id";
+var IP_HEADER_NAME4 = "X-Nf-Client-Connection-Ip";
+var netlify = (headers, c) => {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  if (!headers[REQUEST_ID_HEADER_NAME4]) {
+    return null;
+  }
+  const ctx = c.env.context;
+  const geo = (_a2 = c.env.context) == null ? void 0 : _a2.geo;
+  return {
+    reqId: headers[REQUEST_ID_HEADER_NAME4],
+    ip: (ctx == null ? void 0 : ctx.ip) ?? headers[IP_HEADER_NAME4],
+    city: tryDecodeURIText(geo == null ? void 0 : geo.city),
+    country: (_b = geo == null ? void 0 : geo.country) == null ? void 0 : _b.name,
+    countryCode: (_c = geo == null ? void 0 : geo.country) == null ? void 0 : _c.code,
+    region: (_d = geo == null ? void 0 : geo.subdivision) == null ? void 0 : _d.name,
+    regionCode: (_e = geo == null ? void 0 : geo.subdivision) == null ? void 0 : _e.code,
+    latitude: (_f = geo == null ? void 0 : geo.latitude) == null ? void 0 : _f.toString(),
+    longitude: (_g = geo == null ? void 0 : geo.longitude) == null ? void 0 : _g.toString(),
+    // metroCode: ,
+    postalCode: geo == null ? void 0 : geo.postalCode,
+    timezone: geo == null ? void 0 : geo.timezone,
+    flag: getFlagFromCountryCode((_h = geo == null ? void 0 : geo.country) == null ? void 0 : _h.code),
+    idcRegion: ctx == null ? void 0 : ctx.server.region
+  };
+};
+var CITY_HEADER_NAME3 = "CloudFront-Viewer-City";
+var COUNTRY_CODE_HEADER_NAME = "CloudFront-Viewer-Country";
+var COUNTRY_NAME_HEADER_NAME = "CloudFront-Viewer-Country-Name";
+var REGION_CODE_HEADER_NAME2 = "CloudFront-Viewer-Country-Region";
+var REGION_NAME_HEADER_NAME = "CloudFront-Viewer-Country-Region-Name";
+var LATITUDE_HEADER_NAME3 = "CloudFront-Viewer-Latitude";
+var LONGITUDE_HEADER_NAME3 = "CloudFront-Viewer-Longitude";
+var TIMEZONE_HEADER_NAME2 = "CloudFront-Viewer-Time-Zone";
+var METRO_CODE_HEADER_NAME = "CloudFront-Viewer-Metro-Code";
+var POSTAL_CODE_HEADER_NAME = "CloudFront-Viewer-Postal-Code";
+var ASN_HEADER_NAME = "CloudFront-Viewer-ASN";
+var cloudfront = (headers, c) => {
+  var _a2, _b, _c, _d;
+  const reqId = (_b = (_a2 = c.env) == null ? void 0 : _a2.context) == null ? void 0 : _b.awsRequestId;
+  if (!reqId) {
+    return null;
+  }
+  return {
+    reqId,
+    ip: (_d = (_c = c.env) == null ? void 0 : _c.request) == null ? void 0 : _d.clientIp,
+    city: tryDecodeURIText(headers[CITY_HEADER_NAME3]),
+    country: headers[COUNTRY_NAME_HEADER_NAME],
+    countryCode: headers[COUNTRY_CODE_HEADER_NAME],
+    region: headers[REGION_NAME_HEADER_NAME],
+    regionCode: headers[REGION_CODE_HEADER_NAME2],
+    latitude: headers[LATITUDE_HEADER_NAME3],
+    longitude: headers[LONGITUDE_HEADER_NAME3],
+    // continent?: string;
+    postalCode: headers[POSTAL_CODE_HEADER_NAME],
+    metroCode: headers[METRO_CODE_HEADER_NAME],
+    timezone: headers[TIMEZONE_HEADER_NAME2],
+    asn: headers[ASN_HEADER_NAME],
+    // idcRegion?
+    flag: getFlagFromCountryCode(headers[COUNTRY_CODE_HEADER_NAME])
+  };
+};
+var extractorFuncs = [
+  vercel,
+  cloudflareWorker,
+  cloudflare,
+  netlify,
+  cloudfront
+];
+var extractorFuncsMap = {
+  "vercel": vercel,
+  "cloudflare": cloudflare,
+  "cloudflare-worker": cloudflareWorker,
+  "netlify": netlify,
+  "cloudfront": cloudfront
+};
+var GeoMiddleware = (options) => {
+  const extractors = (options == null ? void 0 : options.extractors) ?? extractorFuncs;
+  const availableExtractorFuncs = extractors.map((it) => typeof it === "string" ? extractorFuncsMap[it] : it);
+  return createMiddleware(async (c, next) => {
+    const geo = extractGeo(c, availableExtractorFuncs, options == null ? void 0 : options.extractorOption);
+    c.set("geo", geo);
+    await next();
+  });
+};
+function extractGeo(c, extractorFuncs2, options) {
+  const headers = c.req.header();
+  let ans = null;
+  const h = createInsensitiveHeaderProxy(headers);
+  for (const func of extractorFuncs2) {
+    ans = func(h, c, options);
+    if (ans) break;
+  }
+  return ans || {};
+}
+var getGeo = (c) => {
+  return c.get("geo");
+};
+
 // src/webMcp/honoWebStandardStreamableHttp.ts
 var server = new McpServer({
   name: "hono-webstandard-mcp-server",
@@ -25757,6 +26016,53 @@ server.registerTool(
     };
   }
 );
+server.registerTool(
+  "get_geolocation",
+  {
+    title: "Get Geolocation Tool",
+    description: "Get the user's geolocation information"
+  },
+  async () => {
+    try {
+      const geoData = await getGeoLocation();
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(geoData, null, 2)
+          }
+        ]
+      };
+    } catch (e) {
+      return handleApiError(e);
+    }
+  }
+);
+async function getGeoLocation() {
+  try {
+    const res = await fetch("https://mcp-geo.edgeone.app/get_geo");
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`);
+    }
+    return await res.json();
+  } catch (error2) {
+    console.error("Failed to get geolocation:", error2);
+    throw error2;
+  }
+}
+var handleApiError = (error2) => {
+  console.error("API Error:", error2);
+  const errorMessage = error2.message || "Unknown error occurred";
+  return {
+    content: [
+      {
+        type: "text",
+        text: `Error: ${errorMessage}`
+      }
+    ],
+    isError: true
+  };
+};
 var transport = new WebStandardStreamableHTTPServerTransport();
 var BASE_URL = "/webmcpserver";
 var app = new Hono2().basePath(BASE_URL);
@@ -25774,7 +26080,26 @@ app.use(
     exposeHeaders: ["mcp-session-id", "mcp-protocol-version"]
   })
 );
-app.get("/health", (c) => c.json({ status: "ok" }));
+app.use("/*", GeoMiddleware());
+app.get("/geo", (c) => c.json(getGeo(c)));
+app.get("/geo2", async (c) => {
+  try {
+    const res = await fetch("https://mcp-geo.edgeone.app/get_geo");
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`);
+    }
+    const result = await res.json();
+    console.log(result);
+    return c.json(result);
+  } catch (error2) {
+    console.error("Failed to get geolocation:", error2);
+    return c.json({ error: "Failed to fetch geolocation" });
+  }
+});
+app.get("/health", (c) => {
+  console.log(c.env);
+  return c.json({ status: "ok" });
+});
 app.all("/mcp", (c) => transport.handleRequest(c.req.raw));
 
 // node_modules/hono/dist/adapter/service-worker/handler.js

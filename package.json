@@ -1,0 +1,24 @@
+{
+  "name": "testdemo",
+  "version": "1.0.0",
+  "main": "esbuild.config.js",
+  "type": "module",
+  "scripts": {
+    "dev": " tsx src/webMcp/server.ts",
+    "esbuild": "node esbuild.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@tencent/aegis-node-sdk": "^1.43.32",
+    "aegis-mp-sdk": "^1.39.1",
+    "aegis-web-sdk": "^1.41.2",
+    "esbuild": "^0.25.8",
+    "glob": "^11.0.3",
+    "hono": "^4.11.4",
+    "hono-geo-middleware": "^0.1.2",
+    "tsx": "^4.21.0"
+  }
+}
