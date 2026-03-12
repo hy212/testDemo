@@ -4,7 +4,7 @@ addEventListener("fetch", async (event) => {
 });
 
 /** 错误日志上报智研 **/
-export function reportLog() {
+export async function reportLog() {
   const queryArgs = {
     topic: "sdk-cce19ccdcee273db",
     host: "cron-test",
@@ -18,13 +18,13 @@ export function reportLog() {
       },
     ],
   };
-  fetch(`https://publiclog.zhiyan.tencent-cloud.net/collect`, {
+  await fetch(`https://publiclog.zhiyan.tencent-cloud.net/collect`, {
     method: "post",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
     body: JSON.stringify(queryArgs),
-  }).then((res) => res.json());
+  });
 }
 
 // reportLog();
