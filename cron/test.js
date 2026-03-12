@@ -1,3 +1,8 @@
+addEventListener("fetch", async (event) => {
+  await reportLog();
+  event.respondWith(new Response("访问成功"));
+});
+
 /** 错误日志上报智研 **/
 export function reportLog() {
   const queryArgs = {
@@ -22,4 +27,4 @@ export function reportLog() {
   }).then((res) => res.json());
 }
 
-reportLog();
+// reportLog();
