@@ -8,7 +8,7 @@ addEventListener("fetch", async (event) => {
 });
 
 /** 错误日志上报智研 **/
-export function reportLog() {
+async function reportLog() {
   const queryArgs = {
     topic: "sdk-cce19ccdcee273db",
     host: "cron-test",
