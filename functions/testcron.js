@@ -1,5 +1,9 @@
 addEventListener("fetch", async (event) => {
-  await reportLog();
+  // 使用非阻塞方式上报日志，避免阻塞响应
+  reportLog().catch(error => {
+    console.error("日志上报失败:", error);
+  });
+  
   event.respondWith(new Response("访问成功"));
 });
 
@@ -18,7 +22,9 @@ async function reportLog() {
       },
     ],
   };
-  await fetch(`https://publiclog.zhiyan.tencent-cloud.net/collect`, {
+  
+  // 移除await，改为返回Promise，让调用方决定是否等待
+  return fetch(`https://publiclog.zhiyan.tencent-cloud.net/collect`, {
     method: "post",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
