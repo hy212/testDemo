@@ -1,4 +1,4 @@
 function handleRequest() {
-  return new Response("Hello");
+  console.log(11111);
 }
 handleRequest();
