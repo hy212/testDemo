@@ -13,7 +13,8 @@
       "/video": "functions/video.js",
       "/admin": "functions/admin.js",
       "/webmcpserver": "functions/webmcpserver.js",
-      "/testcron": "functions/testcron.js"
+      "/testcron": "functions/testcron.js",
+      "/lingdong": "functions/edgeless-worker.js"
     }
   }
 }
