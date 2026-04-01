@@ -14,7 +14,7 @@
       "/admin": "functions/admin.js",
       "/webmcpserver": "functions/webmcpserver.js",
       "/testcron": "functions/testcron.js",
-      "/lingdong": "functions/edgeless-worker.js"
+      "/lingbao": "functions/edgeless-worker.js"
     }
   }
 }
