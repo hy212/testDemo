@@ -3,7 +3,7 @@ function reportLog(reqUrl, e) {
   const { host, pathname: url } = new URL(reqUrl);
   const httpCode = e?.httpCode;
   const msgData = {
-    // js层报错信息
+    // js code error
     name: e.name,
     message: e.message,
   };
@@ -36,7 +36,7 @@ const API_URL_MAP = {
   createSession: `${API_PREFIX}/alloc_instance`,
   releaseSession: `${API_PREFIX}/release_instance`,
 };
-const BUZ_API_PREFIX = "http://9.238.141.203:32767/cloudrender/cloudgame";
+const BUZ_API_PREFIX = "http://9.134.214.239/cloudrender/cloudgame";
 const BUZ_API_URL_MAP = {
   createSession: `${BUZ_API_PREFIX}/alloc_instance?business_id=8300`,
   releaseSession: `${BUZ_API_PREFIX}/release_instance?business_id=8300`,
