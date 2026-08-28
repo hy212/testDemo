@@ -15,7 +15,8 @@
       "/webmcpserver": "functions/webmcpserver.js",
       "/testcron": "functions/testcron.js",
       "/lingbao": "functions/edgeless-worker.js",
-      "/api": "functions/buz.js"
+      "/api": "functions/buz.js",
+      "/server_ws": "functions/serverWs.js"
     }
   }
 }
