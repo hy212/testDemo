@@ -16,7 +16,8 @@
       "/testcron": "functions/testcron.js",
       "/lingbao": "functions/edgeless-worker.js",
       "/api": "functions/buz.js",
-      "/server_ws": "functions/serverWs.js"
+      "/server_ws": "functions/serverWs.js",
+       "/test": "functions/envTest.js"
     }
   }
 }
