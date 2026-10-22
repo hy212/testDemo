@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": " tsx src/webMcp/server.ts",
-    "esbuild": "node esbuild.config.js"
+    "esbuild": "node esbuild.config.js",
+    "dev:hono": " tsx src/honoMcp/server.ts"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@hono/node-server": "^2.1.5",
+    "@modelcontextprotocol/hono": "^2.0.2",
     "@modelcontextprotocol/sdk": "^1.25.2",
+    "@modelcontextprotocol/server": "^2.3.1",
     "@tencent/aegis-node-sdk": "^1.43.32",
     "aegis-mp-sdk": "^1.39.1",
     "aegis-web-sdk": "^1.41.2",
@@ -19,6 +23,7 @@
     "glob": "^11.0.3",
     "hono": "^4.11.4",
     "hono-geo-middleware": "^0.1.2",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "zod": "^4.6.7"
   }
 }
