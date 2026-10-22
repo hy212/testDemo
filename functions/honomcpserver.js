@@ -25072,7 +25072,15 @@ function buildServer() {
   return server;
 }
 var handler = createMcpHandler(buildServer);
-var app = createMcpHonoApp().basePath("/honomcp");
+var ALLOWED_HOSTS = [
+  "testdemo.test-edgeless.cdntip.com",
+  "localhost",
+  "127.0.0.1"
+];
+var app = createMcpHonoApp({
+  allowedHosts: ALLOWED_HOSTS,
+  allowedOrigins: ALLOWED_HOSTS
+}).basePath("/honomcp");
 app.get("/health", (c) => c.json({ status: "ok" }));
 app.all("/mcp", (c) => handler.fetch(c.req.raw));
 var hono_default = app;
