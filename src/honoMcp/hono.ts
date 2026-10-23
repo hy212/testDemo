@@ -50,6 +50,16 @@ const app = createMcpHonoApp({
   allowedOrigins: ALLOWED_HOSTS,
 }).basePath("/honomcp");
 app.get("/health", (c) => c.json({ status: "ok" }));
-app.all("/mcp", (c) => handler.fetch(c.req.raw));
+// Pass the body already parsed by createMcpHonoApp's middleware via
+// `parsedBody` so the handler does NOT re-read / clone `c.req.raw` (which
+// would fail with "Request body already used" and surface as a 500 on /mcp).
+// Requests without a JSON body leave `parsedBody` undefined, which the SDK
+// handles fine (e.g. GET/DELETE session ops, the initialize preflight).
+app.all("/mcp", async (c) => {
+  // `parsedBody` is set by createMcpHonoApp's internal JSON middleware; the
+  // Hono context type does not declare it, hence the cast.
+  const parsedBody = (c as unknown as { get(key: string): unknown }).get("parsedBody");
+  return handler.fetch(c.req.raw, parsedBody !== undefined ? { parsedBody } : undefined);
+});
 
 export default app;
