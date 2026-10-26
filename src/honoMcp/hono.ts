@@ -82,5 +82,15 @@ app.all("/mcp", async (c) => {
     return c.json({ error: message }, 500);
   }
 });
+app.get("/json", async (c) => {
+  try {
+    let a = { test: 1 };
+    let response = new Response(JSON.stringify(a));
+    return await response.json();
+  } catch (e) {
+    const message = e instanceof Error ? `${e.message}\n${e.stack}` : String(e);
+    return c.json({ error: message }, 500);
+  }
+});
 
 export default app;
