@@ -51,17 +51,12 @@ const app = createMcpHonoApp({
 }).basePath("/honomcp");
 app.get("/health", (c) => c.json({ status: "ok" }));
 app.all("/mcp", async (c) => {
-  let res;
   try {
-    res = await handler.fetch(c.req.raw);
+    return await handler.fetch(c.req.raw);
   } catch (e) {
     const message = e instanceof Error ? `${e.message}\n${e.stack}` : String(e);
-    res = new Response(JSON.stringify({ error: message }), {
-      status: 500,
-      headers: { "content-type": "application/json" },
-    });
+    return c.json({ error: message }, 500);
   }
-  return res;
 });
 
 export default app;
