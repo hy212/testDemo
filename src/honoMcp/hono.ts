@@ -1,4 +1,28 @@
 /**
+ * Polyfill: some Node.js-based edge runtimes (e.g. Tencent Cloud EdgeOne /
+ * cdntip) expose a global `Response` that lacks the static `Response.json()`
+ * helper. The `@modelcontextprotocol/*` SDK calls `Response.json(...)` to build
+ * its JSON-RPC error / result responses, so without this the handler throws
+ * `Response.json is not a function`. Add the static helper if missing.
+ */
+if (
+  typeof globalThis.Response !== "undefined" &&
+  typeof (globalThis.Response as { json?: unknown }).json !== "function"
+) {
+  (globalThis.Response as unknown as { json: typeof Response.json }).json = (
+    body: BodyInit,
+    init?: ResponseInit,
+  ) =>
+    new globalThis.Response(JSON.stringify(body), {
+      ...init,
+      headers: {
+        "content-type": "application/json",
+        ...(init?.headers ?? {}),
+      },
+    });
+}
+
+/**
  * Hosting on Hono / web-standard runtimes (Cloudflare Workers, Deno, Bun,
  * Node.js via `@hono/node-server`).
  *

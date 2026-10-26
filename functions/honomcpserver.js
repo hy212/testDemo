@@ -239,7 +239,7 @@ function assignProp(target, prop, value) {
 }
 function rawShape(def) {
   const desc = Object.getOwnPropertyDescriptor(def, "shape");
-  return (desc == null ? void 0 : desc.get) ? desc.get.raw : desc == null ? void 0 : desc.value;
+  return desc?.get ? desc.get.raw : desc?.value;
 }
 function sourceShape(schema) {
   return rawShape(schema._zod.def) ?? schema._zod.def.shape;
@@ -301,7 +301,7 @@ function cloneDef(schema) {
 function getElementAtPath(obj, path) {
   if (!path)
     return obj;
-  return path.reduce((acc, key) => acc == null ? void 0 : acc[key], obj);
+  return path.reduce((acc, key) => acc?.[key], obj);
 }
 function promiseAllObject(promisesObj) {
   const keys = Object.keys(promisesObj);
@@ -334,11 +334,10 @@ function isObject(data) {
   return typeof data === "object" && data !== null && !Array.isArray(data);
 }
 var allowsEval = /* @__PURE__ */ cached(() => {
-  var _a13;
   if (globalConfig.jitless) {
     return false;
   }
-  if (typeof navigator !== "undefined" && ((_a13 = navigator == null ? void 0 : navigator.userAgent) == null ? void 0 : _a13.includes("Cloudflare"))) {
+  if (typeof navigator !== "undefined" && navigator?.userAgent?.includes("Cloudflare")) {
     return false;
   }
   try {
@@ -443,7 +442,7 @@ function escapeRegex(str) {
 }
 function clone(inst, def, params) {
   const cl = new inst._zod.constr(def ?? inst._zod.def);
-  if (!def || (params == null ? void 0 : params.parent))
+  if (!def || params?.parent)
     cl._zod.parent = inst;
   return cl;
 }
@@ -453,8 +452,8 @@ function normalizeParams(_params) {
     return {};
   if (typeof params === "string")
     return { error: () => params };
-  if ((params == null ? void 0 : params.message) !== void 0) {
-    if ((params == null ? void 0 : params.error) !== void 0)
+  if (params?.message !== void 0) {
+    if (params?.error !== void 0)
       throw new Error("Cannot specify both `message` and `error` params");
     params.error = params.message;
   }
@@ -531,11 +530,10 @@ function pick(schema, mask) {
   return clone(schema, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
 function maskedKeys(schema, mask) {
-  var _a13;
   const raw2 = sourceShape(schema);
   const keys = [];
   for (const key of Reflect.ownKeys(mask)) {
-    if (!((_a13 = Object.getOwnPropertyDescriptor(raw2, key)) == null ? void 0 : _a13.enumerable)) {
+    if (!Object.getOwnPropertyDescriptor(raw2, key)?.enumerable) {
       throw new Error(`Unrecognized key: "${String(key)}"`);
     }
     if (mask[key])
@@ -584,11 +582,10 @@ function safeExtend(schema, shape) {
   return clone(schema, mergeDefs(schema._zod.def, { shape: extended(schema, shape) }));
 }
 function merge(a, b) {
-  var _a13, _b;
-  if (!((_a13 = b == null ? void 0 : b._zod) == null ? void 0 : _a13.def)) {
+  if (!b?._zod?.def) {
     throw new Error("Invalid input to merge: expected an object schema. To merge a plain shape, use `.extend()`.");
   }
-  if ((_b = a._zod.def.checks) == null ? void 0 : _b.length) {
+  if (a._zod.def.checks?.length) {
     throw new Error(".merge() cannot be used on object schemas containing refinements. Use .safeExtend() instead.");
   }
   const newShape = {};
@@ -625,22 +622,20 @@ function required(Class2, schema, mask) {
   return clone(schema, mergeDefs(schema._zod.def, { shape: newShape }));
 }
 function aborted(x, startIndex = 0) {
-  var _a13;
   if (x.aborted === true)
     return true;
   for (let i = startIndex; i < x.issues.length; i++) {
-    if (((_a13 = x.issues[i]) == null ? void 0 : _a13.continue) !== true) {
+    if (x.issues[i]?.continue !== true) {
       return true;
     }
   }
   return false;
 }
 function explicitlyAborted(x, startIndex = 0) {
-  var _a13;
   if (x.aborted === true)
     return true;
   for (let i = startIndex; i < x.issues.length; i++) {
-    if (((_a13 = x.issues[i]) == null ? void 0 : _a13.continue) === false) {
+    if (x.issues[i]?.continue === false) {
       return true;
     }
   }
@@ -648,14 +643,14 @@ function explicitlyAborted(x, startIndex = 0) {
 }
 function prefixIssues(path, issues) {
   return issues.map((iss) => {
-    var _a13;
-    (_a13 = iss).path ?? (_a13.path = []);
+    var _a3;
+    (_a3 = iss).path ?? (_a3.path = []);
     iss.path.unshift(path);
     return iss;
   });
 }
 function unwrapMessage(message) {
-  return typeof message === "string" ? message : message == null ? void 0 : message.message;
+  return typeof message === "string" ? message : message?.message;
 }
 function sizeCaps(defChecks) {
   const caps = [];
@@ -670,23 +665,22 @@ function sizeCaps(defChecks) {
   return caps;
 }
 function attachSchema(issues, start, inst) {
-  var _a13;
+  var _a3;
   for (let i = start; i < issues.length; i++) {
-    (_a13 = issues[i]).schema ?? (_a13.schema = inst);
+    (_a3 = issues[i]).schema ?? (_a3.schema = inst);
   }
 }
 function finalizeIssue(iss, ctx, config2) {
-  var _a14, _b, _c, _d, _e, _f, _g, _h, _i, _j;
-  var _a13;
-  const traits = (_b = (_a14 = iss.inst) == null ? void 0 : _a14._zod) == null ? void 0 : _b.traits;
-  if (traits == null ? void 0 : traits.has("$ZodType")) {
+  var _a3;
+  const traits = iss.inst?._zod?.traits;
+  if (traits?.has("$ZodType")) {
     if (traits.has("$ZodCheck"))
-      (_a13 = iss).schema ?? (_a13.schema = iss.inst);
+      (_a3 = iss).schema ?? (_a3.schema = iss.inst);
     else
       iss.schema = iss.inst;
   }
-  const schemaError = iss.schema !== iss.inst ? (_d = (_c = iss.schema) == null ? void 0 : _c._zod.def) == null ? void 0 : _d.error : void 0;
-  const message = iss.message ? iss.message : unwrapMessage((_g = (_f = (_e = iss.inst) == null ? void 0 : _e._zod.def) == null ? void 0 : _f.error) == null ? void 0 : _g.call(_f, iss)) ?? unwrapMessage(schemaError == null ? void 0 : schemaError(iss)) ?? unwrapMessage((_h = ctx == null ? void 0 : ctx.error) == null ? void 0 : _h.call(ctx, iss)) ?? unwrapMessage((_i = config2.customError) == null ? void 0 : _i.call(config2, iss)) ?? unwrapMessage((_j = config2.localeError) == null ? void 0 : _j.call(config2, iss)) ?? "Invalid input";
+  const schemaError = iss.schema !== iss.inst ? iss.schema?._zod.def?.error : void 0;
+  const message = iss.message ? iss.message : unwrapMessage(iss.inst?._zod.def?.error?.(iss)) ?? unwrapMessage(schemaError?.(iss)) ?? unwrapMessage(ctx?.error?.(iss)) ?? unwrapMessage(config2.customError?.(iss)) ?? unwrapMessage(config2.localeError?.(iss)) ?? "Invalid input";
   const full = {};
   for (const k of Object.keys(iss)) {
     if (k === "inst" || k === "schema" || k === "continue" || k === "input" || k === "__proto__")
@@ -695,7 +689,7 @@ function finalizeIssue(iss, ctx, config2) {
   }
   full.path ?? (full.path = []);
   full.message = message;
-  if (ctx == null ? void 0 : ctx.reportInput) {
+  if (ctx?.reportInput) {
     full.input = iss.input;
   }
   return full;
@@ -995,13 +989,12 @@ function $constructor(name, initializer3, proto, params) {
       }
     }
   }
-  const Parent = (params == null ? void 0 : params.Parent) ?? Object;
+  const Parent = params?.Parent ?? Object;
   class Definition extends Parent {
   }
   Object.defineProperty(Definition, "name", { value: name });
   function _(def) {
-    var _a13;
-    const inst = (params == null ? void 0 : params.Parent) ? newError(Definition) : this;
+    const inst = params?.Parent ? newError(Definition) : this;
     init(inst, def);
     const deferred = inst._zod.deferred;
     if (deferred) {
@@ -1010,7 +1003,7 @@ function $constructor(name, initializer3, proto, params) {
       }
       inst._zod.deferred = void 0;
     }
-    const pp = (_a13 = globalThis.__zod_globalConfig) == null ? void 0 : _a13.postProcessor;
+    const pp = globalThis.__zod_globalConfig?.postProcessor;
     if (pp)
       pp(inst);
     return inst;
@@ -1018,10 +1011,9 @@ function $constructor(name, initializer3, proto, params) {
   Object.defineProperty(_, "init", { value: init });
   Object.defineProperty(_, Symbol.hasInstance, {
     value: (inst) => {
-      var _a13, _b;
-      if ((params == null ? void 0 : params.Parent) && inst instanceof params.Parent)
+      if (params?.Parent && inst instanceof params.Parent)
         return true;
-      return (_b = (_a13 = inst == null ? void 0 : inst._zod) == null ? void 0 : _a13.traits) == null ? void 0 : _b.has(name);
+      return inst?._zod?.traits?.has(name);
     }
   });
   Object.defineProperty(_, "name", { value: name });
@@ -1163,7 +1155,7 @@ function formatError(error2, mapper = (issue2) => issue2.message) {
 
 // node_modules/zod/v4/core/parse.js
 function finalizeParams(callee, params) {
-  return { callee: (params == null ? void 0 : params.callee) ?? callee, Err: params == null ? void 0 : params.Err };
+  return { callee: params?.callee ?? callee, Err: params?.Err };
 }
 var _parse = (_Err) => {
   const fn = (schema, value, _ctx, _params) => {
@@ -1173,8 +1165,8 @@ var _parse = (_Err) => {
       throw new $ZodAsyncError();
     }
     if (result.issues.length) {
-      const e = new ((_params == null ? void 0 : _params.Err) ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
-      captureStackTrace(e, (_params == null ? void 0 : _params.callee) ?? fn);
+      const e = new (_params?.Err ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+      captureStackTrace(e, _params?.callee ?? fn);
       throw e;
     }
     return result.value;
@@ -1188,8 +1180,8 @@ var _parseAsync = (_Err) => {
     if (result instanceof Promise)
       result = await result;
     if (result.issues.length) {
-      const e = new ((params == null ? void 0 : params.Err) ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
-      captureStackTrace(e, (params == null ? void 0 : params.callee) ?? fn);
+      const e = new (params?.Err ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+      captureStackTrace(e, params?.callee ?? fn);
       throw e;
     }
     return result.value;
@@ -1371,10 +1363,10 @@ var uppercase = /^[^a-z]*$/;
 
 // node_modules/zod/v4/core/checks.js
 var $ZodCheck = /* @__PURE__ */ $constructor("$ZodCheck", (inst, def) => {
-  var _a13;
+  var _a3;
   inst._zod ?? (inst._zod = {});
   inst._zod.def = def;
-  (_a13 = inst._zod).onattach ?? (_a13.onattach = []);
+  (_a3 = inst._zod).onattach ?? (_a3.onattach = []);
 });
 var _whenHasLength = (payload) => {
   const val = payload.value;
@@ -1443,10 +1435,9 @@ var $ZodCheckMultipleOf = /* @__PURE__ */ $constructor("$ZodCheckMultipleOf", (i
   };
 });
 var $ZodCheckNumberFormat = /* @__PURE__ */ $constructor("$ZodCheckNumberFormat", (inst, def) => {
-  var _a13;
   $ZodCheck.init(inst, def);
   def.format = def.format || "float64";
-  const isInt = (_a13 = def.format) == null ? void 0 : _a13.includes("int");
+  const isInt = def.format?.includes("int");
   const origin = isInt ? "int" : "number";
   const [minimum, maximum] = NUMBER_FORMAT_RANGES[def.format];
   inst._zod.check = (payload) => {
@@ -1515,9 +1506,9 @@ var $ZodCheckNumberFormat = /* @__PURE__ */ $constructor("$ZodCheckNumberFormat"
   };
 });
 var $ZodCheckMaxLength = /* @__PURE__ */ $constructor("$ZodCheckMaxLength", (inst, def) => {
-  var _a13;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a13 = inst._zod.def).when ?? (_a13.when = _whenHasLength);
+  (_a3 = inst._zod.def).when ?? (_a3.when = _whenHasLength);
   inst._zod.check = (payload) => {
     const input = payload.value;
     const units = input.length;
@@ -1537,9 +1528,9 @@ var $ZodCheckMaxLength = /* @__PURE__ */ $constructor("$ZodCheckMaxLength", (ins
   };
 });
 var $ZodCheckMinLength = /* @__PURE__ */ $constructor("$ZodCheckMinLength", (inst, def) => {
-  var _a13;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a13 = inst._zod.def).when ?? (_a13.when = _whenHasLength);
+  (_a3 = inst._zod.def).when ?? (_a3.when = _whenHasLength);
   inst._zod.check = (payload) => {
     const input = payload.value;
     const units = input.length;
@@ -1559,9 +1550,9 @@ var $ZodCheckMinLength = /* @__PURE__ */ $constructor("$ZodCheckMinLength", (ins
   };
 });
 var $ZodCheckLengthEquals = /* @__PURE__ */ $constructor("$ZodCheckLengthEquals", (inst, def) => {
-  var _a13;
+  var _a3;
   $ZodCheck.init(inst, def);
-  (_a13 = inst._zod.def).when ?? (_a13.when = _whenHasLength);
+  (_a3 = inst._zod.def).when ?? (_a3.when = _whenHasLength);
   inst._zod.check = (payload) => {
     const input = payload.value;
     const units = input.length;
@@ -1582,10 +1573,10 @@ var $ZodCheckLengthEquals = /* @__PURE__ */ $constructor("$ZodCheckLengthEquals"
   };
 });
 var $ZodCheckStringFormat = /* @__PURE__ */ $constructor("$ZodCheckStringFormat", (inst, def) => {
-  var _a13, _b;
+  var _a3, _b;
   $ZodCheck.init(inst, def);
   if (def.pattern)
-    (_a13 = inst._zod).check ?? (_a13.check = (payload) => {
+    (_a3 = inst._zod).check ?? (_a3.check = (payload) => {
       def.pattern.lastIndex = 0;
       if (def.pattern.test(payload.value))
         return;
@@ -1723,7 +1714,7 @@ var Doc = class {
   }
   compile() {
     const F = Function;
-    const content = (this == null ? void 0 : this.content) ?? [``];
+    const content = this?.content ?? [``];
     const factory = new F(...Object.keys(this.closed), `return function (${this.args.join(", ")}) {
 ${content.join("\n")}
 };`);
@@ -1740,22 +1731,21 @@ var version = {
 
 // node_modules/zod/v4/core/schemas.js
 var $ZodType = /* @__PURE__ */ $constructor("$ZodType", (inst, def) => {
-  var _a14;
-  var _a13;
+  var _a3;
   inst ?? (inst = {});
   inst._zod.def = def;
   inst._zod.bag = inst._zod.bag || {};
   inst._zod.version = version;
   const defChecks = inst._zod.def.checks;
-  const checks = inst._zod.traits.has("$ZodCheck") ? [inst, ...defChecks ?? []] : (defChecks == null ? void 0 : defChecks.length) ? [...defChecks] : [];
+  const checks = inst._zod.traits.has("$ZodCheck") ? [inst, ...defChecks ?? []] : defChecks?.length ? [...defChecks] : [];
   for (const ch of checks) {
     for (const fn of ch._zod.onattach) {
       fn(inst);
     }
   }
   if (checks.length === 0) {
-    (_a13 = inst._zod).deferred ?? (_a13.deferred = []);
-    (_a14 = inst._zod.deferred) == null ? void 0 : _a14.push(() => {
+    (_a3 = inst._zod).deferred ?? (_a3.deferred = []);
+    inst._zod.deferred?.push(() => {
       inst._zod.run = inst._zod.parse;
     });
   } else {
@@ -1776,7 +1766,7 @@ var $ZodType = /* @__PURE__ */ $constructor("$ZodType", (inst, def) => {
         }
         const currLen = payload.issues.length;
         const _ = ch._zod.check(payload);
-        if (_ instanceof Promise && (ctx == null ? void 0 : ctx.async) === false) {
+        if (_ instanceof Promise && ctx?.async === false) {
           throw new $ZodAsyncError();
         }
         if (asyncResult || _ instanceof Promise) {
@@ -1941,8 +1931,7 @@ function validateURL(trimmed, def) {
   return parseURLObject(trimmed, def);
 }
 function parseURLObject(trimmed, def) {
-  var _a13;
-  if (!def.normalize && ((_a13 = def.protocol) == null ? void 0 : _a13.source) === httpProtocol.source && !/^https?:\/\//i.test(trimmed)) {
+  if (!def.normalize && def.protocol?.source === httpProtocol.source && !/^https?:\/\//i.test(trimmed)) {
     return URL_BAD_FORMAT;
   }
   try {
@@ -2204,7 +2193,7 @@ function isValidJWT(token, algorithm = null) {
     if (!header)
       return false;
     const parsedHeader = JSON.parse(atob(header));
-    if ("typ" in parsedHeader && (parsedHeader == null ? void 0 : parsedHeader.typ) !== "JWT")
+    if ("typ" in parsedHeader && parsedHeader?.typ !== "JWT")
       return false;
     if (!parsedHeader.alg)
       return false;
@@ -2367,7 +2356,7 @@ function capSize(inst, size) {
   const parse2 = inst._zod.parse;
   inst._zod.parse = (payload, ctx) => {
     const n = size(payload.value);
-    if (n > cap && !(ctx == null ? void 0 : ctx.skipChecks) && (ctx == null ? void 0 : ctx.direction) !== "backward") {
+    if (n > cap && !ctx?.skipChecks && ctx?.direction !== "backward") {
       for (const [max, ch] of sizeCaps(inst._zod.def.checks)) {
         if (n > max && ch._zod.def.when(payload)) {
           const start = payload.issues.length;
@@ -2391,7 +2380,7 @@ function handleArrayResult(result, final, index) {
 var $ZodArray = /* @__PURE__ */ $constructor("$ZodArray", (inst, def) => {
   $ZodType.init(inst, def);
   const memo3 = globalConfig.memoizer;
-  memo3 == null ? void 0 : memo3.attach(inst);
+  memo3?.attach(inst);
   inst._zod.parse = (payload, ctx) => {
     const input = payload.value;
     if (!Array.isArray(input)) {
@@ -2405,7 +2394,7 @@ var $ZodArray = /* @__PURE__ */ $constructor("$ZodArray", (inst, def) => {
     }
     payload.value = memo3 ? memo3.alloc(inst, payload, Array(input.length), ctx) : Array(input.length);
     const proms = [];
-    const abortEarly = ctx == null ? void 0 : ctx.abortEarly;
+    const abortEarly = ctx?.abortEarly;
     for (let i = 0; i < input.length; i++) {
       const item = input[i];
       const result = def.element._zod.run({
@@ -2460,13 +2449,12 @@ function handlePropertyResult(result, final, key, input, optin, optout) {
 }
 var NO_SYMBOL_KEYS = [];
 function normalizeDef(def) {
-  var _a13, _b, _c, _d;
   const keys = Object.keys(def.shape);
   const ownSymbols = Object.getOwnPropertySymbols(def.shape);
   const symbolKeys = ownSymbols.length ? ownSymbols : NO_SYMBOL_KEYS;
   const allKeys = symbolKeys.length ? [...keys, ...symbolKeys] : keys;
   for (const k of allKeys) {
-    if (!((_d = (_c = (_b = (_a13 = def.shape) == null ? void 0 : _a13[k]) == null ? void 0 : _b._zod) == null ? void 0 : _c.traits) == null ? void 0 : _d.has("$ZodType"))) {
+    if (!def.shape?.[k]?._zod?.traits?.has("$ZodType")) {
       throw new Error(`Invalid element at key "${String(k)}": expected a Zod schema`);
     }
   }
@@ -2532,7 +2520,7 @@ function handleCatchall(proms, input, payload, ctx, def, inst, abortEarly) {
 var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
   $ZodType.init(inst, def);
   const desc = Object.getOwnPropertyDescriptor(def, "shape");
-  const sh = (desc == null ? void 0 : desc.get) ? desc.get.raw : def.shape ?? {};
+  const sh = desc?.get ? desc.get.raw : def.shape ?? {};
   if (sh) {
     const get = () => {
       const newSh = { ...sh };
@@ -2565,7 +2553,7 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
   const catchall = def.catchall;
   let value;
   const memo3 = globalConfig.memoizer;
-  memo3 == null ? void 0 : memo3.attach(inst);
+  memo3?.attach(inst);
   inst._zod.parse = (payload, ctx) => {
     value ?? (value = _normalized.value);
     const input = payload.value;
@@ -2581,7 +2569,7 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
     payload.value = memo3 ? memo3.alloc(inst, payload, {}, ctx) : {};
     const proms = [];
     const shape = value.shape;
-    const abortEarly = ctx == null ? void 0 : ctx.abortEarly;
+    const abortEarly = ctx?.abortEarly;
     let seen = payload.issues.length;
     for (const key of value.allKeys) {
       if (abortEarly && payload.issues.length !== seen) {
@@ -2613,7 +2601,6 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
   const _normalized = cached(() => normalizeDef(def));
   const memo3 = globalConfig.memoizer;
   const generateFastpass = (shape) => {
-    var _a13, _b;
     const normalized = _normalized.value;
     const syms = normalized.symbolKeys;
     const doc = new Doc(["payload", "ctx"], { shape, inst, memo: memo3, syms });
@@ -2644,9 +2631,9 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
       const k = typeof key === "symbol" ? `syms[${syms.indexOf(key)}]` : esc(key);
       const isPresent = `${k} in input`;
       const schema = shape[key];
-      const optin = (_a13 = schema == null ? void 0 : schema._zod) == null ? void 0 : _a13.optin;
+      const optin = schema?._zod?.optin;
       const isOptionalIn = optin !== void 0;
-      const isOptionalOut = ((_b = schema == null ? void 0 : schema._zod) == null ? void 0 : _b.optout) === "optional";
+      const isOptionalOut = schema?._zod?.optout === "optional";
       doc.write(`const ${id} = ${parseStr(k)};`);
       if (isOptionalIn && isOptionalOut) {
         const assign = optin === "optional" ? `${id}_present` : `${id}.value !== undefined || ${id}_present`;
@@ -2724,13 +2711,13 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
       });
       return payload;
     }
-    if (jit && fastEnabled && (ctx == null ? void 0 : ctx.async) === false && ctx.jitless !== true) {
+    if (jit && fastEnabled && ctx?.async === false && ctx.jitless !== true) {
       if (!fastpass)
         fastpass = generateFastpass(def.shape);
       payload = fastpass(payload, ctx);
       if (!catchall)
         return payload;
-      return handleCatchall([], input, payload, ctx, value, inst, (ctx == null ? void 0 : ctx.abortEarly) === true);
+      return handleCatchall([], input, payload, ctx, value, inst, ctx?.abortEarly === true);
     }
     return superParse(payload, ctx);
   };
@@ -2801,10 +2788,9 @@ var $ZodUnion = /* @__PURE__ */ $constructor("$ZodUnion", (inst, def) => {
   };
 });
 function discriminatorMap(def) {
-  var _a13;
   const map = /* @__PURE__ */ new Map();
   for (const option of def.options) {
-    const values = (_a13 = option._zod.propValues) == null ? void 0 : _a13[def.discriminator];
+    const values = option._zod.propValues?.[def.discriminator];
     if (!values || values.size === 0)
       throw new Error(`Invalid discriminated union option at index "${def.options.indexOf(option)}"`);
     for (const value of values) {
@@ -2824,14 +2810,13 @@ var $ZodDiscriminatedUnion = /* @__PURE__ */ $constructor("$ZodDiscriminatedUnio
   $ZodUnion.init(inst, def);
   const _super = inst._zod.parse;
   defineLazyInternal(inst, "propValues", (zod) => {
-    var _a13, _b;
     const propValues = {};
     let undefinedCount = 0;
     for (const option of zod.def.options) {
       const pv = option._zod.propValues;
       if (!pv || Object.keys(pv).length === 0)
         throw new Error(`Invalid discriminated union option at index "${zod.def.options.indexOf(option)}"`);
-      if ((_a13 = pv[zod.def.discriminator]) == null ? void 0 : _a13.has(void 0))
+      if (pv[zod.def.discriminator]?.has(void 0))
         undefinedCount++;
       for (const [k, v] of Object.entries(pv)) {
         if (!Object.prototype.hasOwnProperty.call(propValues, k)) {
@@ -2843,7 +2828,7 @@ var $ZodDiscriminatedUnion = /* @__PURE__ */ $constructor("$ZodDiscriminatedUnio
       }
     }
     if (!zod.def.unionFallback && undefinedCount > 1)
-      (_b = propValues[zod.def.discriminator]) == null ? void 0 : _b.delete(void 0);
+      propValues[zod.def.discriminator]?.delete(void 0);
     return propValues;
   });
   def.options.forEach((option, i) => {
@@ -2864,7 +2849,7 @@ var $ZodDiscriminatedUnion = /* @__PURE__ */ $constructor("$ZodDiscriminatedUnio
       });
       return payload;
     }
-    const value = input == null ? void 0 : input[def.discriminator];
+    const value = input?.[def.discriminator];
     const opt = disc.value.get(value);
     if (opt && (value !== void 0 || ctx.direction !== "backward")) {
       return opt._zod.run(payload, ctx);
@@ -2953,12 +2938,11 @@ function handleIntersectionResults(result, left, right) {
   let unrecIssue;
   const keyIssues = /* @__PURE__ */ new Map();
   const collect = (iss, side) => {
-    var _a13, _b;
     let keys;
-    if (iss.code === "unrecognized_keys" && !((_a13 = iss.path) == null ? void 0 : _a13.length)) {
+    if (iss.code === "unrecognized_keys" && !iss.path?.length) {
       unrecIssue ?? (unrecIssue = iss);
       keys = iss.keys;
-    } else if (iss.code === "invalid_key" && iss.origin === "record" && ((_b = iss.path) == null ? void 0 : _b.length) === 1) {
+    } else if (iss.code === "invalid_key" && iss.origin === "record" && iss.path?.length === 1) {
       const k = String(iss.path[0]);
       if (!keyIssues.has(k))
         keyIssues.set(k, iss);
@@ -3003,7 +2987,7 @@ function handleIntersectionResults(result, left, right) {
 var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
   $ZodType.init(inst, def);
   const memo3 = globalConfig.memoizer;
-  memo3 == null ? void 0 : memo3.attach(inst);
+  memo3?.attach(inst);
   inst._zod.parse = (payload, ctx) => {
     const input = payload.value;
     if (!isPlainObject(input)) {
@@ -3201,10 +3185,9 @@ var $ZodLiteral = /* @__PURE__ */ $constructor("$ZodLiteral", (inst, def) => {
   };
 });
 var $ZodTransform = /* @__PURE__ */ $constructor("$ZodTransform", (inst, def) => {
-  var _a13;
   $ZodType.init(inst, def);
   inst._zod.optin = "optional";
-  (_a13 = globalConfig.memoizer) == null ? void 0 : _a13.guard(inst);
+  globalConfig.memoizer?.guard(inst);
   inst._zod.parse = (payload, ctx) => {
     if (ctx.direction === "backward") {
       throw new $ZodEncodeError(inst.constructor.name);
@@ -3409,14 +3392,8 @@ var $ZodReadonly = /* @__PURE__ */ $constructor("$ZodReadonly", (inst, def) => {
   $ZodType.init(inst, def);
   defineLazyInternal(inst, "propValues", (zod) => zod.def.innerType._zod.propValues);
   defineLazyInternal(inst, "values", (zod) => zod.def.innerType._zod.values);
-  defineLazyInternal(inst, "optin", (zod) => {
-    var _a13, _b;
-    return (_b = (_a13 = zod.def.innerType) == null ? void 0 : _a13._zod) == null ? void 0 : _b.optin;
-  });
-  defineLazyInternal(inst, "optout", (zod) => {
-    var _a13, _b;
-    return (_b = (_a13 = zod.def.innerType) == null ? void 0 : _a13._zod) == null ? void 0 : _b.optout;
-  });
+  defineLazyInternal(inst, "optin", (zod) => zod.def.innerType?._zod?.optin);
+  defineLazyInternal(inst, "optout", (zod) => zod.def.innerType?._zod?.optout);
   inst._zod.parse = (payload, ctx) => {
     if (ctx.direction === "backward") {
       return def.innerType._zod.run(payload, ctx);
@@ -3441,22 +3418,10 @@ var $ZodLazy = /* @__PURE__ */ $constructor("$ZodLazy", (inst, def) => {
       d._cachedInner = def.getter();
     return d._cachedInner;
   });
-  defineLazyInternal(inst, "pattern", (zod) => {
-    var _a13, _b;
-    return (_b = (_a13 = zod.innerType) == null ? void 0 : _a13._zod) == null ? void 0 : _b.pattern;
-  });
-  defineLazyInternal(inst, "propValues", (zod) => {
-    var _a13, _b;
-    return (_b = (_a13 = zod.innerType) == null ? void 0 : _a13._zod) == null ? void 0 : _b.propValues;
-  });
-  defineLazyInternal(inst, "optin", (zod) => {
-    var _a13, _b;
-    return ((_b = (_a13 = zod.innerType) == null ? void 0 : _a13._zod) == null ? void 0 : _b.optin) ?? void 0;
-  });
-  defineLazyInternal(inst, "optout", (zod) => {
-    var _a13, _b;
-    return ((_b = (_a13 = zod.innerType) == null ? void 0 : _a13._zod) == null ? void 0 : _b.optout) ?? void 0;
-  });
+  defineLazyInternal(inst, "pattern", (zod) => zod.innerType?._zod?.pattern);
+  defineLazyInternal(inst, "propValues", (zod) => zod.innerType?._zod?.propValues);
+  defineLazyInternal(inst, "optin", (zod) => zod.innerType?._zod?.optin ?? void 0);
+  defineLazyInternal(inst, "optout", (zod) => zod.innerType?._zod?.optout ?? void 0);
   inst._zod.parse = (payload, ctx) => {
     const inner = inst._zod.innerType;
     return inner._zod.run(payload, ctx);
@@ -3524,20 +3489,19 @@ function isRecursive(inst, stack, resolve) {
   stack.add(inst);
   let result = NONE;
   const check = (child) => {
-    if (result !== PROVEN && (child == null ? void 0 : child._zod)) {
+    if (result !== PROVEN && child?._zod) {
       const answer = isRecursive(child, stack, resolve);
       if (answer > result)
         result = answer;
     }
   };
   const shape = (sh, spread) => {
-    var _a13;
     let answer = NONE;
     for (const key of Reflect.ownKeys(sh)) {
       const desc = Object.getOwnPropertyDescriptor(sh, key);
       if (spread && !desc.enumerable)
         continue;
-      const child = desc.get ? ASSUMED : ((_a13 = desc.value) == null ? void 0 : _a13._zod) ? isRecursive(desc.value, stack, resolve) : NONE;
+      const child = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve) : NONE;
       if (child > answer)
         answer = child;
     }
@@ -3675,8 +3639,8 @@ var memo = {
     return empty;
   },
   guard(inst) {
-    var _a13;
-    (_a13 = inst._zod).deferred ?? (_a13.deferred = []);
+    var _a3;
+    (_a3 = inst._zod).deferred ?? (_a3.deferred = []);
     inst._zod.deferred.push(() => {
       const base = inst._zod.parse;
       const wrapped = (payload, ctx) => {
@@ -3690,12 +3654,12 @@ var memo = {
     });
   },
   attach(inst) {
-    var _a13;
+    var _a3;
     let isRecursiveInst;
     let rechecked = false;
     let lastCtx;
     let lastBucket;
-    (_a13 = inst._zod).deferred ?? (_a13.deferred = []);
+    (_a3 = inst._zod).deferred ?? (_a3.deferred = []);
     inst._zod.deferred.push(() => {
       const base = inst._zod.parse;
       const wrapped = (payload, ctx) => {
@@ -3767,8 +3731,7 @@ function memoizer() {
   return memo;
 }
 function isBackEdge(ctx, value) {
-  var _a13;
-  const backEdges = (_a13 = ctx[STATE]) == null ? void 0 : _a13.backEdges;
+  const backEdges = ctx[STATE]?.backEdges;
   return backEdges !== void 0 && isRef(value) && backEdges.has(value);
 }
 
@@ -4510,28 +4473,28 @@ function assignProps(target, ...sources) {
   return target;
 }
 function initializeContext(params) {
-  let target = (params == null ? void 0 : params.target) ?? "draft-2020-12";
+  let target = params?.target ?? "draft-2020-12";
   if (target === "draft-4")
     target = "draft-04";
   if (target === "draft-7")
     target = "draft-07";
   return {
     processors: params.processors ?? {},
-    metadataRegistry: (params == null ? void 0 : params.metadata) ?? globalRegistry,
+    metadataRegistry: params?.metadata ?? globalRegistry,
     target,
-    unrepresentable: (params == null ? void 0 : params.unrepresentable) ?? "throw",
-    override: (params == null ? void 0 : params.override) ?? (() => {
+    unrepresentable: params?.unrepresentable ?? "throw",
+    override: params?.override ?? (() => {
     }),
-    io: (params == null ? void 0 : params.io) ?? "output",
+    io: params?.io ?? "output",
     counter: 0,
     seen: /* @__PURE__ */ new Map(),
     sharedDefsExtractedFor: void 0,
     sharedEmitDoneFor: void 0,
-    cycles: (params == null ? void 0 : params.cycles) ?? "ref",
-    reused: (params == null ? void 0 : params.reused) ?? "inline",
+    cycles: params?.cycles ?? "ref",
+    reused: params?.reused ?? "inline",
     intersections: [],
     deferred: [],
-    external: (params == null ? void 0 : params.external) ?? void 0
+    external: params?.external ?? void 0
   };
 }
 function handleUnrepresentable(schema, ctx, json, params, message) {
@@ -4544,8 +4507,7 @@ function handleUnrepresentable(schema, ctx, json, params, message) {
   return true;
 }
 function processSchema(schema, ctx, _params = { path: [], schemaPath: [] }) {
-  var _a14, _b;
-  var _a13;
+  var _a3;
   const def = schema._zod.def;
   const seen = ctx.seen.get(schema);
   if (seen) {
@@ -4560,7 +4522,7 @@ function processSchema(schema, ctx, _params = { path: [], schemaPath: [] }) {
   ctx.seen.set(schema, result);
   ctx.sharedDefsExtractedFor = void 0;
   ctx.sharedEmitDoneFor = void 0;
-  const overrideSchema = (_b = (_a14 = schema._zod).toJSONSchema) == null ? void 0 : _b.call(_a14);
+  const overrideSchema = schema._zod.toJSONSchema?.();
   if (overrideSchema) {
     result.schema = overrideSchema;
   } else {
@@ -4595,7 +4557,7 @@ function processSchema(schema, ctx, _params = { path: [], schemaPath: [] }) {
     delete result.schema.default;
   }
   if (ctx.io === "input" && "_prefault" in result.schema)
-    (_a13 = result.schema).default ?? (_a13.default = result.schema._prefault);
+    (_a3 = result.schema).default ?? (_a3.default = result.schema._prefault);
   delete result.schema._prefault;
   const _result = ctx.seen.get(schema);
   return _result.schema;
@@ -4604,7 +4566,6 @@ function encodeJSONPointerSegment(segment) {
   return segment.replace(/~/g, "~0").replace(/\//g, "~1");
 }
 function extractDefs(ctx, schema) {
-  var _a13, _b, _c, _d;
   const root = ctx.seen.get(schema);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
@@ -4612,7 +4573,7 @@ function extractDefs(ctx, schema) {
     return;
   const idToSchema = /* @__PURE__ */ new Map();
   for (const entry of ctx.seen.entries()) {
-    const id = (_a13 = ctx.metadataRegistry.get(entry[0])) == null ? void 0 : _a13.id;
+    const id = ctx.metadataRegistry.get(entry[0])?.id;
     if (id) {
       const existing = idToSchema.get(id);
       if (existing && existing !== entry[0]) {
@@ -4622,10 +4583,9 @@ function extractDefs(ctx, schema) {
     }
   }
   const makeURI = (entry) => {
-    var _a14;
     const defsSegment = ctx.target === "draft-2020-12" ? "$defs" : "definitions";
     if (ctx.external) {
-      const externalId = (_a14 = ctx.external.registry.get(entry[0])) == null ? void 0 : _a14.id;
+      const externalId = ctx.external.registry.get(entry[0])?.id;
       const uriGenerator = ctx.external.uri ?? ((id2) => id2);
       if (externalId) {
         return { ref: uriGenerator(externalId) };
@@ -4661,7 +4621,7 @@ function extractDefs(ctx, schema) {
     for (const entry of ctx.seen.entries()) {
       const seen = entry[1];
       if (seen.cycle) {
-        throw new Error(`Cycle detected: #/${(_b = seen.cycle) == null ? void 0 : _b.join("/")}/<root>
+        throw new Error(`Cycle detected: #/${seen.cycle?.join("/")}/<root>
 
 Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.`);
       }
@@ -4674,13 +4634,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
       continue;
     }
     if (ctx.external) {
-      const ext = (_c = ctx.external.registry.get(entry[0])) == null ? void 0 : _c.id;
+      const ext = ctx.external.registry.get(entry[0])?.id;
       if (schema !== entry[0] && ext) {
         extractToDef(entry);
         continue;
       }
     }
-    const id = (_d = ctx.metadataRegistry.get(entry[0])) == null ? void 0 : _d.id;
+    const id = ctx.metadataRegistry.get(entry[0])?.id;
     if (id) {
       extractToDef(entry);
       continue;
@@ -4730,7 +4690,6 @@ function undeclaredConstraint(member) {
   return Object.keys(extra).length ? extra : null;
 }
 function foldObjects(members2) {
-  var _a13;
   const objects = [];
   for (const member of members2) {
     if (typeof member !== "object" || member.type !== "object")
@@ -4749,7 +4708,7 @@ function foldObjects(members2) {
         continue;
       const parts = [];
       for (const other of objects) {
-        const part = ((_a13 = other.properties) == null ? void 0 : _a13[key]) ?? undeclaredConstraint(other);
+        const part = other.properties?.[key] ?? undeclaredConstraint(other);
         if (part === null || part === void 0)
           continue;
         if (!parts.some((seen) => JSON.stringify(seen) === JSON.stringify(part)))
@@ -4808,7 +4767,6 @@ function foldIntersection(json) {
   assignProps(json, folded);
 }
 function finalize(ctx, schema) {
-  var _a13, _b, _c, _d;
   const root = ctx.seen.get(schema);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
@@ -4855,7 +4813,7 @@ function finalize(ctx, schema) {
     if (parent && parent !== ref) {
       flattenRef(parent);
       const parentSeen = ctx.seen.get(parent);
-      if (parentSeen == null ? void 0 : parentSeen.schema.$ref) {
+      if (parentSeen?.schema.$ref) {
         schema2.$ref = parentSeen.schema.$ref;
         if (parentSeen.def) {
           for (const key in schema2) {
@@ -4889,7 +4847,7 @@ function finalize(ctx, schema) {
       const carriers = /* @__PURE__ */ new Map();
       for (const seen of ctx.seen.values()) {
         for (const json of [seen.schema, seen.def]) {
-          const allOf = json == null ? void 0 : json.allOf;
+          const allOf = json?.allOf;
           if (!Array.isArray(allOf))
             continue;
           const existing = carriers.get(allOf);
@@ -4915,17 +4873,17 @@ function finalize(ctx, schema) {
   } else if (ctx.target === "openapi-3.0") {
   } else {
   }
-  if ((_a13 = ctx.external) == null ? void 0 : _a13.uri) {
-    const id = (_b = ctx.external.registry.get(schema)) == null ? void 0 : _b.id;
+  if (ctx.external?.uri) {
+    const id = ctx.external.registry.get(schema)?.id;
     if (!id)
       throw new Error("Schema is missing an `id` property");
     result.$id = ctx.external.uri(id);
   }
   assignProps(result, root.defId ? root.schema : root.def ?? root.schema);
-  const rootMetaId = (_c = ctx.metadataRegistry.get(schema)) == null ? void 0 : _c.id;
+  const rootMetaId = ctx.metadataRegistry.get(schema)?.id;
   if (rootMetaId !== void 0 && result.id === rootMetaId)
     delete result.id;
-  const defs = ((_d = ctx.external) == null ? void 0 : _d.defs) ?? {};
+  const defs = ctx.external?.defs ?? {};
   if (!ctx.external || ctx.sharedEmitDoneFor !== ctx.external) {
     for (const entry of ctx.seen.entries()) {
       const seen = entry[1];
@@ -5095,12 +5053,11 @@ var contributors = {
   mime_type: (agg, def) => intersectMime(agg, def.mime)
 };
 function aggregateChecks(schema) {
-  var _a13;
   const agg = {};
   const def = schema._zod.def;
   const list = schema._zod.traits.has("$ZodCheck") ? [schema, ...def.checks ?? []] : def.checks ?? [];
   for (const ch of list)
-    (_a13 = contributors[ch._zod.def.check]) == null ? void 0 : _a13.call(contributors, agg, ch._zod.def);
+    contributors[ch._zod.def.check]?.(agg, ch._zod.def);
   const bag = schema._zod.bag;
   if (bag.minimum !== void 0)
     narrowMin(agg, "minimum", bag.minimum);
@@ -5370,7 +5327,6 @@ function inputOptin(schema) {
   return schema._zod.optin;
 }
 var objectProcessor = (schema, ctx, _json, params) => {
-  var _a13;
   const json = _json;
   const def = schema._zod.def;
   const shape = def.shape;
@@ -5396,7 +5352,7 @@ var objectProcessor = (schema, ctx, _json, params) => {
   if (requiredKeys.length > 0) {
     json.required = requiredKeys;
   }
-  if (((_a13 = def.catchall) == null ? void 0 : _a13._zod.def.type) === "never") {
+  if (def.catchall?._zod.def.type === "never") {
     json.additionalProperties = false;
   } else if (!def.catchall) {
     if (ctx.io === "output")
@@ -5504,12 +5460,11 @@ var tupleProcessor = (schema, ctx, _json, params) => {
     json.maxItems = maximum;
 };
 function stringifyKeyNames(bySchema, json, visited) {
-  var _a13;
   if (json.$ref) {
     if (visited.has(json))
       return json;
     visited.add(json);
-    const def = (_a13 = bySchema.get(json)) == null ? void 0 : _a13.def;
+    const def = bySchema.get(json)?.def;
     if (!def)
       return json;
     const inlined = stringifyKeyNames(bySchema, def, visited);
@@ -5526,7 +5481,7 @@ function stringifyKeyNames(bySchema, json, visited) {
   const types = Array.isArray(json.type) ? json.type : [json.type];
   const numericType = !types.includes("string") && types.some((t) => t === "number" || t === "integer");
   const values = json.enum ?? (json.const !== void 0 ? [json.const] : void 0);
-  if (!numericType && !(values == null ? void 0 : values.some((v) => typeof v === "number")))
+  if (!numericType && !values?.some((v) => typeof v === "number"))
     return json;
   const { minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf, format, id, ...rest } = json;
   if (rest.enum)
@@ -5542,7 +5497,6 @@ function stringifyKeyNames(bySchema, json, visited) {
 }
 var pendingRecords = /* @__PURE__ */ new WeakMap();
 function rewriteKeyNames(ctx) {
-  var _a13;
   const bySchema = /* @__PURE__ */ new Map();
   for (const entry of ctx.seen.values()) {
     if (entry.def && !bySchema.has(entry.schema))
@@ -5551,7 +5505,7 @@ function rewriteKeyNames(ctx) {
   const rewrites = /* @__PURE__ */ new Map();
   for (const record2 of pendingRecords.get(ctx) ?? []) {
     const seen = ctx.seen.get(record2);
-    const names = (_a13 = (seen == null ? void 0 : seen.def) ?? (seen == null ? void 0 : seen.schema)) == null ? void 0 : _a13.propertyNames;
+    const names = (seen?.def ?? seen?.schema)?.propertyNames;
     if (!names || names === true || rewrites.has(names))
       continue;
     const rewritten = stringifyKeyNames(bySchema, names, /* @__PURE__ */ new Set());
@@ -5762,7 +5716,7 @@ function toJSONSchema(input, params) {
     const schemas = {};
     const external = {
       registry: registry2,
-      uri: params == null ? void 0 : params.uri,
+      uri: params?.uri,
       defs
     };
     ctx2.external = external;
@@ -5981,7 +5935,7 @@ var ZodType = /* @__PURE__ */ $constructor("ZodType", (inst, def) => {
   },
   // `spa` is an alias: same function object as `safeParseAsync`, as before.
   get spa() {
-    return this == null ? void 0 : this.safeParseAsync;
+    return this?.safeParseAsync;
   },
   set spa(value) {
     util_exports.own(this, "spa", value);
@@ -6021,8 +5975,7 @@ var ZodType = /* @__PURE__ */ $constructor("ZodType", (inst, def) => {
   },
   // Reads through to the registry on every access, so it must not cache.
   get description() {
-    var _a13;
-    return (_a13 = globalRegistry.get(this)) == null ? void 0 : _a13.description;
+    return globalRegistry.get(this)?.description;
   },
   // No setter: `schema._def = x` throws, as it did when `_def` was a non-writable own property.
   get _def() {
@@ -6295,7 +6248,7 @@ var ZodNumber = /* @__PURE__ */ $constructor(
     },
     isInt: (inst) => {
       const { isInt, multipleOf } = aggregateChecks(inst);
-      return !!isInt || !!(multipleOf == null ? void 0 : multipleOf.some(Number.isSafeInteger));
+      return !!isInt || !!multipleOf?.some(Number.isSafeInteger);
     },
     format: (inst) => aggregateChecks(inst).format ?? null
   }, {
@@ -7939,8 +7892,10 @@ var OAuthErrorCode = /* @__PURE__ */ function(OAuthErrorCode$1) {
   OAuthErrorCode$1["UseDpopNonce"] = "use_dpop_nonce";
   return OAuthErrorCode$1;
 }({});
-var _a3;
-var OAuthError = (_a3 = class extends Error {
+var OAuthError = class OAuthError2 extends Error {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.OAuthError" });
+  }
   static [Symbol.hasInstance](value) {
     return brandedHasInstance(this, value);
   }
@@ -7979,9 +7934,9 @@ var OAuthError = (_a3 = class extends Error {
   * Creates an {@linkcode OAuthError} from an OAuth error response.
   */
   static fromResponse(response) {
-    return new _a3(response.error, response.error_description ?? response.error, response.error_uri);
+    return new OAuthError2(response.error, response.error_description ?? response.error, response.error_uri);
   }
-}, Object.defineProperty(_a3, "mcpBrand", { value: "mcp.OAuthError" }), _a3);
+};
 var SdkErrorCode = /* @__PURE__ */ function(SdkErrorCode$1) {
   SdkErrorCode$1["NotConnected"] = "NOT_CONNECTED";
   SdkErrorCode$1["AlreadyConnected"] = "ALREADY_CONNECTED";
@@ -8004,8 +7959,10 @@ var SdkErrorCode = /* @__PURE__ */ function(SdkErrorCode$1) {
   SdkErrorCode$1["ClientHttpFailedToTerminateSession"] = "CLIENT_HTTP_FAILED_TO_TERMINATE_SESSION";
   return SdkErrorCode$1;
 }({});
-var _a4;
-var SdkError = (_a4 = class extends Error {
+var SdkError = class extends Error {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.SdkError" });
+  }
   static [Symbol.hasInstance](value) {
     return brandedHasInstance(this, value);
   }
@@ -8039,9 +7996,11 @@ var SdkError = (_a4 = class extends Error {
     this.name = "SdkError";
     stampErrorBrands(this, new.target);
   }
-}, Object.defineProperty(_a4, "mcpBrand", { value: "mcp.SdkError" }), _a4);
-var _a5;
-var SdkHttpError = (_a5 = class extends SdkError {
+};
+var SdkHttpError = class extends SdkError {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.SdkHttpError" });
+  }
   /**
   * @param options - Standard `ErrorOptions`, forwarded to `Error` (see {@linkcode SdkError}).
   */
@@ -8055,7 +8014,7 @@ var SdkHttpError = (_a5 = class extends SdkError {
   get statusText() {
     return this.data.statusText;
   }
-}, Object.defineProperty(_a5, "mcpBrand", { value: "mcp.SdkHttpError" }), _a5);
+};
 var REQUIRED_CLIENT_CAPABILITIES_BY_METHOD = {};
 function requiredClientCapabilitiesForRequest(method) {
   return Object.hasOwn(REQUIRED_CLIENT_CAPABILITIES_BY_METHOD, method) ? REQUIRED_CLIENT_CAPABILITIES_BY_METHOD[method] : void 0;
@@ -8067,10 +8026,9 @@ function isImpliedCapabilityMember(capability, member, declaredValue) {
   return capability === "elicitation" && member === "form" && declaredValue["form"] === void 0 && declaredValue["url"] === void 0;
 }
 function requiredClientCapabilitiesForInputRequest(entry) {
-  var _a13;
   switch (entry.method) {
     case "elicitation/create":
-      if (((_a13 = entry.params) == null ? void 0 : _a13["mode"]) === "url") return { elicitation: { url: {} } };
+      if (entry.params?.["mode"] === "url") return { elicitation: { url: {} } };
       return { elicitation: { form: {} } };
     case "sampling/createMessage": {
       const params = entry.params;
@@ -8112,11 +8070,10 @@ function modernProtocolVersions(versions) {
   return versions.filter((version2) => isModernProtocolVersion(version2));
 }
 function appendTextFallbackForNonObject(result) {
-  var _a13;
   const sc = result.structuredContent;
   if (sc === void 0) return result;
   if (!(typeof sc !== "object" || sc === null || Array.isArray(sc))) return result;
-  if (((_a13 = result.content) == null ? void 0 : _a13.some((c) => c.type === "text")) ?? false) return result;
+  if (result.content?.some((c) => c.type === "text") ?? false) return result;
   return {
     ...result,
     content: [...result.content ?? [], {
@@ -10217,8 +10174,10 @@ var ProtocolErrorCode = /* @__PURE__ */ function(ProtocolErrorCode$1) {
   ProtocolErrorCode$1[ProtocolErrorCode$1["UrlElicitationRequired"] = -32042] = "UrlElicitationRequired";
   return ProtocolErrorCode$1;
 }({});
-var _a6;
-var ProtocolError = (_a6 = class extends Error {
+var ProtocolError = class ProtocolError2 extends Error {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.ProtocolError" });
+  }
   static [Symbol.hasInstance](value) {
     return brandedHasInstance(this, value);
   }
@@ -10259,17 +10218,19 @@ var ProtocolError = (_a6 = class extends Error {
     }
     if (code === ProtocolErrorCode.InvalidParams || code === ProtocolErrorCode.ResourceNotFound) {
       const errorData = data;
-      if (typeof (errorData == null ? void 0 : errorData.uri) === "string" && (code === ProtocolErrorCode.ResourceNotFound || Object.keys(errorData).length === 1)) return new ResourceNotFoundError(errorData.uri, message);
+      if (typeof errorData?.uri === "string" && (code === ProtocolErrorCode.ResourceNotFound || Object.keys(errorData).length === 1)) return new ResourceNotFoundError(errorData.uri, message);
     }
     if (code === ProtocolErrorCode.MissingRequiredClientCapability && data) {
       const errorData = data;
       if (errorData.requiredCapabilities !== null && typeof errorData.requiredCapabilities === "object" && !Array.isArray(errorData.requiredCapabilities)) return new MissingRequiredClientCapabilityError({ requiredCapabilities: errorData.requiredCapabilities }, message);
     }
-    return new _a6(code, message, data);
+    return new ProtocolError2(code, message, data);
   }
-}, Object.defineProperty(_a6, "mcpBrand", { value: "mcp.ProtocolError" }), _a6);
-var _a7;
-var ResourceNotFoundError = (_a7 = class extends ProtocolError {
+};
+var ResourceNotFoundError = class extends ProtocolError {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.ResourceNotFoundError" });
+  }
   constructor(uri, message = `Resource not found: ${uri}`) {
     super(ProtocolErrorCode.InvalidParams, message, { uri });
   }
@@ -10277,19 +10238,22 @@ var ResourceNotFoundError = (_a7 = class extends ProtocolError {
   get uri() {
     return this.data.uri;
   }
-}, Object.defineProperty(_a7, "mcpBrand", { value: "mcp.ResourceNotFoundError" }), _a7);
-var _a8;
-var UrlElicitationRequiredError = (_a8 = class extends ProtocolError {
+};
+var UrlElicitationRequiredError = class extends ProtocolError {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.UrlElicitationRequiredError" });
+  }
   constructor(elicitations, message = `URL elicitation${elicitations.length > 1 ? "s" : ""} required`) {
     super(ProtocolErrorCode.UrlElicitationRequired, message, { elicitations });
   }
   get elicitations() {
-    var _a13;
-    return ((_a13 = this.data) == null ? void 0 : _a13.elicitations) ?? [];
+    return this.data?.elicitations ?? [];
   }
-}, Object.defineProperty(_a8, "mcpBrand", { value: "mcp.UrlElicitationRequiredError" }), _a8);
-var _a9;
-var UnsupportedProtocolVersionError = (_a9 = class extends ProtocolError {
+};
+var UnsupportedProtocolVersionError = class extends ProtocolError {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.UnsupportedProtocolVersionError" });
+  }
   constructor(data, message = `Unsupported protocol version: ${data.requested}`) {
     super(ProtocolErrorCode.UnsupportedProtocolVersion, message, data);
   }
@@ -10305,9 +10269,11 @@ var UnsupportedProtocolVersionError = (_a9 = class extends ProtocolError {
   get requested() {
     return this.data.requested;
   }
-}, Object.defineProperty(_a9, "mcpBrand", { value: "mcp.UnsupportedProtocolVersionError" }), _a9);
-var _a10;
-var MissingRequiredClientCapabilityError = (_a10 = class extends ProtocolError {
+};
+var MissingRequiredClientCapabilityError = class extends ProtocolError {
+  static {
+    Object.defineProperty(this, "mcpBrand", { value: "mcp.MissingRequiredClientCapabilityError" });
+  }
   constructor(data, message = `Missing required client capabilities: ${Object.keys(data.requiredCapabilities).join(", ")}`) {
     super(ProtocolErrorCode.MissingRequiredClientCapability, message, data);
   }
@@ -10318,7 +10284,7 @@ var MissingRequiredClientCapabilityError = (_a10 = class extends ProtocolError {
   get requiredCapabilities() {
     return this.data.requiredCapabilities;
   }
-}, Object.defineProperty(_a10, "mcpBrand", { value: "mcp.MissingRequiredClientCapabilityError" }), _a10);
+};
 var DEFAULT_CACHE_TTL_MS = 0;
 var DEFAULT_CACHE_SCOPE = "private";
 var EXTENDED_RESULT_TYPE_METHODS = [
@@ -10576,7 +10542,7 @@ var rev2026Codec = {
       const inputRequests = isPlainObject$4(rawInputRequests) ? rawInputRequests : {};
       const requestState = raw2["requestState"];
       const metaParse = raw2["_meta"] === void 0 ? void 0 : buildSchemas2026().ResultMetaSchema.safeParse(raw2["_meta"]);
-      const meta2 = (metaParse == null ? void 0 : metaParse.success) ? metaParse.data : void 0;
+      const meta2 = metaParse?.success ? metaParse.data : void 0;
       if (Object.keys(inputRequests).length === 0 && typeof requestState !== "string") return {
         kind: "invalid",
         error: new SdkError(SdkErrorCode.InvalidResult, `Invalid result for ${method}: input_required carries neither inputRequests nor requestState (every input_required result must include at least one of the two)`, {
@@ -10672,8 +10638,7 @@ function hasEnvelopeClaim(params) {
   return meta2 !== void 0 && PROTOCOL_VERSION_META_KEY in meta2;
 }
 function envelopeClaimVersion(params) {
-  var _a13;
-  const value = (_a13 = requestMetaOf(params)) == null ? void 0 : _a13[PROTOCOL_VERSION_META_KEY];
+  const value = requestMetaOf(params)?.[PROTOCOL_VERSION_META_KEY];
   return typeof value === "string" ? value : void 0;
 }
 function validateEnvelopeMeta(meta2) {
@@ -11330,12 +11295,11 @@ function shapeKeys(schemas) {
   return new Set(schemas.flatMap((schema) => Object.keys(schema.shape)));
 }
 function isStandardSchema(schema) {
-  var _a13;
   if (schema == null) return false;
   const schemaType = typeof schema;
   if (schemaType !== "object" && schemaType !== "function") return false;
   if (!("~standard" in schema)) return false;
-  return typeof ((_a13 = schema["~standard"]) == null ? void 0 : _a13.validate) === "function";
+  return typeof schema["~standard"]?.validate === "function";
 }
 var warnedZodFallback = false;
 var JSON_SCHEMA_CONVERSION_TARGET = "draft-2020-12";
@@ -11380,8 +11344,7 @@ function isProvablyObjectShapedRoot(schema) {
   return false;
 }
 function formatIssue(issue2) {
-  var _a13;
-  if (!((_a13 = issue2.path) == null ? void 0 : _a13.length)) return issue2.message;
+  if (!issue2.path?.length) return issue2.message;
   return `${issue2.path.map((p) => String(typeof p === "object" ? p.key : p)).join(".")}: ${issue2.message}`;
 }
 async function validateStandardSchema(schema, data) {
@@ -11445,7 +11408,7 @@ function promptArgumentsFromStandardSchema(schema) {
   const required2 = jsonSchema.required || [];
   return Object.entries(properties).map(([name, prop]) => ({
     name,
-    description: prop == null ? void 0 : prop.description,
+    description: prop?.description,
     required: required2.includes(name)
   }));
 }
@@ -11587,30 +11550,30 @@ function inputRequiredRoundsExceededMessage(method, maxRounds) {
 }
 function sleep(ms, signal) {
   return new Promise((resolve, reject) => {
-    if (signal == null ? void 0 : signal.aborted) {
+    if (signal?.aborted) {
       reject(signal.reason instanceof SdkError ? signal.reason : new SdkError(SdkErrorCode.RequestTimeout, String(signal.reason)));
       return;
     }
     const timer = setTimeout(() => {
-      signal == null ? void 0 : signal.removeEventListener("abort", onAbort);
+      signal?.removeEventListener("abort", onAbort);
       resolve();
     }, ms);
     const onAbort = () => {
       clearTimeout(timer);
-      reject((signal == null ? void 0 : signal.reason) instanceof SdkError ? signal.reason : new SdkError(SdkErrorCode.RequestTimeout, String(signal == null ? void 0 : signal.reason)));
+      reject(signal?.reason instanceof SdkError ? signal.reason : new SdkError(SdkErrorCode.RequestTimeout, String(signal?.reason)));
     };
-    signal == null ? void 0 : signal.addEventListener("abort", onAbort, { once: true });
+    signal?.addEventListener("abort", onAbort, { once: true });
   });
 }
 function linkedRoundAbort(outer) {
   const controller = new AbortController();
-  const onOuterAbort = () => controller.abort(outer == null ? void 0 : outer.reason);
-  outer == null ? void 0 : outer.addEventListener("abort", onOuterAbort, { once: true });
-  if (outer == null ? void 0 : outer.aborted) controller.abort(outer.reason);
+  const onOuterAbort = () => controller.abort(outer?.reason);
+  outer?.addEventListener("abort", onOuterAbort, { once: true });
+  if (outer?.aborted) controller.abort(outer.reason);
   return {
     signal: controller.signal,
     abort: (reason) => controller.abort(reason),
-    dispose: () => outer == null ? void 0 : outer.removeEventListener("abort", onOuterAbort)
+    dispose: () => outer?.removeEventListener("abort", onOuterAbort)
   };
 }
 var SPEC_SCHEMA_KEYS = [
@@ -11889,8 +11852,7 @@ var writeNegotiatedProtocolVersion;
 function setNegotiatedProtocolVersion(instance, version2) {
   writeNegotiatedProtocolVersion(instance, version2);
 }
-var _a11;
-var Protocol = (_a11 = class {
+var Protocol = class {
   _transport;
   _requestMessageId = 0;
   _requestHandlers = /* @__PURE__ */ new Map();
@@ -11909,6 +11871,11 @@ var Protocol = (_a11 = class {
   * (`Client.connect`, `Server._oninitialize`).
   */
   _negotiatedProtocolVersion;
+  static {
+    writeNegotiatedProtocolVersion = (instance, version2) => {
+      instance._negotiatedProtocolVersion = version2;
+    };
+  }
   _supportedProtocolVersions;
   /**
   * Callback for when the connection is closed for any reason.
@@ -11932,7 +11899,7 @@ var Protocol = (_a11 = class {
   fallbackNotificationHandler;
   constructor(_options) {
     this._options = _options;
-    this._supportedProtocolVersions = (_options == null ? void 0 : _options.supportedProtocolVersions) ?? SUPPORTED_PROTOCOL_VERSIONS;
+    this._supportedProtocolVersions = _options?.supportedProtocolVersions ?? SUPPORTED_PROTOCOL_VERSIONS;
     this.setNotificationHandler("notifications/cancelled", (notification) => {
       this._oncancel(notification);
     });
@@ -12027,9 +11994,8 @@ var Protocol = (_a11 = class {
     return this._requestHandlers.get(method);
   }
   async _oncancel(notification) {
-    var _a13;
     if (notification.params.requestId === void 0) return;
-    (_a13 = this._requestHandlerAbortControllers.get(notification.params.requestId)) == null ? void 0 : _a13.abort(notification.params.reason);
+    this._requestHandlerAbortControllers.get(notification.params.requestId)?.abort(notification.params.reason);
   }
   _setupTimeout(messageId, timeout, maxTotalTimeout, onTimeout, resetTimeoutOnProgress = false) {
     this._timeoutInfo.set(messageId, {
@@ -12069,30 +12035,29 @@ var Protocol = (_a11 = class {
   * The caller assumes ownership of the {@linkcode Transport}, replacing any callbacks that have already been set, and expects that it is the only user of the {@linkcode Transport} instance going forward.
   */
   async connect(transport) {
-    var _a13, _b, _c, _d;
     this._transport = transport;
-    const _onclose = (_a13 = this.transport) == null ? void 0 : _a13.onclose;
+    const _onclose = this.transport?.onclose;
     this._transport.onclose = () => {
       try {
-        _onclose == null ? void 0 : _onclose();
+        _onclose?.();
       } finally {
         this._onclose();
       }
     };
-    const _onerror = (_b = this.transport) == null ? void 0 : _b.onerror;
+    const _onerror = this.transport?.onerror;
     this._transport.onerror = (error2) => {
-      _onerror == null ? void 0 : _onerror(error2);
+      _onerror?.(error2);
       this._onerror(error2);
     };
-    const _onmessage = (_c = this._transport) == null ? void 0 : _c.onmessage;
+    const _onmessage = this._transport?.onmessage;
     this._transport.onmessage = (message, extra) => {
-      _onmessage == null ? void 0 : _onmessage(message, extra);
+      _onmessage?.(message, extra);
       if (isJSONRPCResultResponse(message) || isJSONRPCErrorResponse(message)) this._onresponse(message);
       else if (isJSONRPCRequest(message)) this._onrequest(message, extra);
       else if (isJSONRPCNotification(message)) this._onnotification(message, extra);
       else this._onerror(/* @__PURE__ */ new Error(`Unknown message type: ${JSON.stringify(message)}`));
     };
-    (_d = transport.setSupportedProtocolVersions) == null ? void 0 : _d.call(transport, this._supportedProtocolVersions);
+    transport.setSupportedProtocolVersions?.(this._supportedProtocolVersions);
     await this._transport.start();
   }
   /**
@@ -12101,7 +12066,6 @@ var Protocol = (_a11 = class {
   * timeout clearing, in-flight request abort) does not run otherwise.
   */
   _onclose() {
-    var _a13;
     const responseHandlers = this._responseHandlers;
     this._responseHandlers = /* @__PURE__ */ new Map();
     this._progressHandlers.clear();
@@ -12113,15 +12077,14 @@ var Protocol = (_a11 = class {
     const error2 = new SdkError(SdkErrorCode.ConnectionClosed, "Connection closed");
     this._transport = void 0;
     try {
-      (_a13 = this.onclose) == null ? void 0 : _a13.call(this);
+      this.onclose?.();
     } finally {
       for (const handler2 of responseHandlers.values()) handler2(error2);
       for (const controller of requestHandlerAbortControllers.values()) controller.abort(error2);
     }
   }
   _onerror(error2) {
-    var _a13;
-    (_a13 = this.onerror) == null ? void 0 : _a13.call(this, error2);
+    this.onerror?.(error2);
   }
   /**
   * Inbound-notification dispatch. Subclass overrides MUST delegate
@@ -12132,8 +12095,8 @@ var Protocol = (_a11 = class {
   _onnotification(rawNotification, extra) {
     const { message: notification } = liftWireOnlyMaterial(rawNotification, "notification");
     const codec = this._negotiatedWireCodec();
-    if ((extra == null ? void 0 : extra.classification) === void 0 && this._shouldDropInbound(rawNotification) === "drop") return;
-    if ((extra == null ? void 0 : extra.classification) !== void 0) {
+    if (extra?.classification === void 0 && this._shouldDropInbound(rawNotification) === "drop") return;
+    if (extra?.classification !== void 0) {
       const classified = classifiedWireEra(extra.classification);
       if (classified !== codec.era) {
         this._onerror(/* @__PURE__ */ new Error(`Era mismatch on inbound notification '${notification.method}': classified as ${classified} but this instance serves ${codec.era}`));
@@ -12147,10 +12110,9 @@ var Protocol = (_a11 = class {
     Promise.resolve().then(() => handler2 === void 0 ? fallback(notification) : handler2(notification, codec)).catch((error2) => this._onerror(/* @__PURE__ */ new Error(`Uncaught error in notification handler: ${error2}`)));
   }
   _onrequest(rawRequest, extra) {
-    var _a13;
     const { message: request, lifted } = liftWireOnlyMaterial(rawRequest, "request");
     const codec = this._negotiatedWireCodec();
-    if ((extra == null ? void 0 : extra.classification) === void 0 && this._shouldDropInbound(rawRequest) === "drop") {
+    if (extra?.classification === void 0 && this._shouldDropInbound(rawRequest) === "drop") {
       this._onerror(/* @__PURE__ */ new Error(`Dropped inbound request '${rawRequest.method}': not servable on this connection's protocol era`));
       return;
     }
@@ -12165,9 +12127,9 @@ var Protocol = (_a11 = class {
           ...data !== void 0 && { data }
         }
       };
-      capturedTransport == null ? void 0 : capturedTransport.send(errorResponse).catch((error2) => this._onerror(/* @__PURE__ */ new Error(`Failed to send an error response: ${error2}`)));
+      capturedTransport?.send(errorResponse).catch((error2) => this._onerror(/* @__PURE__ */ new Error(`Failed to send an error response: ${error2}`)));
     };
-    if ((extra == null ? void 0 : extra.classification) !== void 0) {
+    if (extra?.classification !== void 0) {
       const classified = classifiedWireEra(extra.classification);
       if (classified !== codec.era) {
         this._onerror(/* @__PURE__ */ new Error(`Era mismatch on inbound request '${request.method}': classified as ${classified} but this instance serves ${codec.era}`));
@@ -12205,11 +12167,11 @@ var Protocol = (_a11 = class {
     this._requestHandlerAbortControllers.set(request.id, abortController);
     const partitionedInputResponses = lifted.inputResponses === void 0 ? void 0 : partitionInputResponses(lifted.inputResponses);
     const baseCtx = {
-      sessionId: capturedTransport == null ? void 0 : capturedTransport.sessionId,
+      sessionId: capturedTransport?.sessionId,
       mcpReq: {
         id: request.id,
         method: request.method,
-        _meta: (_a13 = request.params) == null ? void 0 : _a13._meta,
+        _meta: request.params?._meta,
         ...lifted.envelope !== void 0 && { envelope: lifted.envelope },
         ...partitionedInputResponses !== void 0 && { inputResponses: partitionedInputResponses.accepted },
         ...partitionedInputResponses !== void 0 && partitionedInputResponses.droppedKeys.length > 0 && { droppedInputResponseKeys: partitionedInputResponses.droppedKeys },
@@ -12225,7 +12187,7 @@ var Protocol = (_a11 = class {
         },
         notify: sendNotification
       },
-      http: (extra == null ? void 0 : extra.authInfo) ? { authInfo: extra.authInfo } : void 0
+      http: extra?.authInfo ? { authInfo: extra.authInfo } : void 0
     };
     const ctx = this.buildContext(baseCtx, extra);
     Promise.resolve().then(() => handler2(request, ctx)).then(async (result) => {
@@ -12243,7 +12205,7 @@ var Protocol = (_a11 = class {
         jsonrpc: "2.0",
         id: request.id
       };
-      await (capturedTransport == null ? void 0 : capturedTransport.send(response));
+      await capturedTransport?.send(response);
     }, async (error2) => {
       if (abortController.signal.aborted) return;
       const thrownCode = Number.isSafeInteger(error2["code"]) ? error2["code"] : ProtocolErrorCode.InternalError;
@@ -12256,7 +12218,7 @@ var Protocol = (_a11 = class {
           ...error2["data"] !== void 0 && { data: error2["data"] }
         }
       };
-      await (capturedTransport == null ? void 0 : capturedTransport.send(errorResponse));
+      await capturedTransport?.send(errorResponse);
     }).catch((error2) => this._onerror(/* @__PURE__ */ new Error(`Failed to send response: ${error2}`))).finally(() => {
       if (this._requestHandlerAbortControllers.get(request.id) === abortController) this._requestHandlerAbortControllers.delete(request.id);
     });
@@ -12308,8 +12270,7 @@ var Protocol = (_a11 = class {
   * Closes the connection.
   */
   async close() {
-    var _a13;
-    await ((_a13 = this._transport) == null ? void 0 : _a13.close());
+    await this._transport?.close();
   }
   request(request, schemaOrOptions, maybeOptions) {
     const codec = this._resolveOutboundCodec(request.method);
@@ -12395,7 +12356,6 @@ var Protocol = (_a11 = class {
     let onAbort;
     let cleanupMessageId;
     return new Promise((resolve, reject) => {
-      var _a13, _b, _c, _d;
       const earlyReject = (error2) => {
         reject(error2);
       };
@@ -12403,13 +12363,13 @@ var Protocol = (_a11 = class {
         earlyReject(/* @__PURE__ */ new Error("Not connected"));
         return;
       }
-      if (((_a13 = this._options) == null ? void 0 : _a13.enforceStrictCapabilities) === true) try {
+      if (this._options?.enforceStrictCapabilities === true) try {
         this.assertCapabilityForMethod(request.method);
       } catch (error2) {
         earlyReject(error2);
         return;
       }
-      if ((_b = options == null ? void 0 : options.signal) == null ? void 0 : _b.aborted) {
+      if (options?.signal?.aborted) {
         const reason = options.signal.reason;
         throw reason instanceof SdkError ? reason : new SdkError(SdkErrorCode.RequestTimeout, String(reason));
       }
@@ -12421,12 +12381,12 @@ var Protocol = (_a11 = class {
         jsonrpc: "2.0",
         id: messageId
       };
-      if (options == null ? void 0 : options.onprogress) {
+      if (options?.onprogress) {
         this._progressHandlers.set(messageId, options.onprogress);
         jsonrpcRequest.params = {
           ...request.params,
           _meta: {
-            ...(_c = request.params) == null ? void 0 : _c._meta,
+            ...request.params?._meta,
             progressToken: messageId
           }
         };
@@ -12434,11 +12394,10 @@ var Protocol = (_a11 = class {
       const outbound = this._envelopeOutbound(jsonrpcRequest);
       let responseReceived = false;
       const cancel = (reason) => {
-        var _a14;
         if (responseReceived) return;
         this._progressHandlers.delete(messageId);
         if (requestAbort === void 0) {
-          if (request.method !== "initialize") (_a14 = this._transport) == null ? void 0 : _a14.send(this._envelopeOutbound({
+          if (request.method !== "initialize") this._transport?.send(this._envelopeOutbound({
             jsonrpc: "2.0",
             method: "notifications/cancelled",
             params: {
@@ -12454,8 +12413,7 @@ var Protocol = (_a11 = class {
         reject(reason instanceof SdkError ? reason : new SdkError(SdkErrorCode.RequestTimeout, String(reason)));
       };
       this._responseHandlers.set(messageId, (response) => {
-        var _a14;
-        if ((_a14 = options == null ? void 0 : options.signal) == null ? void 0 : _a14.aborted) return;
+        if (options?.signal?.aborted) return;
         responseReceived = true;
         if (response instanceof Error) return reject(response);
         let decoded;
@@ -12466,7 +12424,7 @@ var Protocol = (_a11 = class {
         }
         if (decoded.kind === "invalid") return reject(decoded.error);
         if (decoded.kind === "input_required") {
-          if ((options == null ? void 0 : options.allowInputRequired) === true) return resolve(manualInputRequiredValue(decoded));
+          if (options?.allowInputRequired === true) return resolve(manualInputRequiredValue(decoded));
           const flow = {
             codec,
             request,
@@ -12486,27 +12444,23 @@ var Protocol = (_a11 = class {
           else reject(new SdkError(SdkErrorCode.InvalidResult, `Invalid result for ${request.method}: ${parseResult.error}`));
         }, reject);
       });
-      onAbort = () => {
-        var _a14;
-        return cancel((_a14 = options == null ? void 0 : options.signal) == null ? void 0 : _a14.reason);
-      };
-      (_d = options == null ? void 0 : options.signal) == null ? void 0 : _d.addEventListener("abort", onAbort, { once: true });
-      const timeout = (options == null ? void 0 : options.timeout) ?? DEFAULT_REQUEST_TIMEOUT_MSEC;
+      onAbort = () => cancel(options?.signal?.reason);
+      options?.signal?.addEventListener("abort", onAbort, { once: true });
+      const timeout = options?.timeout ?? DEFAULT_REQUEST_TIMEOUT_MSEC;
       const timeoutHandler = () => cancel(new SdkError(SdkErrorCode.RequestTimeout, "Request timed out", { timeout }));
-      this._setupTimeout(messageId, timeout, options == null ? void 0 : options.maxTotalTimeout, timeoutHandler, (options == null ? void 0 : options.resetTimeoutOnProgress) ?? false);
+      this._setupTimeout(messageId, timeout, options?.maxTotalTimeout, timeoutHandler, options?.resetTimeoutOnProgress ?? false);
       this._transport.send(outbound, {
         relatedRequestId,
         resumptionToken,
         onresumptiontoken,
         headers,
-        requestSignal: requestAbort == null ? void 0 : requestAbort.signal
+        requestSignal: requestAbort?.signal
       }).catch((error2) => {
         this._progressHandlers.delete(messageId);
         reject(error2);
       });
     }).finally(() => {
-      var _a13;
-      if (onAbort) (_a13 = options == null ? void 0 : options.signal) == null ? void 0 : _a13.removeEventListener("abort", onAbort);
+      if (onAbort) options?.signal?.removeEventListener("abort", onAbort);
       if (cleanupMessageId !== void 0) {
         this._responseHandlers.delete(cleanupMessageId);
         this._cleanupTimeout(cleanupMessageId);
@@ -12525,7 +12479,6 @@ var Protocol = (_a11 = class {
   * resolve through the instance's negotiated era at send time.
   */
   async _notificationViaCodec(codec, notification, options) {
-    var _a13;
     if (!this._transport) throw new SdkError(SdkErrorCode.NotConnected, "Not connected");
     if (isSpecNotificationMethod(notification.method) && !codec.hasNotificationMethod(notification.method)) throw new SdkError(SdkErrorCode.MethodNotSupportedByProtocolVersion, `Notification '${notification.method}' is not supported by the negotiated protocol version (wire era ${codec.era})`, {
       method: notification.method,
@@ -12536,14 +12489,13 @@ var Protocol = (_a11 = class {
       jsonrpc: "2.0",
       ...notification
     });
-    if ((((_a13 = this._options) == null ? void 0 : _a13.debouncedNotificationMethods) ?? []).includes(notification.method) && !notification.params && (options == null ? void 0 : options.relatedRequestId) === void 0) {
+    if ((this._options?.debouncedNotificationMethods ?? []).includes(notification.method) && !notification.params && options?.relatedRequestId === void 0) {
       if (this._pendingDebouncedNotifications.has(notification.method)) return;
       this._pendingDebouncedNotifications.add(notification.method);
       Promise.resolve().then(() => {
-        var _a14;
         this._pendingDebouncedNotifications.delete(notification.method);
         if (!this._transport) return;
-        (_a14 = this._transport) == null ? void 0 : _a14.send(jsonrpcNotification, options).catch((error2) => this._onerror(error2));
+        this._transport?.send(jsonrpcNotification, options).catch((error2) => this._onerror(error2));
       });
       return;
     }
@@ -12635,9 +12587,7 @@ var Protocol = (_a11 = class {
   removeNotificationHandler(method) {
     this._notificationHandlers.delete(method);
   }
-}, writeNegotiatedProtocolVersion = (instance, version2) => {
-  instance._negotiatedProtocolVersion = version2;
-}, _a11);
+};
 function isPlainObject$1(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
@@ -12792,8 +12742,7 @@ function isZodV4Schema(v) {
   return typeof v === "object" && v !== null && "_zod" in v;
 }
 function looksLikeZodV3(v) {
-  var _a13;
-  return typeof v === "object" && v !== null && !("_zod" in v) && "_def" in v && typeof ((_a13 = v._def) == null ? void 0 : _a13.typeName) === "string";
+  return typeof v === "object" && v !== null && !("_zod" in v) && "_def" in v && typeof v._def?.typeName === "string";
 }
 function isZodRawShape(obj) {
   if (typeof obj !== "object" || obj === null) return false;
@@ -12849,12 +12798,12 @@ var require_code$1 = /* @__PURE__ */ __commonJSMin((exports2) => {
       return item === "" || item === '""';
     }
     get str() {
-      var _a13;
-      return (_a13 = this._str) !== null && _a13 !== void 0 ? _a13 : this._str = this._items.reduce((s, c) => `${s}${c}`, "");
+      var _a3;
+      return (_a3 = this._str) !== null && _a3 !== void 0 ? _a3 : this._str = this._items.reduce((s, c) => `${s}${c}`, "");
     }
     get names() {
-      var _a13;
-      return (_a13 = this._names) !== null && _a13 !== void 0 ? _a13 : this._names = this._items.reduce((names, c) => {
+      var _a3;
+      return (_a3 = this._names) !== null && _a3 !== void 0 ? _a3 : this._names = this._items.reduce((names, c) => {
         if (c instanceof Name) names[c.str] = (names[c.str] || 0) + 1;
         return names;
       }, {});
@@ -12982,8 +12931,8 @@ var require_scope = /* @__PURE__ */ __commonJSMin((exports2) => {
       return `${prefix}${ng.index++}`;
     }
     _nameGroup(prefix) {
-      var _a13, _b;
-      if (((_b = (_a13 = this._parent) === null || _a13 === void 0 ? void 0 : _a13._prefixes) === null || _b === void 0 ? void 0 : _b.has(prefix)) || this._prefixes && !this._prefixes.has(prefix)) throw new Error(`CodeGen: prefix "${prefix}" is not allowed in this scope`);
+      var _a3, _b;
+      if (((_b = (_a3 = this._parent) === null || _a3 === void 0 ? void 0 : _a3._prefixes) === null || _b === void 0 ? void 0 : _b.has(prefix)) || this._prefixes && !this._prefixes.has(prefix)) throw new Error(`CodeGen: prefix "${prefix}" is not allowed in this scope`);
       return this._names[prefix] = {
         prefix,
         index: 0
@@ -13020,11 +12969,11 @@ var require_scope = /* @__PURE__ */ __commonJSMin((exports2) => {
       return new ValueScopeName(prefix, this._newName(prefix));
     }
     value(nameOrPrefix, value) {
-      var _a13;
+      var _a3;
       if (value.ref === void 0) throw new Error("CodeGen: ref must be passed in value");
       const name = this.toName(nameOrPrefix);
       const { prefix } = name;
-      const valueKey = (_a13 = value.key) !== null && _a13 !== void 0 ? _a13 : value.ref;
+      const valueKey = (_a3 = value.key) !== null && _a3 !== void 0 ? _a3 : value.ref;
       let vs = this._values[prefix];
       if (vs) {
         const _name = vs.get(valueKey);
@@ -13351,8 +13300,8 @@ var require_codegen = /* @__PURE__ */ __commonJSMin((exports2) => {
       return this;
     }
     optimizeNames(names, constants) {
-      var _a13;
-      this.else = (_a13 = this.else) === null || _a13 === void 0 ? void 0 : _a13.optimizeNames(names, constants);
+      var _a3;
+      this.else = (_a3 = this.else) === null || _a3 === void 0 ? void 0 : _a3.optimizeNames(names, constants);
       if (!(super.optimizeNames(names, constants) || this.else)) return;
       this.condition = optimizeExpr(this.condition, names, constants);
       return this;
@@ -13448,16 +13397,16 @@ var require_codegen = /* @__PURE__ */ __commonJSMin((exports2) => {
       return code;
     }
     optimizeNodes() {
-      var _a13, _b;
+      var _a3, _b;
       super.optimizeNodes();
-      (_a13 = this.catch) === null || _a13 === void 0 || _a13.optimizeNodes();
+      (_a3 = this.catch) === null || _a3 === void 0 || _a3.optimizeNodes();
       (_b = this.finally) === null || _b === void 0 || _b.optimizeNodes();
       return this;
     }
     optimizeNames(names, constants) {
-      var _a13, _b;
+      var _a3, _b;
       super.optimizeNames(names, constants);
-      (_a13 = this.catch) === null || _a13 === void 0 || _a13.optimizeNames(names, constants);
+      (_a3 = this.catch) === null || _a3 === void 0 || _a3.optimizeNames(names, constants);
       (_b = this.finally) === null || _b === void 0 || _b.optimizeNames(names, constants);
       return this;
     }
@@ -14114,8 +14063,8 @@ var require_applicability = /* @__PURE__ */ __commonJSMin((exports2) => {
   }
   exports2.shouldUseGroup = shouldUseGroup;
   function shouldUseRule(schema, rule) {
-    var _a13;
-    return schema[rule.keyword] !== void 0 || ((_a13 = rule.definition.implements) === null || _a13 === void 0 ? void 0 : _a13.some((kwd) => schema[kwd] !== void 0));
+    var _a3;
+    return schema[rule.keyword] !== void 0 || ((_a3 = rule.definition.implements) === null || _a3 === void 0 ? void 0 : _a3.some((kwd) => schema[kwd] !== void 0));
   }
   exports2.shouldUseRule = shouldUseRule;
 });
@@ -14453,13 +14402,13 @@ var require_keyword = /* @__PURE__ */ __commonJSMin((exports2) => {
   }
   exports2.macroKeywordCode = macroKeywordCode;
   function funcKeywordCode(cxt, def) {
-    var _a13;
+    var _a3;
     const { gen, keyword, schema, parentSchema, $data, it } = cxt;
     checkAsyncKeyword(it, def);
     const validateRef = useKeyword(gen, keyword, !$data && def.compile ? def.compile.call(it.self, schema, parentSchema, it) : def.validate);
     const valid = gen.let("valid");
     cxt.block$data(valid, validateKeyword);
-    cxt.ok((_a13 = def.valid) !== null && _a13 !== void 0 ? _a13 : valid);
+    cxt.ok((_a3 = def.valid) !== null && _a3 !== void 0 ? _a3 : valid);
     function validateKeyword() {
       if (def.errors === false) {
         assignValid();
@@ -15275,7 +15224,7 @@ var require_compile = /* @__PURE__ */ __commonJSMin((exports2) => {
   const validate_1 = require_validate();
   var SchemaEnv = class {
     constructor(env) {
-      var _a13;
+      var _a3;
       this.refs = {};
       this.dynamicAnchors = {};
       let schema;
@@ -15283,7 +15232,7 @@ var require_compile = /* @__PURE__ */ __commonJSMin((exports2) => {
       this.schema = env.schema;
       this.schemaId = env.schemaId;
       this.root = env.root || this;
-      this.baseId = (_a13 = env.baseId) !== null && _a13 !== void 0 ? _a13 : (0, resolve_1.normalizeId)(schema === null || schema === void 0 ? void 0 : schema[env.schemaId || "$id"]);
+      this.baseId = (_a3 = env.baseId) !== null && _a3 !== void 0 ? _a3 : (0, resolve_1.normalizeId)(schema === null || schema === void 0 ? void 0 : schema[env.schemaId || "$id"]);
       this.schemaPath = env.schemaPath;
       this.localRefs = env.localRefs;
       this.meta = env.meta;
@@ -15379,13 +15328,13 @@ var require_compile = /* @__PURE__ */ __commonJSMin((exports2) => {
   }
   exports2.compileSchema = compileSchema;
   function resolveRef(root, baseId, ref) {
-    var _a13;
+    var _a3;
     ref = (0, resolve_1.resolveUrl)(this.opts.uriResolver, baseId, ref);
     const schOrFunc = root.refs[ref];
     if (schOrFunc) return schOrFunc;
     let _sch = resolve.call(this, root, ref);
     if (_sch === void 0) {
-      const schema = (_a13 = root.localRefs) === null || _a13 === void 0 ? void 0 : _a13[ref];
+      const schema = (_a3 = root.localRefs) === null || _a3 === void 0 ? void 0 : _a3[ref];
       const { schemaId } = this.opts;
       if (schema) _sch = new SchemaEnv({
         schema,
@@ -15451,8 +15400,8 @@ var require_compile = /* @__PURE__ */ __commonJSMin((exports2) => {
     "definitions"
   ]);
   function getJsonPointer(parsedRef, { baseId, schema, root }) {
-    var _a13;
-    if (((_a13 = parsedRef.fragment) === null || _a13 === void 0 ? void 0 : _a13[0]) !== "/") return;
+    var _a3;
+    if (((_a3 = parsedRef.fragment) === null || _a3 === void 0 ? void 0 : _a3[0]) !== "/") return;
     for (const part of parsedRef.fragment.slice(1).split("/")) {
       if (typeof schema === "boolean") return;
       const partSchema = schema[(0, util_1.unescapeFragment)(part)];
@@ -16152,9 +16101,9 @@ var require_core$3 = /* @__PURE__ */ __commonJSMin((exports2) => {
   };
   const MAX_EXPRESSION = 200;
   function requiredOptions(o) {
-    var _a13, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
+    var _a3, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
     const s = o.strict;
-    const _optz = (_a13 = o.code) === null || _a13 === void 0 ? void 0 : _a13.optimize;
+    const _optz = (_a3 = o.code) === null || _a3 === void 0 ? void 0 : _a3.optimize;
     const optimize = _optz === true || _optz === void 0 ? 1 : _optz || 0;
     const regExp = (_c = (_b = o.code) === null || _b === void 0 ? void 0 : _b.regExp) !== null && _c !== void 0 ? _c : defaultRegExp;
     const uriResolver = (_d = o.uriResolver) !== null && _d !== void 0 ? _d : uri_1.default;
@@ -16573,7 +16522,7 @@ var require_core$3 = /* @__PURE__ */ __commonJSMin((exports2) => {
     if (def.$data && !("code" in def || "validate" in def)) throw new Error('$data keyword must have "code" or "validate" function');
   }
   function addRule(keyword, definition, dataType) {
-    var _a13;
+    var _a3;
     const post = definition === null || definition === void 0 ? void 0 : definition.post;
     if (dataType && post) throw new Error('keyword with "post" flag cannot have "type"');
     const { RULES } = this;
@@ -16598,7 +16547,7 @@ var require_core$3 = /* @__PURE__ */ __commonJSMin((exports2) => {
     if (definition.before) addBeforeRule.call(this, ruleGroup, rule, definition.before);
     else ruleGroup.rules.push(rule);
     RULES.all[keyword] = rule;
-    (_a13 = definition.implements) === null || _a13 === void 0 || _a13.forEach((kwd) => this.addKeyword(kwd));
+    (_a3 = definition.implements) === null || _a3 === void 0 || _a3.forEach((kwd) => this.addKeyword(kwd));
   }
   function addBeforeRule(ruleGroup, rule, before) {
     const i = ruleGroup.rules.findIndex((_rule) => _rule.keyword === before);
@@ -16710,9 +16659,9 @@ var require_ref = /* @__PURE__ */ __commonJSMin((exports2) => {
       gen.assign(names_1.default.errors, (0, codegen_1._)`${names_1.default.vErrors}.length`);
     }
     function addEvaluatedFrom(source) {
-      var _a13;
+      var _a3;
       if (!it.opts.unevaluated) return;
-      const schEvaluated = (_a13 = sch === null || sch === void 0 ? void 0 : sch.validate) === null || _a13 === void 0 ? void 0 : _a13.evaluated;
+      const schEvaluated = (_a3 = sch === null || sch === void 0 ? void 0 : sch.validate) === null || _a3 === void 0 ? void 0 : _a3.evaluated;
       if (it.props !== true) if (schEvaluated && !schEvaluated.dynamicProps) {
         if (schEvaluated.props !== void 0) it.props = util_1.mergeEvaluated.props(gen, schEvaluated.props, it.props);
       } else {
@@ -18084,7 +18033,7 @@ var require_discriminator = /* @__PURE__ */ __commonJSMin((exports2) => {
         return _valid;
       }
       function getMapping() {
-        var _a13;
+        var _a3;
         const oneOfMapping = {};
         const topRequired = hasRequired(parentSchema);
         let tagRequired = true;
@@ -18096,7 +18045,7 @@ var require_discriminator = /* @__PURE__ */ __commonJSMin((exports2) => {
             if (sch instanceof compile_1.SchemaEnv) sch = sch.schema;
             if (sch === void 0) throw new ref_error_1.default(it.opts.uriResolver, it.baseId, ref);
           }
-          const propSch = (_a13 = sch === null || sch === void 0 ? void 0 : sch.properties) === null || _a13 === void 0 ? void 0 : _a13[tagName];
+          const propSch = (_a3 = sch === null || sch === void 0 ? void 0 : sch.properties) === null || _a3 === void 0 ? void 0 : _a3[tagName];
           if (typeof propSch != "object") throw new Error(`discriminator: oneOf subschemas (or referenced schemas) must have "properties/${tagName}"`);
           tagRequired = tagRequired && (topRequired || hasRequired(sch));
           addMappings(propSch, i);
@@ -19738,9 +19687,9 @@ var require_dist = /* @__PURE__ */ __commonJSMin((exports2, module2) => {
     return f;
   };
   function addFormats2(ajv, list, fs, exportName) {
-    var _a13;
+    var _a3;
     var _b;
-    (_a13 = (_b = ajv.opts.code).formats) !== null && _a13 !== void 0 || (_b.formats = (0, codegen_1._)`require("ajv-formats/dist/formats").${exportName}`);
+    (_a3 = (_b = ajv.opts.code).formats) !== null && _a3 !== void 0 || (_b.formats = (0, codegen_1._)`require("ajv-formats/dist/formats").${exportName}`);
     for (const f of list) ajv.addFormat(f, fs[f]);
   }
   module2.exports = exports2 = formatsPlugin;
@@ -19826,16 +19775,14 @@ function isCompletable(schema) {
   return !!schema && typeof schema === "object" && COMPLETABLE_SYMBOL in schema;
 }
 function getCompleter(schema) {
-  var _a13;
-  return (_a13 = schema[COMPLETABLE_SYMBOL]) == null ? void 0 : _a13.complete;
+  return schema[COMPLETABLE_SYMBOL]?.complete;
 }
 var DEFAULT_SSE_KEEP_ALIVE_MS = 15e3;
 var MAX_TIMER_DELAY_MS = 2 ** 31 - 1;
 function armSseKeepAlive(intervalMs, onTick) {
-  var _a13;
   if (!Number.isFinite(intervalMs) || intervalMs < 1) return;
   const timer = setInterval(onTick, Math.min(intervalMs, MAX_TIMER_DELAY_MS));
-  (_a13 = timer.unref) == null ? void 0 : _a13.call(timer);
+  timer.unref?.();
   return timer;
 }
 var InMemoryServerEventBus = class {
@@ -19848,11 +19795,10 @@ var InMemoryServerEventBus = class {
     this.onerror = onerror;
   }
   publish(event) {
-    var _a13;
     for (const listener of this._listeners) try {
       listener(event);
     } catch (error2) {
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, error2 instanceof Error ? error2 : new Error(String(error2)));
+      this.onerror?.(error2 instanceof Error ? error2 : new Error(String(error2)));
     }
   }
   subscribe(listener) {
@@ -19893,13 +19839,12 @@ function listenFilterAccepts(filter, event) {
   }
 }
 function honoredSubset(requested, capabilities) {
-  var _a13, _b, _c, _d;
   const honored = {};
   const allow = (bit) => capabilities === void 0 || bit === true;
-  if (requested.toolsListChanged === true && allow((_a13 = capabilities == null ? void 0 : capabilities.tools) == null ? void 0 : _a13.listChanged)) honored.toolsListChanged = true;
-  if (requested.promptsListChanged === true && allow((_b = capabilities == null ? void 0 : capabilities.prompts) == null ? void 0 : _b.listChanged)) honored.promptsListChanged = true;
-  if (requested.resourcesListChanged === true && allow((_c = capabilities == null ? void 0 : capabilities.resources) == null ? void 0 : _c.listChanged)) honored.resourcesListChanged = true;
-  if (requested.resourceSubscriptions !== void 0 && requested.resourceSubscriptions.length > 0 && allow((_d = capabilities == null ? void 0 : capabilities.resources) == null ? void 0 : _d.subscribe)) honored.resourceSubscriptions = [...requested.resourceSubscriptions];
+  if (requested.toolsListChanged === true && allow(capabilities?.tools?.listChanged)) honored.toolsListChanged = true;
+  if (requested.promptsListChanged === true && allow(capabilities?.prompts?.listChanged)) honored.promptsListChanged = true;
+  if (requested.resourcesListChanged === true && allow(capabilities?.resources?.listChanged)) honored.resourcesListChanged = true;
+  if (requested.resourceSubscriptions !== void 0 && requested.resourceSubscriptions.length > 0 && allow(capabilities?.resources?.subscribe)) honored.resourceSubscriptions = [...requested.resourceSubscriptions];
   return honored;
 }
 function serverEventToNotification(event) {
@@ -19929,22 +19874,20 @@ function jsonRpcError(id, code, message) {
   }, { status: 200 });
 }
 function stampSubscriptionId(notification, subscriptionId) {
-  var _a13;
   return {
     method: notification.method,
     params: {
       ...notification.params,
       _meta: {
-        ...(_a13 = notification.params) == null ? void 0 : _a13._meta,
+        ...notification.params?._meta,
         [SUBSCRIPTION_ID_META_KEY]: subscriptionId
       }
     }
   };
 }
 function parseListenFilter(message) {
-  var _a13;
   const outcome = codecForVersion(MODERN_WIRE_REVISION).validateRequest("subscriptions/listen", message);
-  return outcome.ok ? (_a13 = outcome.value.params) == null ? void 0 : _a13.notifications : void 0;
+  return outcome.ok ? outcome.value.params?.notifications : void 0;
 }
 function createListenRouter(options) {
   const { bus, onerror } = options;
@@ -19953,7 +19896,7 @@ function createListenRouter(options) {
   const open2 = /* @__PURE__ */ new Set();
   function serve(message, signal, capabilities, serverInfo) {
     if (open2.size >= maxSubscriptions) {
-      onerror == null ? void 0 : onerror(/* @__PURE__ */ new Error(`subscriptions/listen refused: subscription limit reached (${maxSubscriptions})`));
+      onerror?.(/* @__PURE__ */ new Error(`subscriptions/listen refused: subscription limit reached (${maxSubscriptions})`));
       return jsonRpcError(message.id, -32603, "Subscription limit reached");
     }
     const filter = parseListenFilter(message);
@@ -19971,7 +19914,7 @@ function createListenRouter(options) {
       try {
         controller.enqueue(encoder.encode(frame));
       } catch (error2) {
-        onerror == null ? void 0 : onerror(error2 instanceof Error ? error2 : new Error(String(error2)));
+        onerror?.(error2 instanceof Error ? error2 : new Error(String(error2)));
       }
     };
     const writeNotification = (method, params) => {
@@ -20002,12 +19945,12 @@ data: ${JSON.stringify({
 `);
       closed = true;
       try {
-        unsubscribe == null ? void 0 : unsubscribe();
+        unsubscribe?.();
       } catch (error2) {
-        onerror == null ? void 0 : onerror(error2 instanceof Error ? error2 : new Error(String(error2)));
+        onerror?.(error2 instanceof Error ? error2 : new Error(String(error2)));
       }
       if (keepAliveTimer !== void 0) clearInterval(keepAliveTimer);
-      abortCleanup == null ? void 0 : abortCleanup();
+      abortCleanup?.();
       open2.delete(teardown);
       try {
         controller.close();
@@ -20136,9 +20079,8 @@ async function findScopeChallenge(requests, authInfo, resolve) {
   }
 }
 function scopeChallengeResourceMetadataUrl(authInfo) {
-  var _a13, _b;
-  if ((authInfo == null ? void 0 : authInfo.resourceMetadataUrl) !== void 0) return authInfo.resourceMetadataUrl;
-  if (((_a13 = authInfo == null ? void 0 : authInfo.resource) == null ? void 0 : _a13.protocol) === "https:" || ((_b = authInfo == null ? void 0 : authInfo.resource) == null ? void 0 : _b.protocol) === "http:") return getOAuthProtectedResourceMetadataUrl(authInfo.resource);
+  if (authInfo?.resourceMetadataUrl !== void 0) return authInfo.resourceMetadataUrl;
+  if (authInfo?.resource?.protocol === "https:" || authInfo?.resource?.protocol === "http:") return getOAuthProtectedResourceMetadataUrl(authInfo.resource);
 }
 function createScopeChallengeResponse(challenge, resourceMetadataUrl) {
   return bearerAuthChallengeResponse(new OAuthError(OAuthErrorCode.InsufficientScope, challenge.errorDescription ?? "Insufficient scope"), {
@@ -20149,12 +20091,12 @@ function createScopeChallengeResponse(challenge, resourceMetadataUrl) {
 var DEFAULT_LEGACY_SHIM_MAX_ROUNDS = 8;
 var DEFAULT_LEGACY_SHIM_ROUND_TIMEOUT_MS = 6e5;
 function resolveLegacyShimOptions(options) {
-  if ((options == null ? void 0 : options.maxRounds) !== void 0 && (!Number.isInteger(options.maxRounds) || options.maxRounds < 1)) throw new RangeError(`inputRequired.maxRounds must be a positive integer (got ${options.maxRounds})`);
-  if ((options == null ? void 0 : options.roundTimeoutMs) !== void 0 && (!Number.isFinite(options.roundTimeoutMs) || options.roundTimeoutMs <= 0)) throw new RangeError(`inputRequired.roundTimeoutMs must be a positive number (got ${options.roundTimeoutMs})`);
+  if (options?.maxRounds !== void 0 && (!Number.isInteger(options.maxRounds) || options.maxRounds < 1)) throw new RangeError(`inputRequired.maxRounds must be a positive integer (got ${options.maxRounds})`);
+  if (options?.roundTimeoutMs !== void 0 && (!Number.isFinite(options.roundTimeoutMs) || options.roundTimeoutMs <= 0)) throw new RangeError(`inputRequired.roundTimeoutMs must be a positive number (got ${options.roundTimeoutMs})`);
   return {
-    maxRounds: (options == null ? void 0 : options.maxRounds) ?? DEFAULT_LEGACY_SHIM_MAX_ROUNDS,
-    roundTimeoutMs: (options == null ? void 0 : options.roundTimeoutMs) ?? DEFAULT_LEGACY_SHIM_ROUND_TIMEOUT_MS,
-    legacyShim: (options == null ? void 0 : options.legacyShim) ?? true
+    maxRounds: options?.maxRounds ?? DEFAULT_LEGACY_SHIM_MAX_ROUNDS,
+    roundTimeoutMs: options?.roundTimeoutMs ?? DEFAULT_LEGACY_SHIM_ROUND_TIMEOUT_MS,
+    legacyShim: options?.legacyShim ?? true
   };
 }
 function coerceEmbeddedInputRequest(method, key, entry) {
@@ -20169,7 +20111,7 @@ function coerceEmbeddedInputRequest(method, key, entry) {
 }
 function syntheticElicitationId() {
   const webCrypto = globalThis.crypto;
-  if ((webCrypto == null ? void 0 : webCrypto.randomUUID) !== void 0) return webCrypto.randomUUID();
+  if (webCrypto?.randomUUID !== void 0) return webCrypto.randomUUID();
   const bytes = new Uint8Array(16);
   webCrypto.getRandomValues(bytes);
   bytes[6] = bytes[6] & 15 | 64;
@@ -20292,10 +20234,21 @@ function installModernOnlyHandlers(server, servedModernVersions) {
 function serverIdentityOf(server) {
   return readServerIdentity(server);
 }
-var _a12;
-var Server = (_a12 = class extends Protocol {
+var Server = class extends Protocol {
   _clientCapabilities;
   _clientVersion;
+  static {
+    writeClientIdentity = (server, identity) => {
+      if (identity.clientCapabilities !== void 0) server._clientCapabilities = identity.clientCapabilities;
+      if (identity.clientInfo !== void 0) server._clientVersion = identity.clientInfo;
+    };
+    installDiscoverHandler = (server, servedModernVersions) => {
+      const missing = servedModernVersions.filter((version2) => !server._supportedProtocolVersions.includes(version2));
+      if (missing.length > 0) server._supportedProtocolVersions = [...server._supportedProtocolVersions, ...missing];
+      server.setRequestHandler("server/discover", () => server._ondiscover());
+    };
+    readServerIdentity = (server) => server._serverInfo;
+  }
   _capabilities;
   _instructions;
   _jsonSchemaValidator;
@@ -20323,23 +20276,19 @@ var Server = (_a12 = class extends Protocol {
   * Initializes this server with the given name and version information.
   */
   constructor(_serverInfo, options) {
-    var _a13;
     super(options);
     this._serverInfo = _serverInfo;
-    this._capabilities = (options == null ? void 0 : options.capabilities) ? { ...options.capabilities } : {};
-    this._instructions = options == null ? void 0 : options.instructions;
-    this._jsonSchemaValidator = (options == null ? void 0 : options.jsonSchemaValidator) ?? new AjvJsonSchemaValidator();
-    this._requestStateVerify = (_a13 = options == null ? void 0 : options.requestState) == null ? void 0 : _a13.verify;
-    this._inputRequiredServing = resolveLegacyShimOptions(options == null ? void 0 : options.inputRequired);
-    if ((options == null ? void 0 : options.cacheHints) !== void 0) {
+    this._capabilities = options?.capabilities ? { ...options.capabilities } : {};
+    this._instructions = options?.instructions;
+    this._jsonSchemaValidator = options?.jsonSchemaValidator ?? new AjvJsonSchemaValidator();
+    this._requestStateVerify = options?.requestState?.verify;
+    this._inputRequiredServing = resolveLegacyShimOptions(options?.inputRequired);
+    if (options?.cacheHints !== void 0) {
       for (const [operation, hint] of Object.entries(options.cacheHints)) if (hint !== void 0) assertValidCacheHint(hint, `cacheHints['${operation}']`);
       this._cacheHints = options.cacheHints;
     }
     this.setRequestHandler("initialize", (request) => this._oninitialize(request));
-    this.setNotificationHandler("notifications/initialized", () => {
-      var _a14;
-      return (_a14 = this.oninitialized) == null ? void 0 : _a14.call(this);
-    });
+    this.setNotificationHandler("notifications/initialized", () => this.oninitialized?.());
     if (modernProtocolVersions(this._supportedProtocolVersions).length > 0) this.setRequestHandler("server/discover", () => this._ondiscover());
     if (this._capabilities.logging) this._registerLoggingHandler();
   }
@@ -20357,8 +20306,7 @@ var Server = (_a12 = class extends Protocol {
   */
   _registerLoggingHandler() {
     this.setRequestHandler("logging/setLevel", async (request, ctx) => {
-      var _a13, _b;
-      const transportSessionId = ctx.sessionId || ((_b = (_a13 = ctx.http) == null ? void 0 : _a13.req) == null ? void 0 : _b.headers.get("mcp-session-id")) || void 0;
+      const transportSessionId = ctx.sessionId || ctx.http?.req?.headers.get("mcp-session-id") || void 0;
       const { level } = request.params;
       const parseResult = parseSchema(LoggingLevelSchema, level);
       if (parseResult.success) this._loggingLevels.set(transportSessionId, parseResult.data);
@@ -20366,17 +20314,16 @@ var Server = (_a12 = class extends Protocol {
     });
   }
   buildContext(ctx, transportInfo) {
-    const hasHttpInfo = ctx.http || (transportInfo == null ? void 0 : transportInfo.request) || (transportInfo == null ? void 0 : transportInfo.closeSSEStream) || (transportInfo == null ? void 0 : transportInfo.closeStandaloneSSEStream);
+    const hasHttpInfo = ctx.http || transportInfo?.request || transportInfo?.closeSSEStream || transportInfo?.closeStandaloneSSEStream;
     return {
       ...ctx,
       mcpReq: {
         ...ctx.mcpReq,
         log: (level, data, logger) => {
-          var _a13;
           if (!this._capabilities.logging) return Promise.resolve();
           let threshold;
           if (this._servedModernEra()) {
-            threshold = (_a13 = ctx.mcpReq.envelope) == null ? void 0 : _a13[LOG_LEVEL_META_KEY];
+            threshold = ctx.mcpReq.envelope?.[LOG_LEVEL_META_KEY];
             if (threshold === void 0) return Promise.resolve();
           } else threshold = this._loggingLevels.get(ctx.sessionId) ?? this._loggingLevels.get(void 0);
           if (threshold !== void 0 && this.LOG_LEVEL_SEVERITY.get(level) < this.LOG_LEVEL_SEVERITY.get(threshold)) return Promise.resolve();
@@ -20394,9 +20341,9 @@ var Server = (_a12 = class extends Protocol {
       },
       http: hasHttpInfo ? {
         ...ctx.http,
-        req: transportInfo == null ? void 0 : transportInfo.request,
-        closeSSE: transportInfo == null ? void 0 : transportInfo.closeSSEStream,
-        closeStandaloneSSE: transportInfo == null ? void 0 : transportInfo.closeStandaloneSSEStream
+        req: transportInfo?.request,
+        closeSSE: transportInfo?.closeSSEStream,
+        closeStandaloneSSE: transportInfo?.closeStandaloneSSEStream
       } : void 0
     };
   }
@@ -20431,9 +20378,8 @@ var Server = (_a12 = class extends Protocol {
   * property that is never serialized, so 2025-era responses are unaffected.
   */
   _wrapHandler(method, handler2) {
-    var _a13;
     if (method !== "tools/call") {
-      const cacheHint = (_a13 = this._cacheHints) == null ? void 0 : _a13[method];
+      const cacheHint = this._cacheHints?.[method];
       const isInputRequiredCapable = INPUT_REQUIRED_CAPABLE_METHODS.has(method);
       if (cacheHint === void 0 && !isInputRequiredCapable) return async (request, ctx) => {
         const result = await handler2(request, ctx);
@@ -20536,12 +20482,11 @@ var Server = (_a12 = class extends Protocol {
   * the reason goes to `onerror` only.
   */
   async _verifyRequestState(state, ctx, method) {
-    var _a13;
     if (this._requestStateVerify === void 0) return;
     try {
       return await this._requestStateVerify(state, ctx);
     } catch (error2) {
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error(`requestState verification rejected ${method}: ${error2 instanceof Error ? error2.message : String(error2)}`));
+      this.onerror?.(/* @__PURE__ */ new Error(`requestState verification rejected ${method}: ${error2 instanceof Error ? error2.message : String(error2)}`));
       throw new ProtocolError(ProtocolErrorCode.InvalidParams, "Invalid or expired requestState", { reason: "invalid_request_state" });
     }
   }
@@ -20552,8 +20497,7 @@ var Server = (_a12 = class extends Protocol {
   * initialize (stateless legacy) hold nothing, so gates refuse there.
   */
   _inputRequestCapabilityView(ctx) {
-    var _a13;
-    return this._servedModernEra() ? (_a13 = ctx.mcpReq.envelope) == null ? void 0 : _a13[CLIENT_CAPABILITIES_META_KEY] : this._clientCapabilities;
+    return this._servedModernEra() ? ctx.mcpReq.envelope?.[CLIENT_CAPABILITIES_META_KEY] : this._clientCapabilities;
   }
   /**
   * Guard for the push-style server→client request APIs ({@linkcode createMessage},
@@ -20570,23 +20514,21 @@ var Server = (_a12 = class extends Protocol {
     });
   }
   assertCapabilityForMethod(method) {
-    var _a13, _b, _c;
     switch (method) {
       case "sampling/createMessage":
-        if (!((_a13 = this._clientCapabilities) == null ? void 0 : _a13.sampling)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support sampling (required for ${method})`);
+        if (!this._clientCapabilities?.sampling) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support sampling (required for ${method})`);
         break;
       case "elicitation/create":
-        if (!((_b = this._clientCapabilities) == null ? void 0 : _b.elicitation)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support elicitation (required for ${method})`);
+        if (!this._clientCapabilities?.elicitation) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support elicitation (required for ${method})`);
         break;
       case "roots/list":
-        if (!((_c = this._clientCapabilities) == null ? void 0 : _c.roots)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support listing roots (required for ${method})`);
+        if (!this._clientCapabilities?.roots) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support listing roots (required for ${method})`);
         break;
       case "ping":
         break;
     }
   }
   assertNotificationCapability(method) {
-    var _a13, _b;
     switch (method) {
       case "notifications/message":
         if (!this._capabilities.logging) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Server does not support logging (required for ${method})`);
@@ -20602,7 +20544,7 @@ var Server = (_a12 = class extends Protocol {
         if (!this._capabilities.prompts) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Server does not support notifying of prompt list changes (required for ${method})`);
         break;
       case "notifications/elicitation/complete":
-        if (!((_b = (_a13 = this._clientCapabilities) == null ? void 0 : _a13.elicitation) == null ? void 0 : _b.url)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support URL elicitation (required for ${method})`);
+        if (!this._clientCapabilities?.elicitation?.url) throw new SdkError(SdkErrorCode.CapabilityNotSupported, `Client does not support URL elicitation (required for ${method})`);
         break;
       case "notifications/cancelled":
         break;
@@ -20637,14 +20579,13 @@ var Server = (_a12 = class extends Protocol {
     }
   }
   async _oninitialize(request) {
-    var _a13, _b;
     const requestedVersion = request.params.protocolVersion;
     this._clientCapabilities = request.params.capabilities;
     this._clientVersion = request.params.clientInfo;
     const legacyVersions = legacyProtocolVersions(this._supportedProtocolVersions);
     const protocolVersion = legacyVersions.includes(requestedVersion) ? requestedVersion : legacyVersions[0] ?? LATEST_PROTOCOL_VERSION;
     this._negotiatedProtocolVersion = protocolVersion;
-    (_b = (_a13 = this.transport) == null ? void 0 : _a13.setProtocolVersion) == null ? void 0 : _b.call(_a13, protocolVersion);
+    this.transport?.setProtocolVersion?.(protocolVersion);
     return {
       protocolVersion,
       capabilities: this.getCapabilities(),
@@ -20746,9 +20687,8 @@ var Server = (_a12 = class extends Protocol {
     return this.request({ method: "ping" });
   }
   async createMessage(params, options) {
-    var _a13, _b;
     this._assertPushApiInServedEra("sampling/createMessage");
-    if ((params.tools || params.toolChoice) && !((_b = (_a13 = this._clientCapabilities) == null ? void 0 : _a13.sampling) == null ? void 0 : _b.tools)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support sampling tools capability.");
+    if ((params.tools || params.toolChoice) && !this._clientCapabilities?.sampling?.tools) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support sampling tools capability.");
     if (params.messages.length > 0) {
       const lastMessage = params.messages.at(-1);
       const lastContent = Array.isArray(lastMessage.content) ? lastMessage.content : [lastMessage.content];
@@ -20788,14 +20728,13 @@ var Server = (_a12 = class extends Protocol {
   * legacy path.
   */
   async elicitInput(params, options) {
-    var _a13, _b, _c, _d;
     this._assertPushApiInServedEra("elicitation/create");
     switch (params.mode ?? "form") {
       case "url":
-        if (!((_b = (_a13 = this._clientCapabilities) == null ? void 0 : _a13.elicitation) == null ? void 0 : _b.url)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support url elicitation.");
+        if (!this._clientCapabilities?.elicitation?.url) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support url elicitation.");
         break;
       case "form":
-        if (!((_d = (_c = this._clientCapabilities) == null ? void 0 : _c.elicitation) == null ? void 0 : _d.form)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support form elicitation.");
+        if (!this._clientCapabilities?.elicitation?.form) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support form elicitation.");
         break;
     }
     return this._sendElicitationLeg(params, options);
@@ -20810,7 +20749,7 @@ var Server = (_a12 = class extends Protocol {
   */
   async _sendElicitationLeg(params, options, behavior) {
     const mode = params.mode ?? "form";
-    const validateAcceptedContent = (behavior == null ? void 0 : behavior.validateAcceptedContent) ?? true;
+    const validateAcceptedContent = behavior?.validateAcceptedContent ?? true;
     switch (mode) {
       case "url": {
         const urlParams = params;
@@ -20853,8 +20792,7 @@ var Server = (_a12 = class extends Protocol {
   * @returns A function that emits the completion notification when awaited.
   */
   createElicitationCompletionNotifier(elicitationId, options) {
-    var _a13, _b;
-    if (!((_b = (_a13 = this._clientCapabilities) == null ? void 0 : _a13.elicitation) == null ? void 0 : _b.url)) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support URL elicitation (required for notifications/elicitation/complete)");
+    if (!this._clientCapabilities?.elicitation?.url) throw new SdkError(SdkErrorCode.CapabilityNotSupported, "Client does not support URL elicitation (required for notifications/elicitation/complete)");
     return () => this.notification({
       method: "notifications/elicitation/complete",
       params: { elicitationId }
@@ -20908,14 +20846,7 @@ var Server = (_a12 = class extends Protocol {
   async sendPromptListChanged() {
     return this.notification({ method: "notifications/prompts/list_changed" });
   }
-}, writeClientIdentity = (server, identity) => {
-  if (identity.clientCapabilities !== void 0) server._clientCapabilities = identity.clientCapabilities;
-  if (identity.clientInfo !== void 0) server._clientVersion = identity.clientInfo;
-}, installDiscoverHandler = (server, servedModernVersions) => {
-  const missing = servedModernVersions.filter((version2) => !server._supportedProtocolVersions.includes(version2));
-  if (missing.length > 0) server._supportedProtocolVersions = [...server._supportedProtocolVersions, ...missing];
-  server.setRequestHandler("server/discover", () => server._ondiscover());
-}, readServerIdentity = (server) => server._serverInfo, _a12);
+};
 function discoverAdvertisedCapabilities(capabilities) {
   return { ...capabilities };
 }
@@ -20977,12 +20908,11 @@ var McpServer = class {
     }
   }
   constructor(serverInfo, options) {
-    var _a13, _b, _c;
     this.server = new Server(serverInfo, options);
-    this._maxToolInputElements = resolveMaxToolInputElements(options == null ? void 0 : options.maxToolInputElements);
-    if ((_a13 = options == null ? void 0 : options.capabilities) == null ? void 0 : _a13.tools) this.setToolRequestHandlers();
-    if ((_b = options == null ? void 0 : options.capabilities) == null ? void 0 : _b.resources) this.setResourceRequestHandlers();
-    if ((_c = options == null ? void 0 : options.capabilities) == null ? void 0 : _c.prompts) this.setPromptRequestHandlers();
+    this._maxToolInputElements = resolveMaxToolInputElements(options?.maxToolInputElements);
+    if (options?.capabilities?.tools) this.setToolRequestHandlers();
+    if (options?.capabilities?.resources) this.setResourceRequestHandlers();
+    if (options?.capabilities?.prompts) this.setPromptRequestHandlers();
   }
   /**
   * Attaches to the given transport, starts it, and starts listening for messages.
@@ -21008,17 +20938,16 @@ var McpServer = class {
   }
   /** @internal */
   resolveScopeChallenge = (context) => {
-    var _a13, _b, _c, _d, _e, _f, _g;
     switch (context.request.method) {
       case "tools/call": {
-        const toolName = (_a13 = context.request.params) == null ? void 0 : _a13.name;
+        const toolName = context.request.params?.name;
         if (typeof toolName !== "string") return;
         const tool = this._registeredTools[toolName];
         if (tool === void 0 || !tool.enabled) return;
-        return (_b = tool.scopeChallenge) == null ? void 0 : _b.call(tool, context);
+        return tool.scopeChallenge?.(context);
       }
       case "resources/read": {
-        const resourceUri = (_c = context.request.params) == null ? void 0 : _c.uri;
+        const resourceUri = context.request.params?.uri;
         if (typeof resourceUri !== "string") return;
         let uri;
         try {
@@ -21027,16 +20956,16 @@ var McpServer = class {
           return;
         }
         const resource = this._registeredResources[uri.toString()];
-        if (resource !== void 0) return resource.enabled ? (_d = resource.scopeChallenge) == null ? void 0 : _d.call(resource, context) : void 0;
-        for (const template of Object.values(this._registeredResourceTemplates)) if (template.resourceTemplate.uriTemplate.match(uri.toString())) return template.enabled ? (_e = template.scopeChallenge) == null ? void 0 : _e.call(template, context) : void 0;
+        if (resource !== void 0) return resource.enabled ? resource.scopeChallenge?.(context) : void 0;
+        for (const template of Object.values(this._registeredResourceTemplates)) if (template.resourceTemplate.uriTemplate.match(uri.toString())) return template.enabled ? template.scopeChallenge?.(context) : void 0;
         return;
       }
       case "prompts/get": {
-        const promptName = (_f = context.request.params) == null ? void 0 : _f.name;
+        const promptName = context.request.params?.name;
         if (typeof promptName !== "string") return;
         const prompt = this._registeredPrompts[promptName];
         if (prompt === void 0 || !prompt.enabled) return;
-        return (_g = prompt.scopeChallenge) == null ? void 0 : _g.call(prompt, context);
+        return prompt.scopeChallenge?.(context);
       }
       default:
         return;
@@ -21044,11 +20973,10 @@ var McpServer = class {
   };
   _toolHandlersInitialized = false;
   setToolRequestHandlers() {
-    var _a13;
     if (this._toolHandlersInitialized) return;
     this.server.assertCanSetRequestHandler("tools/list");
     this.server.assertCanSetRequestHandler("tools/call");
-    this.server.registerCapabilities({ tools: { listChanged: ((_a13 = this.server.getCapabilities().tools) == null ? void 0 : _a13.listChanged) ?? true } });
+    this.server.registerCapabilities({ tools: { listChanged: this.server.getCapabilities().tools?.listChanged ?? true } });
     this.server.setRequestHandler("tools/list", () => ({ tools: Object.entries(this._registeredTools).filter(([, tool]) => tool.enabled).map(([name, tool]) => {
       const toolDefinition = {
         name,
@@ -21142,12 +21070,11 @@ var McpServer = class {
     this._completionHandlerInitialized = true;
   }
   async handlePromptCompletion(request, ref) {
-    var _a13;
     const prompt = this._registeredPrompts[ref.name];
     if (!prompt) throw new ProtocolError(ProtocolErrorCode.InvalidParams, `Prompt ${ref.name} not found`);
     if (!prompt.enabled) throw new ProtocolError(ProtocolErrorCode.InvalidParams, `Prompt ${ref.name} disabled`);
     if (!prompt.argsSchema) return EMPTY_COMPLETION_RESULT;
-    const field = unwrapOptionalSchema((_a13 = getSchemaShape(prompt.argsSchema)) == null ? void 0 : _a13[request.params.argument.name]);
+    const field = unwrapOptionalSchema(getSchemaShape(prompt.argsSchema)?.[request.params.argument.name]);
     if (!isCompletable(field)) return EMPTY_COMPLETION_RESULT;
     const completer = getCompleter(field);
     if (!completer) return EMPTY_COMPLETION_RESULT;
@@ -21165,12 +21092,11 @@ var McpServer = class {
   }
   _resourceHandlersInitialized = false;
   setResourceRequestHandlers() {
-    var _a13;
     if (this._resourceHandlersInitialized) return;
     this.server.assertCanSetRequestHandler("resources/list");
     this.server.assertCanSetRequestHandler("resources/templates/list");
     this.server.assertCanSetRequestHandler("resources/read");
-    this.server.registerCapabilities({ resources: { listChanged: ((_a13 = this.server.getCapabilities().resources) == null ? void 0 : _a13.listChanged) ?? true } });
+    this.server.registerCapabilities({ resources: { listChanged: this.server.getCapabilities().resources?.listChanged ?? true } });
     this.server.setRequestHandler("resources/list", async (_request, ctx) => {
       const resources = Object.entries(this._registeredResources).filter(([_, resource]) => resource.enabled).map(([uri, resource]) => ({
         uri,
@@ -21223,11 +21149,10 @@ var McpServer = class {
   }
   _promptHandlersInitialized = false;
   setPromptRequestHandlers() {
-    var _a13;
     if (this._promptHandlersInitialized) return;
     this.server.assertCanSetRequestHandler("prompts/list");
     this.server.assertCanSetRequestHandler("prompts/get");
-    this.server.registerCapabilities({ prompts: { listChanged: ((_a13 = this.server.getCapabilities().prompts) == null ? void 0 : _a13.listChanged) ?? true } });
+    this.server.registerCapabilities({ prompts: { listChanged: this.server.getCapabilities().prompts?.listChanged ?? true } });
     this.server.setRequestHandler("prompts/list", () => ({ prompts: Object.entries(this._registeredPrompts).filter(([, prompt]) => prompt.enabled).map(([name, prompt]) => {
       return {
         name,
@@ -21561,12 +21486,11 @@ function getSchemaShape(schema) {
   if (candidate.shape && typeof candidate.shape === "object") return candidate.shape;
 }
 function isOptionalSchema(schema) {
-  return (schema == null ? void 0 : schema.type) === "optional";
+  return schema?.type === "optional";
 }
 function unwrapOptionalSchema(schema) {
-  var _a13;
   if (!isOptionalSchema(schema)) return schema;
-  return ((_a13 = schema.def) == null ? void 0 : _a13.innerType) ?? schema;
+  return schema.def?.innerType ?? schema;
 }
 
 // node_modules/@modelcontextprotocol/server/dist/index.mjs
@@ -21615,20 +21539,19 @@ var PerRequestHTTPServerTransport = class {
   * the client disconnected).
   */
   async handleMessage(message, extra) {
-    var _a13;
     if (this._used) throw new Error("PerRequestHTTPServerTransport serves exactly one exchange; construct a new transport per request");
     if (!this._started || this.onmessage === void 0) throw new Error("PerRequestHTTPServerTransport is not connected: connect a server to this transport before handling a message");
     if (this._closed) throw new Error("PerRequestHTTPServerTransport is closed");
     this._used = true;
-    const signal = (_a13 = extra == null ? void 0 : extra.request) == null ? void 0 : _a13.signal;
-    if (signal == null ? void 0 : signal.aborted) {
+    const signal = extra?.request?.signal;
+    if (signal?.aborted) {
       await this.close();
       throw new SdkError(SdkErrorCode.ConnectionClosed, "The request was aborted before it could be handled");
     }
     const messageExtra = {
       classification: this._classification,
-      ...(extra == null ? void 0 : extra.request) !== void 0 && { request: extra.request },
-      ...(extra == null ? void 0 : extra.authInfo) !== void 0 && { authInfo: extra.authInfo }
+      ...extra?.request !== void 0 && { request: extra.request },
+      ...extra?.authInfo !== void 0 && { authInfo: extra.authInfo }
     };
     if (isJSONRPCRequest(message)) {
       this._requestId = message.id;
@@ -21662,12 +21585,11 @@ var PerRequestHTTPServerTransport = class {
     return new Response(null, { status: 202 });
   }
   async send(message, options) {
-    var _a13;
     if (this._closed) return;
     const isResponse = isJSONRPCResultResponse(message) || isJSONRPCErrorResponse(message);
-    const relatedId = isResponse ? message.id : options == null ? void 0 : options.relatedRequestId;
+    const relatedId = isResponse ? message.id : options?.relatedRequestId;
     if (this._requestId === void 0 || relatedId === void 0 || relatedId !== this._requestId) {
-      if (isResponse) (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error(`Received a response for an unknown request id: ${String(message.id)}`));
+      if (isResponse) this.onerror?.(/* @__PURE__ */ new Error(`Received a response for an unknown request id: ${String(message.id)}`));
       return;
     }
     if (isResponse) {
@@ -21712,12 +21634,11 @@ var PerRequestHTTPServerTransport = class {
 `);
   }
   async close() {
-    var _a13, _b, _c;
     if (this._closed) return;
     this._closed = true;
-    (_a13 = this._abortCleanup) == null ? void 0 : _a13.call(this);
+    this._abortCleanup?.();
     this._abortCleanup = void 0;
-    if (((_b = this._sse) == null ? void 0 : _b.keepAliveTimer) !== void 0) clearInterval(this._sse.keepAliveTimer);
+    if (this._sse?.keepAliveTimer !== void 0) clearInterval(this._sse.keepAliveTimer);
     if (this._sse !== void 0 && !this._sse.closed) {
       this._sse.closed = true;
       try {
@@ -21729,7 +21650,7 @@ var PerRequestHTTPServerTransport = class {
       this._deferredResponse.settled = true;
       this._deferredResponse.reject(new SdkError(SdkErrorCode.ConnectionClosed, "Connection closed before a response was produced"));
     }
-    (_c = this.onclose) == null ? void 0 : _c.call(this);
+    this.onclose?.();
   }
   settleResponse(response) {
     if (this._deferredResponse === void 0 || this._deferredResponse.settled) return;
@@ -21763,8 +21684,7 @@ var PerRequestHTTPServerTransport = class {
     }));
   }
   finalizeStream() {
-    var _a13;
-    if (((_a13 = this._sse) == null ? void 0 : _a13.keepAliveTimer) !== void 0) clearInterval(this._sse.keepAliveTimer);
+    if (this._sse?.keepAliveTimer !== void 0) clearInterval(this._sse.keepAliveTimer);
     if (this._sse !== void 0 && !this._sse.closed) {
       this._sse.closed = true;
       try {
@@ -21781,12 +21701,11 @@ data: ${JSON.stringify(message)}
 `);
   }
   writeFrame(frame) {
-    var _a13;
     if (this._sse === void 0 || this._sse.closed) return;
     try {
       this._sse.controller.enqueue(this._sse.encoder.encode(frame));
     } catch (error2) {
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error(`Failed to write to the response stream: ${error2}`));
+      this.onerror?.(/* @__PURE__ */ new Error(`Failed to write to the response stream: ${error2}`));
     }
   }
 };
@@ -21916,7 +21835,7 @@ var WebStandardStreamableHTTPServerTransport = class {
       code,
       message
     };
-    if ((options == null ? void 0 : options.data) !== void 0) error2.data = options.data;
+    if (options?.data !== void 0) error2.data = options.data;
     return Response.json({
       jsonrpc: "2.0",
       error: error2,
@@ -21925,7 +21844,7 @@ var WebStandardStreamableHTTPServerTransport = class {
       status,
       headers: {
         "Content-Type": "application/json",
-        ...options == null ? void 0 : options.headers
+        ...options?.headers
       }
     });
   }
@@ -21939,13 +21858,12 @@ var WebStandardStreamableHTTPServerTransport = class {
   * @returns Error response if validation fails, `undefined` if validation passes.
   */
   validateRequestHeaders(req) {
-    var _a13, _b;
     if (!this._enableDnsRebindingProtection) return;
     if (this._allowedHosts && this._allowedHosts.length > 0) {
       const hostHeader = req.headers.get("host");
       if (!hostHeader || !this._allowedHosts.includes(hostHeader)) {
         const error2 = `Invalid Host header: ${hostHeader}`;
-        (_a13 = this.onerror) == null ? void 0 : _a13.call(this, new Error(error2));
+        this.onerror?.(new Error(error2));
         return this.createJsonErrorResponse(403, -32e3, error2);
       }
     }
@@ -21953,7 +21871,7 @@ var WebStandardStreamableHTTPServerTransport = class {
       const originHeader = req.headers.get("origin");
       if (originHeader && !this._allowedOrigins.includes(originHeader)) {
         const error2 = `Invalid Origin header: ${originHeader}`;
-        (_b = this.onerror) == null ? void 0 : _b.call(this, new Error(error2));
+        this.onerror?.(new Error(error2));
         return this.createJsonErrorResponse(403, -32e3, error2);
       }
     }
@@ -22019,9 +21937,8 @@ data:
   * Handles `GET` requests for SSE stream
   */
   async handleGetRequest(req) {
-    var _a13, _b, _c;
-    if (!((_a13 = req.headers.get("accept")) == null ? void 0 : _a13.includes("text/event-stream"))) {
-      (_b = this.onerror) == null ? void 0 : _b.call(this, /* @__PURE__ */ new Error("Not Acceptable: Client must accept text/event-stream"));
+    if (!req.headers.get("accept")?.includes("text/event-stream")) {
+      this.onerror?.(/* @__PURE__ */ new Error("Not Acceptable: Client must accept text/event-stream"));
       return this.createJsonErrorResponse(406, -32e3, "Not Acceptable: Client must accept text/event-stream");
     }
     const sessionError = this.validateSession(req);
@@ -22033,7 +21950,7 @@ data:
       if (lastEventId) return this.replayEvents(lastEventId);
     }
     if (this._streamMapping.get(this._standaloneSseStreamId) !== void 0) {
-      (_c = this.onerror) == null ? void 0 : _c.call(this, /* @__PURE__ */ new Error("Conflict: Only one SSE stream is allowed per session"));
+      this.onerror?.(/* @__PURE__ */ new Error("Conflict: Only one SSE stream is allowed per session"));
       return this.createJsonErrorResponse(409, -32e3, "Conflict: Only one SSE stream is allowed per session");
     }
     const encoder = new TextEncoder();
@@ -22044,9 +21961,8 @@ data:
         streamController = controller;
       },
       cancel: () => {
-        var _a14;
         if (keepAliveTimer !== void 0) clearInterval(keepAliveTimer);
-        if (((_a14 = this._streamMapping.get(this._standaloneSseStreamId)) == null ? void 0 : _a14.controller) === streamController) this._streamMapping.delete(this._standaloneSseStreamId);
+        if (this._streamMapping.get(this._standaloneSseStreamId)?.controller === streamController) this._streamMapping.delete(this._standaloneSseStreamId);
       }
     });
     const headers = {
@@ -22076,9 +21992,8 @@ data:
   * Only used when resumability is enabled
   */
   async replayEvents(lastEventId) {
-    var _a13, _b, _c, _d, _e, _f;
     if (!this._eventStore) {
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error("Event store not configured"));
+      this.onerror?.(/* @__PURE__ */ new Error("Event store not configured"));
       return this.createJsonErrorResponse(400, -32e3, "Event store not configured");
     }
     try {
@@ -22086,11 +22001,11 @@ data:
       if (this._eventStore.getStreamIdForEventId) {
         streamId = await this._eventStore.getStreamIdForEventId(lastEventId);
         if (!streamId) {
-          (_b = this.onerror) == null ? void 0 : _b.call(this, /* @__PURE__ */ new Error("Invalid event ID format"));
+          this.onerror?.(/* @__PURE__ */ new Error("Invalid event ID format"));
           return this.createJsonErrorResponse(400, -32e3, "Invalid event ID format");
         }
         if (this._streamMapping.get(streamId) !== void 0) {
-          (_c = this.onerror) == null ? void 0 : _c.call(this, /* @__PURE__ */ new Error("Conflict: Stream already has an active connection"));
+          this.onerror?.(/* @__PURE__ */ new Error("Conflict: Stream already has an active connection"));
           return this.createJsonErrorResponse(409, -32e3, "Conflict: Stream already has an active connection");
         }
       }
@@ -22111,10 +22026,9 @@ data:
           streamController = controller;
         },
         cancel: () => {
-          var _a14;
           cancelled = true;
           if (keepAliveTimer !== void 0) clearInterval(keepAliveTimer);
-          if (replayedStreamId !== void 0 && ((_a14 = this._streamMapping.get(replayedStreamId)) == null ? void 0 : _a14.controller) === streamController) this._streamMapping.delete(replayedStreamId);
+          if (replayedStreamId !== void 0 && this._streamMapping.get(replayedStreamId)?.controller === streamController) this._streamMapping.delete(replayedStreamId);
         }
       });
       const replayedEventIds = /* @__PURE__ */ new Set();
@@ -22132,7 +22046,7 @@ data:
         }
         return this.createJsonErrorResponse(404, -32001, "Session not found");
       }
-      (_d = this._streamMapping.get(replayedStreamId)) == null ? void 0 : _d.cleanup();
+      this._streamMapping.get(replayedStreamId)?.cleanup();
       this._streamMapping.set(replayedStreamId, {
         controller: streamController,
         encoder,
@@ -22155,10 +22069,10 @@ data:
           }
         }
       }
-      if (((_e = this._streamMapping.get(replayedStreamId)) == null ? void 0 : _e.controller) === streamController) keepAliveTimer = this.startKeepAlive(streamController, encoder);
+      if (this._streamMapping.get(replayedStreamId)?.controller === streamController) keepAliveTimer = this.startKeepAlive(streamController, encoder);
       return new Response(readable, { headers });
     } catch (error2) {
-      (_f = this.onerror) == null ? void 0 : _f.call(this, error2);
+      this.onerror?.(error2);
       return this.createJsonErrorResponse(500, -32e3, "Error replaying events");
     }
   }
@@ -22166,7 +22080,6 @@ data:
   * Writes an event to an SSE stream via controller with proper formatting
   */
   writeSSEEvent(controller, encoder, message, eventId) {
-    var _a13;
     try {
       let eventData = `event: message
 `;
@@ -22178,7 +22091,7 @@ data:
       controller.enqueue(encoder.encode(eventData));
       return true;
     } catch (error2) {
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, error2);
+      this.onerror?.(error2);
       return false;
     }
   }
@@ -22186,8 +22099,7 @@ data:
   * Handles unsupported requests (`PUT`, `PATCH`, etc.)
   */
   handleUnsupportedRequest() {
-    var _a13;
-    (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error("Method not allowed."));
+    this.onerror?.(/* @__PURE__ */ new Error("Method not allowed."));
     return Response.json({
       jsonrpc: "2.0",
       error: {
@@ -22207,55 +22119,54 @@ data:
   * Handles `POST` requests containing JSON-RPC messages
   */
   async handlePostRequest(req, options) {
-    var _a13, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
     try {
       const acceptHeader = req.headers.get("accept");
-      if (!(acceptHeader == null ? void 0 : acceptHeader.includes("application/json")) || !acceptHeader.includes("text/event-stream")) {
-        (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error("Not Acceptable: Client must accept both application/json and text/event-stream"));
+      if (!acceptHeader?.includes("application/json") || !acceptHeader.includes("text/event-stream")) {
+        this.onerror?.(/* @__PURE__ */ new Error("Not Acceptable: Client must accept both application/json and text/event-stream"));
         return this.createJsonErrorResponse(406, -32e3, "Not Acceptable: Client must accept both application/json and text/event-stream");
       }
       if (!isJsonContentType(req.headers.get("content-type"))) {
-        (_b = this.onerror) == null ? void 0 : _b.call(this, /* @__PURE__ */ new Error("Unsupported Media Type: Content-Type must be application/json"));
+        this.onerror?.(/* @__PURE__ */ new Error("Unsupported Media Type: Content-Type must be application/json"));
         return this.createJsonErrorResponse(415, -32e3, "Unsupported Media Type: Content-Type must be application/json");
       }
       const request = req;
       let rawMessage;
-      if ((options == null ? void 0 : options.parsedBody) === void 0) try {
+      if (options?.parsedBody === void 0) try {
         const body = await readRequestBody(req, this._maxRequestBodySize);
         if (body.tooLarge) {
           const message = requestBodyTooLargeMessage(this._maxRequestBodySize);
-          (_c = this.onerror) == null ? void 0 : _c.call(this, new Error(message));
+          this.onerror?.(new Error(message));
           return this.createJsonErrorResponse(413, -32e3, message);
         }
         rawMessage = JSON.parse(body.text);
       } catch (error2) {
-        (_d = this.onerror) == null ? void 0 : _d.call(this, error2);
+        this.onerror?.(error2);
         return this.createJsonErrorResponse(400, -32700, "Parse error: Invalid JSON");
       }
       else rawMessage = options.parsedBody;
       if (Array.isArray(rawMessage) && rawMessage.length > MAX_BATCH_SIZE) {
-        (_e = this.onerror) == null ? void 0 : _e.call(this, /* @__PURE__ */ new Error(`Invalid Request: Batch must not exceed ${MAX_BATCH_SIZE} messages`));
+        this.onerror?.(/* @__PURE__ */ new Error(`Invalid Request: Batch must not exceed ${MAX_BATCH_SIZE} messages`));
         return this.createJsonErrorResponse(400, -32600, `Invalid Request: Batch must not exceed ${MAX_BATCH_SIZE} messages`);
       }
       let messages;
       try {
         messages = Array.isArray(rawMessage) ? rawMessage.map((msg) => JSONRPCMessageSchema.parse(msg)) : [JSONRPCMessageSchema.parse(rawMessage)];
       } catch (error2) {
-        (_f = this.onerror) == null ? void 0 : _f.call(this, error2);
+        this.onerror?.(error2);
         return this.createJsonErrorResponse(400, -32700, "Parse error: Invalid JSON-RPC message");
       }
       if (this._closed) return this.createJsonErrorResponse(404, -32001, "Session not found");
       const isInitializationRequest = messages.some((element) => isInitializeRequest(element));
       if (isInitializationRequest) {
         if (this._initialized && this.sessionId !== void 0) {
-          (_g = this.onerror) == null ? void 0 : _g.call(this, /* @__PURE__ */ new Error("Invalid Request: Server already initialized"));
+          this.onerror?.(/* @__PURE__ */ new Error("Invalid Request: Server already initialized"));
           return this.createJsonErrorResponse(400, -32600, "Invalid Request: Server already initialized");
         }
         if (messages.length > 1) {
-          (_h = this.onerror) == null ? void 0 : _h.call(this, /* @__PURE__ */ new Error("Invalid Request: Only one initialization request is allowed"));
+          this.onerror?.(/* @__PURE__ */ new Error("Invalid Request: Only one initialization request is allowed"));
           return this.createJsonErrorResponse(400, -32600, "Invalid Request: Only one initialization request is allowed");
         }
-        this.sessionId = (_i = this.sessionIdGenerator) == null ? void 0 : _i.call(this);
+        this.sessionId = this.sessionIdGenerator?.();
         this._initialized = true;
         if (this.sessionId && this._onsessioninitialized) await Promise.resolve(this._onsessioninitialized(this.sessionId));
       }
@@ -22268,15 +22179,15 @@ data:
       if (this._closed) return this.createJsonErrorResponse(404, -32001, "Session not found");
       let scopeChallengeResponse;
       try {
-        scopeChallengeResponse = await this._checkScopeChallenge(messages, options == null ? void 0 : options.authInfo);
+        scopeChallengeResponse = await this._checkScopeChallenge(messages, options?.authInfo);
       } catch (error2) {
-        (_j = this.onerror) == null ? void 0 : _j.call(this, error2);
+        this.onerror?.(error2);
         return this.createJsonErrorResponse(500, -32603, "Internal server error");
       }
       if (scopeChallengeResponse) return scopeChallengeResponse;
       if (!messages.some((element) => isJSONRPCRequest(element))) {
-        for (const message of messages) (_k = this.onmessage) == null ? void 0 : _k.call(this, message, {
-          authInfo: options == null ? void 0 : options.authInfo,
+        for (const message of messages) this.onmessage?.(message, {
+          authInfo: options?.authInfo,
           request
         });
         return new Response(null, { status: 202 });
@@ -22285,7 +22196,6 @@ data:
       const initRequest = messages.find((m) => isInitializeRequest(m));
       const clientProtocolVersion = initRequest ? initRequest.params.protocolVersion : req.headers.get("mcp-protocol-version") ?? DEFAULT_NEGOTIATED_PROTOCOL_VERSION;
       if (this._enableJsonResponse) return new Promise((resolve) => {
-        var _a14;
         this._streamMapping.set(streamId, {
           resolveJson: resolve,
           cleanup: () => {
@@ -22293,8 +22203,8 @@ data:
           }
         });
         for (const message of messages) if (isJSONRPCRequest(message)) this._requestToStreamMapping.set(message.id, streamId);
-        for (const message of messages) (_a14 = this.onmessage) == null ? void 0 : _a14.call(this, message, {
-          authInfo: options == null ? void 0 : options.authInfo,
+        for (const message of messages) this.onmessage?.(message, {
+          authInfo: options?.authInfo,
           request
         });
       });
@@ -22306,9 +22216,8 @@ data:
           streamController = controller;
         },
         cancel: () => {
-          var _a14;
           if (keepAliveTimer !== void 0) clearInterval(keepAliveTimer);
-          if (((_a14 = this._streamMapping.get(streamId)) == null ? void 0 : _a14.controller) === streamController) this._streamMapping.delete(streamId);
+          if (this._streamMapping.get(streamId)?.controller === streamController) this._streamMapping.delete(streamId);
         }
       });
       const headers = {
@@ -22345,20 +22254,20 @@ data:
             this.closeStandaloneSSEStream();
           };
         }
-        (_l = this.onmessage) == null ? void 0 : _l.call(this, message, {
-          authInfo: options == null ? void 0 : options.authInfo,
+        this.onmessage?.(message, {
+          authInfo: options?.authInfo,
           request,
           closeSSEStream,
           closeStandaloneSSEStream
         });
       }
-      if (((_m = this._streamMapping.get(streamId)) == null ? void 0 : _m.controller) === streamController) keepAliveTimer = this.startKeepAlive(streamController, encoder);
+      if (this._streamMapping.get(streamId)?.controller === streamController) keepAliveTimer = this.startKeepAlive(streamController, encoder);
       return new Response(readable, {
         status: 200,
         headers
       });
     } catch (error2) {
-      (_n = this.onerror) == null ? void 0 : _n.call(this, error2);
+      this.onerror?.(error2);
       return this.createJsonErrorResponse(400, -32700, "Parse error", { data: String(error2) });
     }
   }
@@ -22366,13 +22275,12 @@ data:
   * Handles `DELETE` requests to terminate sessions
   */
   async handleDeleteRequest(req) {
-    var _a13;
     const sessionError = this.validateSession(req);
     if (sessionError) return sessionError;
     const protocolError = this.validateProtocolVersion(req);
     if (protocolError) return protocolError;
     try {
-      await Promise.resolve((_a13 = this._onsessionclosed) == null ? void 0 : _a13.call(this, this.sessionId));
+      await Promise.resolve(this._onsessionclosed?.(this.sessionId));
       return new Response(null, { status: 200 });
     } finally {
       await this.close();
@@ -22383,19 +22291,18 @@ data:
   * Returns `Response` error if invalid, `undefined` otherwise
   */
   validateSession(req) {
-    var _a13, _b, _c;
     if (this.sessionIdGenerator === void 0) return;
     if (!this._initialized) {
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, /* @__PURE__ */ new Error("Bad Request: Server not initialized"));
+      this.onerror?.(/* @__PURE__ */ new Error("Bad Request: Server not initialized"));
       return this.createJsonErrorResponse(400, -32e3, "Bad Request: Server not initialized");
     }
     const sessionId = req.headers.get("mcp-session-id");
     if (!sessionId) {
-      (_b = this.onerror) == null ? void 0 : _b.call(this, /* @__PURE__ */ new Error("Bad Request: Mcp-Session-Id header is required"));
+      this.onerror?.(/* @__PURE__ */ new Error("Bad Request: Mcp-Session-Id header is required"));
       return this.createJsonErrorResponse(400, -32e3, "Bad Request: Mcp-Session-Id header is required");
     }
     if (sessionId !== this.sessionId) {
-      (_c = this.onerror) == null ? void 0 : _c.call(this, /* @__PURE__ */ new Error("Session not found"));
+      this.onerror?.(/* @__PURE__ */ new Error("Session not found"));
       return this.createJsonErrorResponse(404, -32001, "Session not found");
     }
   }
@@ -22413,22 +22320,20 @@ data:
   * - Accept and default to the version negotiated at initialization
   */
   validateProtocolVersion(req) {
-    var _a13;
     const protocolVersion = req.headers.get("mcp-protocol-version");
     if (protocolVersion !== null && !this._supportedProtocolVersions.includes(protocolVersion)) {
       const error2 = `Bad Request: Unsupported protocol version: ${protocolVersion} (supported versions: ${this._supportedProtocolVersions.join(", ")})`;
-      (_a13 = this.onerror) == null ? void 0 : _a13.call(this, new Error(error2));
+      this.onerror?.(new Error(error2));
       return this.createJsonErrorResponse(400, -32e3, error2);
     }
   }
   async close() {
-    var _a13;
     if (this._closed) return;
     this._closed = true;
     for (const { cleanup } of this._streamMapping.values()) cleanup();
     this._streamMapping.clear();
     this._requestResponseMap.clear();
-    (_a13 = this.onclose) == null ? void 0 : _a13.call(this);
+    this.onclose?.();
   }
   /**
   * Close an SSE stream for a specific request, triggering client reconnection.
@@ -22450,8 +22355,7 @@ data:
     if (stream) stream.cleanup();
   }
   async send(message, options) {
-    var _a13, _b, _c;
-    let requestId = options == null ? void 0 : options.relatedRequestId;
+    let requestId = options?.relatedRequestId;
     if (isJSONRPCResultResponse(message) || isJSONRPCErrorResponse(message)) requestId = message.id;
     if (requestId === void 0) {
       if (isJSONRPCResultResponse(message) || isJSONRPCErrorResponse(message)) throw new Error("Cannot send a response on a standalone SSE stream unless resuming a previous client request");
@@ -22459,7 +22363,7 @@ data:
       if (this._eventStore) eventId = await this._eventStore.storeEvent(this._standaloneSseStreamId, message);
       const standaloneSse = this._streamMapping.get(this._standaloneSseStreamId);
       if (standaloneSse === void 0) return;
-      if (standaloneSse.controller && standaloneSse.encoder && (eventId === void 0 || !((_a13 = standaloneSse.replayedEventIds) == null ? void 0 : _a13.has(eventId)))) this.writeSSEEvent(standaloneSse.controller, standaloneSse.encoder, message, eventId);
+      if (standaloneSse.controller && standaloneSse.encoder && (eventId === void 0 || !standaloneSse.replayedEventIds?.has(eventId))) this.writeSSEEvent(standaloneSse.controller, standaloneSse.encoder, message, eventId);
       return;
     }
     const streamId = this._requestToStreamMapping.get(requestId);
@@ -22471,7 +22375,7 @@ data:
         eventId = await this._eventStore.storeEvent(streamId, message);
         stream = this._streamMapping.get(streamId);
       }
-      if ((stream == null ? void 0 : stream.controller) && (stream == null ? void 0 : stream.encoder) && (eventId === void 0 || !((_b = stream.replayedEventIds) == null ? void 0 : _b.has(eventId)))) this.writeSSEEvent(stream.controller, stream.encoder, message, eventId);
+      if (stream?.controller && stream?.encoder && (eventId === void 0 || !stream.replayedEventIds?.has(eventId))) this.writeSSEEvent(stream.controller, stream.encoder, message, eventId);
     }
     if (isJSONRPCResultResponse(message) || isJSONRPCErrorResponse(message)) {
       this._requestResponseMap.set(requestId, message);
@@ -22480,7 +22384,7 @@ data:
         if (!stream) {
           if (this._enableJsonResponse) throw new Error(`No connection established for request ID: ${String(requestId)}`);
           if (!this._eventStore) {
-            (_c = this.onerror) == null ? void 0 : _c.call(this, /* @__PURE__ */ new Error(`Response for request ID ${String(requestId)} is undeliverable: per-request stream is disconnected and no eventStore is configured`));
+            this.onerror?.(/* @__PURE__ */ new Error(`Response for request ID ${String(requestId)} is undeliverable: per-request stream is disconnected and no eventStore is configured`));
             for (const id of relatedIds) {
               this._requestResponseMap.delete(id);
               this._requestToStreamMapping.delete(id);
@@ -22546,12 +22450,11 @@ function assertNotServing(server) {
 }
 function createLegacyStatelessFallback(factory, onerror, keepAliveMs, maxRequestBodySize) {
   return async (request, options) => {
-    var _a13;
     if (request.method.toUpperCase() !== "POST") return jsonRpcErrorResponse(405, -32e3, "Method not allowed.");
     try {
       const product = await factory({
         era: "legacy",
-        ...(options == null ? void 0 : options.authInfo) !== void 0 && { authInfo: options.authInfo },
+        ...options?.authInfo !== void 0 && { authInfo: options.authInfo },
         requestInfo: request
       });
       const transport = new WebStandardStreamableHTTPServerTransport({
@@ -22566,10 +22469,10 @@ function createLegacyStatelessFallback(factory, onerror, keepAliveMs, maxRequest
         product.close().catch(() => {
         });
       };
-      (_a13 = request.signal) == null ? void 0 : _a13.addEventListener("abort", teardown, { once: true });
+      request.signal?.addEventListener("abort", teardown, { once: true });
       const response = await transport.handleRequest(request, {
-        ...(options == null ? void 0 : options.authInfo) !== void 0 && { authInfo: options.authInfo },
-        ...(options == null ? void 0 : options.parsedBody) !== void 0 && { parsedBody: options.parsedBody }
+        ...options?.authInfo !== void 0 && { authInfo: options.authInfo },
+        ...options?.parsedBody !== void 0 && { parsedBody: options.parsedBody }
       });
       if (response.body === null || mediaTypeEssence(response.headers.get("content-type")) !== "text/event-stream") {
         teardown();
@@ -22611,10 +22514,10 @@ function createLegacyStatelessFallback(factory, onerror, keepAliveMs, maxRequest
       });
     } catch (error2) {
       try {
-        onerror == null ? void 0 : onerror(toError(error2));
+        onerror?.(toError(error2));
       } catch {
       }
-      return internalServerErrorResponse(echoableRequestId(options == null ? void 0 : options.parsedBody));
+      return internalServerErrorResponse(echoableRequestId(options?.parsedBody));
     }
   };
 }
@@ -22674,7 +22577,7 @@ function createMcpHandler(factory, options = {}) {
   let closed = false;
   const reportError = (error2) => {
     try {
-      onerror == null ? void 0 : onerror(error2);
+      onerror?.(error2);
     } catch {
     }
   };
@@ -22707,7 +22610,7 @@ function createMcpHandler(factory, options = {}) {
       return rejectionResponse(stdHeaderRejection, echoableRequestId(route.message));
     }
     const meta2 = route.messageKind === "request" ? requestMetaOf(route.message.params) : void 0;
-    const declaredClientCapabilities = meta2 == null ? void 0 : meta2[CLIENT_CAPABILITIES_META_KEY];
+    const declaredClientCapabilities = meta2?.[CLIENT_CAPABILITIES_META_KEY];
     if (route.messageKind === "request") {
       const required2 = requiredClientCapabilitiesForRequest(route.message.method);
       if (required2 !== void 0) {
@@ -22734,12 +22637,12 @@ function createMcpHandler(factory, options = {}) {
     }
     if (route.messageKind === "request" && route.message.method === "tools/call" && product instanceof McpServer) {
       const callParams = route.message.params;
-      const toolName = typeof (callParams == null ? void 0 : callParams.name) === "string" ? callParams.name : void 0;
+      const toolName = typeof callParams?.name === "string" ? callParams.name : void 0;
       const inputSchema = toolName === void 0 ? void 0 : product.toolInputSchemaJson(toolName);
       if (inputSchema !== void 0) {
         const scan = scanXMcpHeaderDeclarations(inputSchema);
         if (scan.valid && scan.declarations.length > 0) {
-          const rejection2 = validateMcpParamHeaders(scan.declarations, callParams == null ? void 0 : callParams.arguments, request.headers);
+          const rejection2 = validateMcpParamHeaders(scan.declarations, callParams?.arguments, request.headers);
           if (rejection2 !== void 0) {
             product.close().catch(reportError);
             reportError(/* @__PURE__ */ new Error(`Rejected inbound request (${rejection2.cell}): ${rejection2.message}`));
@@ -22771,7 +22674,7 @@ function createMcpHandler(factory, options = {}) {
     const onExchangeClose = () => {
       inflight.delete(server);
       if (server.onclose === onExchangeClose) server.onclose = previousOnClose;
-      previousOnClose == null ? void 0 : previousOnClose();
+      previousOnClose?.();
     };
     server.onclose = onExchangeClose;
     try {
@@ -22805,12 +22708,12 @@ function createMcpHandler(factory, options = {}) {
     return rejectionResponse(strict, echoableRequestId(parsedBody));
   }
   async function handle2(request, requestOptions) {
-    const authInfo = requestOptions == null ? void 0 : requestOptions.authInfo;
+    const authInfo = requestOptions?.authInfo;
     if (request.method.toUpperCase() === "POST" && !isJsonContentType(request.headers.get("content-type"))) {
       reportError(/* @__PURE__ */ new Error("Unsupported Media Type: Content-Type must be application/json"));
       return jsonRpcErrorResponse(415, -32e3, "Unsupported Media Type: Content-Type must be application/json");
     }
-    const classified = await classifyEntryRequest(request, requestOptions == null ? void 0 : requestOptions.parsedBody, true, maxRequestBodySize);
+    const classified = await classifyEntryRequest(request, requestOptions?.parsedBody, true, maxRequestBodySize);
     if (classified.step === "unreadable-body") return jsonRpcErrorResponse(400, -32700, "Parse error: the request body could not be read");
     if (classified.step === "body-too-large") return jsonRpcErrorResponse(413, -32e3, requestBodyTooLargeMessage(maxRequestBodySize));
     if (classified.step === "no-json-body") {
@@ -22839,7 +22742,7 @@ function createMcpHandler(factory, options = {}) {
       return await handle2(request, requestOptions);
     } catch (error2) {
       reportError(toError(error2));
-      return internalServerErrorResponse(echoableRequestId(requestOptions == null ? void 0 : requestOptions.parsedBody));
+      return internalServerErrorResponse(echoableRequestId(requestOptions?.parsedBody));
     }
   };
   return {
@@ -22987,7 +22890,7 @@ var parseBody = async (request, options = /* @__PURE__ */ Object.create(null)) =
   const { all = false, dot = false } = options;
   const headers = request instanceof HonoRequest ? request.raw.headers : request.headers;
   const contentType = headers.get("Content-Type");
-  if ((contentType == null ? void 0 : contentType.startsWith("multipart/form-data")) || (contentType == null ? void 0 : contentType.startsWith("application/x-www-form-urlencoded"))) {
+  if (contentType?.startsWith("multipart/form-data") || contentType?.startsWith("application/x-www-form-urlencoded")) {
     return parseFormData(request, { all, dot });
   }
   return {};
@@ -23142,7 +23045,7 @@ var mergePath = (base, sub, ...rest) => {
   if (rest.length) {
     sub = mergePath(sub, ...rest);
   }
-  return `${(base == null ? void 0 : base[0]) === "/" ? "" : "/"}${base}${sub === "/" ? "" : `${(base == null ? void 0 : base.at(-1)) === "/" ? "" : "/"}${(sub == null ? void 0 : sub[0]) === "/" ? sub.slice(1) : sub}`}`;
+  return `${base?.[0] === "/" ? "" : "/"}${base}${sub === "/" ? "" : `${base?.at(-1) === "/" ? "" : "/"}${sub?.[0] === "/" ? sub.slice(1) : sub}`}`;
 };
 var checkOptionalParameter = (path) => {
   if (path.charCodeAt(path.length - 1) !== 63 || !path.includes(":")) {
@@ -23543,7 +23446,7 @@ var resolveCallback = async (str, phase, preserveCallbacks, context, buffer) => 
     }
   }
   const callbacks = str.callbacks;
-  if (!(callbacks == null ? void 0 : callbacks.length)) {
+  if (!callbacks?.length) {
     return Promise.resolve(str);
   }
   if (buffer) {
@@ -23775,7 +23678,7 @@ var Context = class {
     const headers = this.#res ? this.#res.headers : this.#preparedHeaders ??= new Headers();
     if (value === void 0) {
       headers.delete(name);
-    } else if (options == null ? void 0 : options.append) {
+    } else if (options?.append) {
       headers.append(name, value);
     } else {
       headers.set(name, value);
@@ -23858,7 +23761,7 @@ var Context = class {
         }
       }
     }
-    const status = typeof arg === "number" ? arg : (arg == null ? void 0 : arg.status) ?? this.#status;
+    const status = typeof arg === "number" ? arg : arg?.status ?? this.#status;
     return new Response(data, { status, headers: responseHeaders });
   }
   newResponse = (...args) => this.#newResponse(...args);
@@ -24551,7 +24454,6 @@ function clearWildcardRegExpCache() {
   wildcardRegExpCache = /* @__PURE__ */ Object.create(null);
 }
 function buildMatcherFromPreprocessedRoutes(routes) {
-  var _a13;
   const trie = new Trie();
   const handlerData = [];
   if (routes.length === 0) {
@@ -24592,7 +24494,7 @@ function buildMatcherFromPreprocessedRoutes(routes) {
   const [regexp, indexReplacementMap, paramReplacementMap] = trie.buildRegExp();
   for (let i = 0, len = handlerData.length; i < len; i++) {
     for (let j = 0, len2 = handlerData[i].length; j < len2; j++) {
-      const map = (_a13 = handlerData[i][j]) == null ? void 0 : _a13[1];
+      const map = handlerData[i][j]?.[1];
       if (!map) {
         continue;
       }
@@ -24835,7 +24737,7 @@ var Node2 = class _Node2 {
           for (let i2 = 0, len2 = handlerSet.possibleKeys.length; i2 < len2; i2++) {
             const key = handlerSet.possibleKeys[i2];
             const processed = processedSet[handlerSet.score];
-            handlerSet.params[key] = (params == null ? void 0 : params[key]) && !processed ? params[key] : nodeParams[key] ?? (params == null ? void 0 : params[key]);
+            handlerSet.params[key] = params?.[key] && !processed ? params[key] : nodeParams[key] ?? params?.[key];
             processedSet[handlerSet.score] = true;
           }
         }
@@ -24844,7 +24746,6 @@ var Node2 = class _Node2 {
     return handlerSets;
   }
   search(method, path) {
-    var _a13;
     const handlerSets = [];
     this.#params = emptyParams;
     const curNode = this;
@@ -24896,7 +24797,7 @@ var Node2 = class _Node2 {
               handlerSets.push(...this.#getHandlerSets(child, method, node2.#params, params));
               if (Object.keys(child.#children).length) {
                 child.#params = params;
-                const componentCount = ((_a13 = m[0].match(/\//)) == null ? void 0 : _a13.length) ?? 0;
+                const componentCount = m[0].match(/\//)?.length ?? 0;
                 const targetCurNodes = curNodesQueue[componentCount] ||= [];
                 targetCurNodes.push(child);
               }
@@ -25051,6 +24952,15 @@ function createMcpHonoApp(options = {}) {
 }
 
 // src/honoMcp/hono.ts
+if (typeof globalThis.Response !== "undefined" && typeof globalThis.Response.json !== "function") {
+  globalThis.Response.json = (body, init) => new globalThis.Response(JSON.stringify(body), {
+    ...init,
+    headers: {
+      "content-type": "application/json",
+      ...init?.headers ?? {}
+    }
+  });
+}
 function buildServer() {
   const server = new McpServer({ name: "hono-example", version: "1.0.0" });
   server.registerTool(
