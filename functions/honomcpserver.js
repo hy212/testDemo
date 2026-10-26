@@ -24995,9 +24995,7 @@ ${e.stack}` : String(e);
 app.get("/json", async (c) => {
   try {
     let a = { test: 1 };
-    let response = new Response(JSON.stringify(a));
-    const b = await response.json();
-    return new Response(JSON.stringify(b));
+    return Response.json(a);
   } catch (e) {
     const message = e instanceof Error ? `${e.message}
 ${e.stack}` : String(e);

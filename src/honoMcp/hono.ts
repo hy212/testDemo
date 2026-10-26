@@ -85,9 +85,8 @@ app.all("/mcp", async (c) => {
 app.get("/json", async (c) => {
   try {
     let a = { test: 1 };
-    let response = new Response(JSON.stringify(a));
-    const b = await response.json();
-    return new Response(JSON.stringify(b));
+    // let response = new Response(JSON.stringify(a));
+    return Response.json(a);
   } catch (e) {
     const message = e instanceof Error ? `${e.message}\n${e.stack}` : String(e);
     return c.json({ error: message }, 500);
