@@ -25082,7 +25082,15 @@ var app = createMcpHonoApp({
   allowedOrigins: ALLOWED_HOSTS
 }).basePath("/honomcp");
 app.get("/health", (c) => c.json({ status: "ok" }));
-app.all("/mcp", (c) => handler.fetch(c.req.raw));
+app.all("/mcp", async (c) => {
+  let res;
+  try {
+    res = await handler.fetch(c.req.raw);
+  } catch (e) {
+    res = new Response(JSON.stringify(e));
+  }
+  return res;
+});
 var hono_default = app;
 
 // node_modules/hono/dist/adapter/service-worker/handler.js
