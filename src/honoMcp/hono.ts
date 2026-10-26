@@ -5,22 +5,22 @@
  * its JSON-RPC error / result responses, so without this the handler throws
  * `Response.json is not a function`. Add the static helper if missing.
  */
-if (
-  typeof globalThis.Response !== "undefined" &&
-  typeof (globalThis.Response as { json?: unknown }).json !== "function"
-) {
-  (globalThis.Response as unknown as { json: typeof Response.json }).json = (
-    body: BodyInit,
-    init?: ResponseInit,
-  ) =>
-    new globalThis.Response(JSON.stringify(body), {
-      ...init,
-      headers: {
-        "content-type": "application/json",
-        ...(init?.headers ?? {}),
-      },
-    });
-}
+// if (
+//   typeof globalThis.Response !== "undefined" &&
+//   typeof (globalThis.Response as { json?: unknown }).json !== "function"
+// ) {
+//   (globalThis.Response as unknown as { json: typeof Response.json }).json = (
+//     body: BodyInit,
+//     init?: ResponseInit,
+//   ) =>
+//     new globalThis.Response(JSON.stringify(body), {
+//       ...init,
+//       headers: {
+//         "content-type": "application/json",
+//         ...(init?.headers ?? {}),
+//       },
+//     });
+// }
 
 /**
  * Hosting on Hono / web-standard runtimes (Cloudflare Workers, Deno, Bun,
@@ -87,7 +87,7 @@ app.get("/json", async (c) => {
     let a = { test: 1 };
     let response = new Response(JSON.stringify(a));
     const b = await response.json();
-    return c.json(b);
+    return new Response(JSON.stringify(b));
   } catch (e) {
     const message = e instanceof Error ? `${e.message}\n${e.stack}` : String(e);
     return c.json({ error: message }, 500);

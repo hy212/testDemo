@@ -24952,15 +24952,6 @@ function createMcpHonoApp(options = {}) {
 }
 
 // src/honoMcp/hono.ts
-if (typeof globalThis.Response !== "undefined" && typeof globalThis.Response.json !== "function") {
-  globalThis.Response.json = (body, init) => new globalThis.Response(JSON.stringify(body), {
-    ...init,
-    headers: {
-      "content-type": "application/json",
-      ...init?.headers ?? {}
-    }
-  });
-}
 function buildServer() {
   const server = new McpServer({ name: "hono-example", version: "1.0.0" });
   server.registerTool(
@@ -25006,7 +24997,7 @@ app.get("/json", async (c) => {
     let a = { test: 1 };
     let response = new Response(JSON.stringify(a));
     const b = await response.json();
-    return c.json(b);
+    return new Response(JSON.stringify(b));
   } catch (e) {
     const message = e instanceof Error ? `${e.message}
 ${e.stack}` : String(e);
