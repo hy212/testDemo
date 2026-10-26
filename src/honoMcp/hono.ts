@@ -55,7 +55,11 @@ app.all("/mcp", async (c) => {
   try {
     res = await handler.fetch(c.req.raw);
   } catch (e) {
-    res = new Response(JSON.stringify(e));
+    const message = e instanceof Error ? `${e.message}\n${e.stack}` : String(e);
+    res = new Response(JSON.stringify({ error: message }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
   return res;
 });
