@@ -24952,23 +24952,91 @@ function createMcpHonoApp(options = {}) {
 }
 
 // src/honoMcp/hono.ts
+if (typeof globalThis.Response !== "undefined" && typeof globalThis.Response.json !== "function") {
+  globalThis.Response.json = (body, init) => new globalThis.Response(JSON.stringify(body), {
+    ...init,
+    headers: {
+      "content-type": "application/json",
+      ...init?.headers ?? {}
+    }
+  });
+}
 function buildServer() {
   const server = new McpServer({ name: "hono-example", version: "1.0.0" });
   server.registerTool(
-    "greet",
+    "get_weather",
     {
-      title: "Greeting Tool",
-      description: "A simple greeting tool",
-      inputSchema: object({ name: string2() })
+      title: "Weather Query Tool",
+      description: "Query current weather on using the wttr.in service. Location can be a city name (e.g. 'Beijing'), an airport code, or a geographic coordinate.",
+      inputSchema: object({
+        location: string2().describe("City name, airport code, or 'lat,lon' coordinate"),
+        lang: string2().optional().describe(
+          "Optional language code, e.g. 'en', 'zh'. Defaults to 'zh'."
+        )
+      })
     },
-    async ({ name }) => ({
-      content: [
-        {
-          type: "text",
-          text: `Hello, ${name}! (from Hono + createMcpHandler.fetch)`
+    async ({ location, lang }) => {
+      console.log("location", location);
+      console.log("lang", lang);
+      const encoded = encodeURIComponent(location);
+      const url2 = `https://wttr.in/${encoded}?format=j1&lang=${lang ?? "zh"}`;
+      try {
+        const res = await fetch(url2, {
+          headers: { "User-Agent": "hono-mcp-weather/1.0" }
+        });
+        if (!res.ok) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: `wttr.in returned HTTP ${res.status} for "${location}"`
+              }
+            ]
+          };
         }
-      ]
-    })
+        const data = await res.json();
+        console.log("data", data);
+        const cur = data.current_condition?.[0];
+        const area = data.nearest_area?.[0];
+        if (!cur) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: `No weather data available for "${location}".`
+              }
+            ]
+          };
+        }
+        const desc = lang === "zh" && cur.lang_zh?.[0]?.value || cur.weatherDesc?.[0]?.value || "n/a";
+        const place = [
+          area?.areaName?.[0]?.value,
+          area?.region?.[0]?.value,
+          area?.country?.[0]?.value
+        ].filter(Boolean).join(", ") || location;
+        const summary = `Weather for ${place}:
+- Condition: ${desc}
+- Temperature: ${cur.temp_C}\xB0C (${cur.temp_F}\xB0F), feels like ${cur.FeelsLikeC}\xB0C
+- Humidity: ${cur.humidity}%
+` + `- Wind: ${cur.windspeedKmph} km/h ${cur.winddir16Point ?? ""}`.trim();
+        return {
+          content: [
+            { type: "text", text: summary },
+            { type: "text", text: JSON.stringify(cur) }
+          ]
+        };
+      } catch (e) {
+        const message = e instanceof Error ? e.message : String(e);
+        return {
+          isError: true,
+          content: [
+            { type: "text", text: `Failed to fetch weather: ${message}` }
+          ]
+        };
+      }
+    }
   );
   return server;
 }
@@ -24986,16 +25054,6 @@ app.get("/health", (c) => c.json({ status: "ok" }));
 app.all("/mcp", async (c) => {
   try {
     return await handler.fetch(c.req.raw);
-  } catch (e) {
-    const message = e instanceof Error ? `${e.message}
-${e.stack}` : String(e);
-    return c.json({ error: message }, 500);
-  }
-});
-app.get("/json", async (c) => {
-  try {
-    let a = { test: 1 };
-    return Response.json(a);
   } catch (e) {
     const message = e instanceof Error ? `${e.message}
 ${e.stack}` : String(e);
