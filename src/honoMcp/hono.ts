@@ -150,19 +150,16 @@ function buildServer(): McpServer {
 
 const handler = createMcpHandler(buildServer);
 
-// `createMcpHonoApp()` arms localhost host/origin validation by default,
-// which rejects any Host/Origin that isn't localhost. When deployed behind
-// a real domain, list the allowed host(s) and origin(s) here so the DNS
-// rebinding protection still applies to the right hostnames.
-const ALLOWED_HOSTS = [
-  "testdemo.test-edgeless.cdntip.com",
-  "localhost",
-  "127.0.0.1",
-];
-const app = createMcpHonoApp({
-  allowedHosts: ALLOWED_HOSTS,
-  allowedOrigins: ALLOWED_HOSTS,
-}).basePath("/honomcp");
+// Disable DNS-rebinding / Origin validation entirely so the template can be
+// deployed to any domain without code changes.
+//
+// `createMcpHonoApp()` only installs Host/Origin validation middleware when
+// either `allowedHosts` / `allowedOrigins` is provided, OR when `host` is a
+// localhost variant (127.0.0.1 / localhost / ::1). By passing `host: "0.0.0.0"`
+// and omitting the allow-lists, no validation middleware is installed and the
+// server accepts whatever hostname the platform assigns (EdgeOne / Workers /
+// etc.).
+const app = createMcpHonoApp({ host: "0.0.0.0" }).basePath("/honomcp");
 app.get("/health", (c) => c.json({ status: "ok" }));
 app.all("/mcp", async (c) => {
   try {
